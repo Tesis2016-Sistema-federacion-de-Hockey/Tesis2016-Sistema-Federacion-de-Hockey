@@ -76,7 +76,7 @@ public class SimpleObjects {
             final String name
     ) {
         return repositoryService.allMatches(
-                new QueryDefault<>(
+                new QueryDefault<SimpleObject>(
                         SimpleObject.class,
                         "findByName",
                         "name", name));
