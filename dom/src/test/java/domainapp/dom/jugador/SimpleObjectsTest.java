@@ -72,7 +72,7 @@ public class SimpleObjectsTest {
             });
 
             // when
-            final Jugador obj = simpleObjects.create("Foobar");
+            final Jugador obj = simpleObjects.crear("Nombre 1","Apellido 01", "Documento 01");
 
             // then
             assertThat(obj).isEqualTo(simpleObject);
@@ -97,7 +97,7 @@ public class SimpleObjectsTest {
             });
 
             // when
-            final List<Jugador> list = simpleObjects.listAll();
+            final List<Jugador> list = simpleObjects.listarTodosLosJugadores();
 
             // then
             assertThat(list).isEqualTo(all);

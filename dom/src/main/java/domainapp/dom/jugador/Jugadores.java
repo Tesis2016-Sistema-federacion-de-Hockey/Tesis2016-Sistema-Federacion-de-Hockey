@@ -59,7 +59,7 @@ public class Jugadores {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<Jugador> listAll() {
+    public List<Jugador> listarTodosLosJugadores() {
         return repositoryService.allInstances(Jugador.class);
     }
     //endregion
@@ -75,15 +75,15 @@ public class Jugadores {
             
     )
     @MemberOrder(sequence = "2")
-    public List<Jugador> buscarPorNombre(
-            @ParameterLayout(named="Nombre")
-            final String nombre
+    public List<Jugador> buscarPorDocumento(
+            @ParameterLayout(named="Documento")
+            final String documento
     ) {
     	return repositoryService.allMatches(
                 new QueryDefault<Jugador>(
                         Jugador.class,
-                        "buscarPorNombre",
-                        "nombre", nombre));
+                        "buscarPorDocumento",
+                        "documento", documento));
     }
     //endregion
 
@@ -101,10 +101,15 @@ public class Jugadores {
     		cssClassFa="fa fa-plus-square"
     )
     @MemberOrder(sequence = "3")
-    public Jugador create(
-            final @ParameterLayout(named="Nombre") String nombre) {
+    public Jugador crear(
+            final @ParameterLayout(named="Nombre") String nombre,
+            final @ParameterLayout(named="Apellido") String apellido,
+            final @ParameterLayout(named="Documento") String documento
+    		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         obj.setNombre(nombre);
+        obj.setApellido(apellido);
+        obj.setDocumento(documento);
         repositoryService.persist(obj);
         return obj;
     }

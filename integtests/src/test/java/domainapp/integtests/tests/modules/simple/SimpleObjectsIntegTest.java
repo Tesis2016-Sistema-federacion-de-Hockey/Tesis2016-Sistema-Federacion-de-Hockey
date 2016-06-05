@@ -57,7 +57,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            final List<Jugador> all = wrap(simpleObjects).listAll();
+            final List<Jugador> all = wrap(simpleObjects).listarTodosLosJugadores();
 
             // then
             assertThat(all).hasSize(fs.getSimpleObjects().size());
@@ -75,7 +75,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            final List<Jugador> all = wrap(simpleObjects).listAll();
+            final List<Jugador> all = wrap(simpleObjects).listarTodosLosJugadores();
 
             // then
             assertThat(all).hasSize(0);
@@ -93,10 +93,10 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(simpleObjects).crear("Faz", null, null);
 
             // then
-            final List<Jugador> all = wrap(simpleObjects).listAll();
+            final List<Jugador> all = wrap(simpleObjects).listarTodosLosJugadores();
             assertThat(all).hasSize(1);
         }
 
@@ -107,14 +107,14 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             FixtureScript fs = new SimpleObjectsTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
-            wrap(simpleObjects).create("Faz");
+            wrap(simpleObjects).crear("Faz", null, null);
             nextTransaction();
 
             // then
             expectedExceptions.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(simpleObjects).crear("Faz", null, null);
             nextTransaction();
         }
 

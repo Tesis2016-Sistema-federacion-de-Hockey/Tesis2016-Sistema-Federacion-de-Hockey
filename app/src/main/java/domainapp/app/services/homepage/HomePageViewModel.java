@@ -37,7 +37,7 @@ public class HomePageViewModel {
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
     public List<Jugador> getJugadores() {
-        return jugadores.listAll();
+        return jugadores.listarTodosLosJugadores();
     }
     //endregion
 

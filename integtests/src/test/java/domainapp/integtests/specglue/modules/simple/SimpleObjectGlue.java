@@ -33,7 +33,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     @Given("^there are.* (\\d+) simple objects$")
     public void there_are_N_simple_objects(int n) throws Throwable {
         try {
-            final List<Jugador> findAll = service(Jugadores.class).listAll();
+            final List<Jugador> findAll = service(Jugadores.class).listarTodosLosJugadores();
             assertThat(findAll.size(), is(n));
             putVar("list", "all", findAll);
             
@@ -44,7 +44,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     
     @When("^I create a new simple object$")
     public void I_create_a_new_simple_object() throws Throwable {
-        service(Jugadores.class).create(UUID.randomUUID().toString());
+        service(Jugadores.class).crear(UUID.randomUUID().toString(), null, null);
     }
     
 }
