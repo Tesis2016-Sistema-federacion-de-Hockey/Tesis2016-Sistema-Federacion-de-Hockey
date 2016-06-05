@@ -22,29 +22,29 @@ import java.util.List;
 
 import org.apache.isis.applib.annotation.ViewModel;
 
-import domainapp.dom.simple.SimpleObject;
-import domainapp.dom.simple.SimpleObjects;
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.Jugadores;
 
 @ViewModel
 public class HomePageViewModel {
 
     //region > title
     public String title() {
-        return getObjects().size() + " objects";
+        return getJugadores().size() + " jugadores";
     }
     //endregion
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
-        return simpleObjects.listAll();
+    public List<Jugador> getJugadores() {
+        return jugadores.listAll();
     }
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
-    SimpleObjects simpleObjects;
+    Jugadores jugadores;
 
     //endregion
 }

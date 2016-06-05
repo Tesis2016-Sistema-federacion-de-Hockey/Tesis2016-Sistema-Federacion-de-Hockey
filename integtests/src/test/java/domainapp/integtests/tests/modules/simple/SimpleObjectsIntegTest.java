@@ -29,12 +29,11 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
-
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.dom.simple.SimpleObject;
-import domainapp.dom.simple.SimpleObjects;
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.Jugadores;
 import domainapp.fixture.dom.simple.SimpleObjectsTearDown;
 import domainapp.fixture.scenarios.RecreateSimpleObjects;
 import domainapp.integtests.tests.DomainAppIntegTest;
@@ -45,7 +44,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    SimpleObjects simpleObjects;
+    Jugadores simpleObjects;
 
     public static class ListAll extends SimpleObjectsIntegTest {
 
@@ -58,13 +57,13 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Jugador> all = wrap(simpleObjects).listAll();
 
             // then
             assertThat(all).hasSize(fs.getSimpleObjects().size());
 
-            SimpleObject simpleObject = wrap(all.get(0));
-            assertThat(simpleObject.getName()).isEqualTo(fs.getSimpleObjects().get(0).getName());
+            Jugador simpleObject = wrap(all.get(0));
+            assertThat(simpleObject.getNombre()).isEqualTo(fs.getSimpleObjects().get(0).getNombre());
         }
 
         @Test
@@ -76,7 +75,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Jugador> all = wrap(simpleObjects).listAll();
 
             // then
             assertThat(all).hasSize(0);
@@ -97,7 +96,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             wrap(simpleObjects).create("Faz");
 
             // then
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Jugador> all = wrap(simpleObjects).listAll();
             assertThat(all).hasSize(1);
         }
 

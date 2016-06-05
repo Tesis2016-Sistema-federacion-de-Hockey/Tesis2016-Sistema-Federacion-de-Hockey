@@ -24,14 +24,13 @@ import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusIdLong;
 import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusVersionTimestamp;
 
-import domainapp.dom.simple.SimpleObject;
+import domainapp.dom.jugador.Jugador;
 import domainapp.fixture.scenarios.RecreateSimpleObjects;
 import domainapp.integtests.tests.DomainAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,8 +41,8 @@ public class SimpleObjectIntegTest extends DomainAppIntegTest {
     FixtureScripts fixtureScripts;
 
     RecreateSimpleObjects fs;
-    SimpleObject simpleObjectPojo;
-    SimpleObject simpleObjectWrapped;
+    Jugador simpleObjectPojo;
+    Jugador simpleObjectWrapped;
 
     @Before
     public void setUp() throws Exception {
@@ -62,7 +61,7 @@ public class SimpleObjectIntegTest extends DomainAppIntegTest {
         @Test
         public void accessible() throws Exception {
             // when
-            final String name = simpleObjectWrapped.getName();
+            final String name = simpleObjectWrapped.getNombre();
             // then
             assertThat(name).isEqualTo(fs.NAMES.get(0));
         }
@@ -75,10 +74,10 @@ public class SimpleObjectIntegTest extends DomainAppIntegTest {
         public void canBeUpdatedDirectly() throws Exception {
 
             // when
-            simpleObjectWrapped.setName("new name");
+            simpleObjectWrapped.setNombre("new name");
 
             // then
-            assertThat(simpleObjectWrapped.getName()).isEqualTo("new name");
+            assertThat(simpleObjectWrapped.getNombre()).isEqualTo("new name");
         }
 
         @Test
@@ -89,7 +88,7 @@ public class SimpleObjectIntegTest extends DomainAppIntegTest {
             expectedExceptions.expectMessage("Exclamation mark is not allowed");
 
             // when
-            simpleObjectWrapped.setName("new name!");
+            simpleObjectWrapped.setNombre("new name!");
         }
     }
 
@@ -103,7 +102,7 @@ public class SimpleObjectIntegTest extends DomainAppIntegTest {
         public void interpolatesName() throws Exception {
 
             // given
-            final String name = simpleObjectWrapped.getName();
+            final String name = simpleObjectWrapped.getNombre();
 
             // when
             final String title = container.titleOf(simpleObjectWrapped);

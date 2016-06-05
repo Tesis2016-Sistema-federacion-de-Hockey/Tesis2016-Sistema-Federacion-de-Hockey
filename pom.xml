@@ -23,7 +23,7 @@
     <artifactId>Tesis2016-Sistema-federacion-de-Hockey</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Simple App</name>
+    <name>Hockey</name>
 
     <packaging>pom</packaging>
 
@@ -322,7 +322,6 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj-core.version}</version>
             </dependency>
-
 
             <!-- this project's own modules -->
             <dependency>

@@ -14,11 +14,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.jugador;
 
 import java.util.List;
 
 import com.google.common.collect.Lists;
+
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.Jugadores;
 
 import org.jmock.Expectations;
 import org.jmock.Sequence;
@@ -26,7 +29,6 @@ import org.jmock.auto.Mock;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
@@ -41,11 +43,11 @@ public class SimpleObjectsTest {
     @Mock
     RepositoryService mockRepositoryService;
     
-    SimpleObjects simpleObjects;
+    Jugadores simpleObjects;
 
     @Before
     public void setUp() throws Exception {
-        simpleObjects = new SimpleObjects();
+        simpleObjects = new Jugadores();
         simpleObjects.repositoryService = mockRepositoryService;
     }
 
@@ -55,12 +57,12 @@ public class SimpleObjectsTest {
         public void happyCase() throws Exception {
 
             // given
-            final SimpleObject simpleObject = new SimpleObject();
+            final Jugador simpleObject = new Jugador();
 
             final Sequence seq = context.sequence("create");
             context.checking(new Expectations() {
                 {
-                    oneOf(mockRepositoryService).instantiate(SimpleObject.class);
+                    oneOf(mockRepositoryService).instantiate(Jugador.class);
                     inSequence(seq);
                     will(returnValue(simpleObject));
 
@@ -70,11 +72,11 @@ public class SimpleObjectsTest {
             });
 
             // when
-            final SimpleObject obj = simpleObjects.create("Foobar");
+            final Jugador obj = simpleObjects.create("Foobar");
 
             // then
             assertThat(obj).isEqualTo(simpleObject);
-            assertThat(obj.getName()).isEqualTo("Foobar");
+            assertThat(obj.getNombre()).isEqualTo("Foobar");
         }
 
     }
@@ -85,17 +87,17 @@ public class SimpleObjectsTest {
         public void happyCase() throws Exception {
 
             // given
-            final List<SimpleObject> all = Lists.newArrayList();
+            final List<Jugador> all = Lists.newArrayList();
 
             context.checking(new Expectations() {
                 {
-                    oneOf(mockRepositoryService).allInstances(SimpleObject.class);
+                    oneOf(mockRepositoryService).allInstances(Jugador.class);
                     will(returnValue(all));
                 }
             });
 
             // when
-            final List<SimpleObject> list = simpleObjects.listAll();
+            final List<Jugador> list = simpleObjects.listAll();
 
             // then
             assertThat(list).isEqualTo(all);

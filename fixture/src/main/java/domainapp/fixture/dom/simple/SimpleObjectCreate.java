@@ -21,8 +21,8 @@ package domainapp.fixture.dom.simple;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import domainapp.dom.simple.SimpleObject;
-import domainapp.dom.simple.SimpleObjects;
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.Jugadores;
 
 public class SimpleObjectCreate extends FixtureScript {
 
@@ -43,13 +43,13 @@ public class SimpleObjectCreate extends FixtureScript {
 
 
     //region > simpleObject (output)
-    private SimpleObject simpleObject;
+    private Jugador simpleObject;
 
     /**
      * The created simple object (output).
      * @return
      */
-    public SimpleObject getSimpleObject() {
+    public Jugador getSimpleObject() {
         return simpleObject;
     }
     //endregion
@@ -66,6 +66,6 @@ public class SimpleObjectCreate extends FixtureScript {
     }
 
     @javax.inject.Inject
-    private SimpleObjects simpleObjects;
+    private Jugadores simpleObjects;
 
 }

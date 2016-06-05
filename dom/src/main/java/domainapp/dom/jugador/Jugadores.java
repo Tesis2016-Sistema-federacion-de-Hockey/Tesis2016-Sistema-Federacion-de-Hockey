@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.jugador;
 
 import java.util.List;
 
@@ -37,16 +37,16 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.VIEW,
-        repositoryFor = SimpleObject.class
+        repositoryFor = Jugador.class
 )
 @DomainServiceLayout(
         menuOrder = "10"
 )
-public class SimpleObjects {
+public class Jugadores {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Simple Objects");
+        return TranslatableString.tr("Jugadores");
     }
     //endregion
 
@@ -55,11 +55,12 @@ public class SimpleObjects {
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
+    		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<SimpleObject> listAll() {
-        return repositoryService.allInstances(SimpleObject.class);
+    public List<Jugador> listAll() {
+        return repositoryService.allInstances(Jugador.class);
     }
     //endregion
 
@@ -68,24 +69,27 @@ public class SimpleObjects {
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
+    		cssClassFa="fa fa-search",
             bookmarking = BookmarkPolicy.AS_ROOT
+            
+            
     )
     @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
-            @ParameterLayout(named="Name")
-            final String name
+    public List<Jugador> buscarPorNombre(
+            @ParameterLayout(named="Nombre")
+            final String nombre
     ) {
-        return repositoryService.allMatches(
-                new QueryDefault<SimpleObject>(
-                        SimpleObject.class,
-                        "findByName",
-                        "name", name));
+    	return repositoryService.allMatches(
+                new QueryDefault<Jugador>(
+                        Jugador.class,
+                        "buscarPorNombre",
+                        "nombre", nombre));
     }
     //endregion
 
     //region > create (action)
-    public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjects> {
-        public CreateDomainEvent(final SimpleObjects source, final Identifier identifier, final Object... arguments) {
+    public static class CreateDomainEvent extends ActionDomainEvent<Jugadores> {
+        public CreateDomainEvent(final Jugadores source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
@@ -93,11 +97,14 @@ public class SimpleObjects {
     @Action(
             domainEvent = CreateDomainEvent.class
     )
+    @ActionLayout(
+    		cssClassFa="fa fa-plus-square"
+    )
     @MemberOrder(sequence = "3")
-    public SimpleObject create(
-            final @ParameterLayout(named="Name") String name) {
-        final SimpleObject obj = repositoryService.instantiate(SimpleObject.class);
-        obj.setName(name);
+    public Jugador create(
+            final @ParameterLayout(named="Nombre") String nombre) {
+        final Jugador obj = repositoryService.instantiate(Jugador.class);
+        obj.setNombre(nombre);
         repositoryService.persist(obj);
         return obj;
     }

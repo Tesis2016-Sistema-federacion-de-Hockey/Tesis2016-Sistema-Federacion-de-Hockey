@@ -16,13 +16,14 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.jugador;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -34,11 +35,11 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "SimpleObject"
+        table = "Jugador"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
-         column="id")
+         column="idJugador")
 @javax.jdo.annotations.Version(
 //        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
@@ -47,26 +48,41 @@ import org.apache.isis.applib.util.ObjectContracts;
         @javax.jdo.annotations.Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.SimpleObject "),
+                        + "FROM domainapp.dom.jugador.Jugador "),
         @javax.jdo.annotations.Query(
-                name = "findByName", language = "JDOQL",
+                name = "buscarPorNombre", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.SimpleObject "
-                        + "WHERE name.indexOf(:name) >= 0 ")
+                        + "FROM domainapp.dom.jugador.Jugador "
+                        + "WHERE nombre.indexOf(:nombre) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Jugador_nombre_UNQ", members = {"nombre"})
 @DomainObject
-public class SimpleObject implements Comparable<SimpleObject> {
+@DomainObjectLayout
+public class Jugador implements Comparable<Jugador> {
 
     public static final int NAME_LENGTH = 40;
-
-
+    
+    
     public TranslatableString title() {
-        return TranslatableString.tr("Object: {name}", "name", getName());
+        return TranslatableString.tr("{nombre}", "nombre", getNombre());
     }
 
+    
+    public String iconName(){
+    	return "Jugador";
+    }
 
-    public static class NameDomainEvent extends PropertyDomainEvent<SimpleObject,String> {}
+    
+//    public String title(){
+//        return getNombre();
+//    }
+
+
+
+
+    public static class NameDomainEvent extends PropertyDomainEvent<Jugador,String> {}
+    
+    
     @javax.jdo.annotations.Column(
             allowsNull="false",
             length = NAME_LENGTH
@@ -74,21 +90,22 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Property(
         domainEvent = NameDomainEvent.class
     )
-    private String name;
-    public String getName() {
-        return name;
-    }
-    public void setName(final String name) {
-        this.name = name;
-    }
+    //@Getter @Setter
+    private String nombre;
+    public String getNombre() {return nombre;}
+    public void setNombre(final String nombre) {this.nombre = nombre;}
+    
+    
+    
+    
 
-    public TranslatableString validateName(final String name) {
-        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
-    }
+//    public TranslatableString validateName(final String name) {
+//        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
+//    }
 
 
 
-    public static class DeleteDomainEvent extends ActionDomainEvent<SimpleObject> {}
+    public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
     @Action(
             domainEvent = DeleteDomainEvent.class,
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
@@ -98,14 +115,16 @@ public class SimpleObject implements Comparable<SimpleObject> {
     }
 
 
-
     @Override
-    public int compareTo(final SimpleObject other) {
+    public int compareTo(final Jugador other) {
         return ObjectContracts.compare(this, other, "name");
     }
 
 
     @javax.inject.Inject
     RepositoryService repositoryService;
+    
+    @javax.inject.Inject
+    Jugadores jugadores;
 
 }
