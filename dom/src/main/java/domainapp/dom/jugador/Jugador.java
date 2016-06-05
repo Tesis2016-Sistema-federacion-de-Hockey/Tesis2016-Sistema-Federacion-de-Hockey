@@ -64,12 +64,12 @@ public class Jugador implements Comparable<Jugador> {
     
     
     public TranslatableString title() {
-        return TranslatableString.tr("{nombre}", "nombre", getNombre());
+        return TranslatableString.tr("Jugador: {nombre}", "nombre", getNombre());
     }
 
     
     public String iconName(){
-    	return "Jugador";
+    	return "Jugadora mujer";
     }
 
     
@@ -117,7 +117,7 @@ public class Jugador implements Comparable<Jugador> {
 
     @Override
     public int compareTo(final Jugador other) {
-        return ObjectContracts.compare(this, other, "name");
+        return ObjectContracts.compare(this, other, "nombre");
     }
 
 
