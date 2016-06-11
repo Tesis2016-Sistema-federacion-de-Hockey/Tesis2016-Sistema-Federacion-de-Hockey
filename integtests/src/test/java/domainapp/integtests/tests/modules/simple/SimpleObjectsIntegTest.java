@@ -93,7 +93,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            wrap(simpleObjects).crear("Faz", null, null);
+            wrap(simpleObjects).crear("Faz", null, null, null);
 
             // then
             final List<Jugador> all = wrap(simpleObjects).listarTodosLosJugadores();
@@ -107,14 +107,14 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
             FixtureScript fs = new SimpleObjectsTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
-            wrap(simpleObjects).crear("Faz", null, null);
+            wrap(simpleObjects).crear("Faz", null, null, null);
             nextTransaction();
 
             // then
             expectedExceptions.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(simpleObjects).crear("Faz", null, null);
+            wrap(simpleObjects).crear("Faz", null, null, null);
             nextTransaction();
         }
 

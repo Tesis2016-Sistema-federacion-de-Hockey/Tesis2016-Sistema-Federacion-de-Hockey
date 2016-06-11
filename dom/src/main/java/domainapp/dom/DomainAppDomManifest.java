@@ -35,7 +35,7 @@ public class DomainAppDomManifest implements AppManifest {
     public List<Class<?>> getModules() {
         return Arrays.asList(
                 DomainAppDomainModule.class  // domain (entities and repositories)
-        );
+        		);
     }
 
     @Override

@@ -35,6 +35,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.tipodocumento.TipoDocumento;
+
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = Jugador.class
@@ -104,12 +106,14 @@ public class Jugadores {
     public Jugador crear(
             final @ParameterLayout(named="Nombre") String nombre,
             final @ParameterLayout(named="Apellido") String apellido,
+            final @ParameterLayout(named="Tipo de Documento") TipoDocumento tipoDocumento,
             final @ParameterLayout(named="Documento") String documento
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         obj.setNombre(nombre);
         obj.setApellido(apellido);
         obj.setDocumento(documento);
+        obj.setTipoDocumento(tipoDocumento);
         repositoryService.persist(obj);
         return obj;
     }

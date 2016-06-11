@@ -34,6 +34,9 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.persona.Persona;
+import domainapp.dom.tipodocumento.TipoDocumento;
+
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
@@ -60,16 +63,21 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.Unique(name="Jugador_documento_UNQ", members = {"documento"})
 @DomainObject
 @DomainObjectLayout
-public class Jugador implements Comparable<Jugador> {
+public class Jugador extends Persona implements Comparable<Jugador> {
 
     public static final int NAME_LENGTH = 40;
     
     public TranslatableString title() {
-        return TranslatableString.tr("Jugador: {nombre}", "nombre", getNombre());
-    }
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Jugador: " + this.getApellido() + ", " + this.getNombre());
+	}
+    
+//    public TranslatableString title() {
+//        return TranslatableString.tr("Jugador: {nombre} ", "nombre", getNombre());
+//    }
     
     public String iconName(){
-    	return "Jugador hombre";
+    	return "avatar";
     }
     
 //    public String title(){
@@ -108,7 +116,15 @@ public class Jugador implements Comparable<Jugador> {
 			return null;
 		}
 	}
-    
+	
+	
+	@MemberOrder(sequence = "4")
+    @Column(allowsNull="false")
+    @Property(domainEvent = NameDomainEvent.class)
+	private TipoDocumento tipoDocumento;
+	public TipoDocumento getTipoDocumento() {return tipoDocumento;}
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
+
 	@MemberOrder(sequence = "5")
     @Column(allowsNull="false", length = NAME_LENGTH)
     @Property(domainEvent = NameDomainEvent.class)

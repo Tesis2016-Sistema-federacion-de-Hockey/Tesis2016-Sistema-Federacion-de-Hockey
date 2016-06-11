@@ -72,7 +72,7 @@ public class SimpleObjectsTest {
             });
 
             // when
-            final Jugador obj = simpleObjects.crear("Nombre 1","Apellido 01", "Documento 01");
+            final Jugador obj = simpleObjects.crear("Nombre 1","Apellido 01", null, null);
 
             // then
             assertThat(obj).isEqualTo(simpleObject);
