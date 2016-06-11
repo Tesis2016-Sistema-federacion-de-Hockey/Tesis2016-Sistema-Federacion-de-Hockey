@@ -25,6 +25,7 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -35,6 +36,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.persona.Persona;
+import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -72,77 +74,37 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 				"Jugador: " + this.getApellido() + ", " + this.getNombre());
 	}
     
-//    public TranslatableString title() {
-//        return TranslatableString.tr("Jugador: {nombre} ", "nombre", getNombre());
-//    }
+    public String iconName(){return "jugador";}
     
-    public String iconName(){
-    	return "avatar";
-    }
-    
-//    public String title(){
-//        return getNombre();
-//    }
-
     public static class NameDomainEvent extends PropertyDomainEvent<Jugador,String> {}
     
-    
-	@MemberOrder(sequence = "1")
-    @Column(allowsNull="false", length = NAME_LENGTH)
-    @Property(domainEvent = NameDomainEvent.class)
-    private String nombre;
-    public String getNombre() {return nombre;}
-    public void setNombre(final String nombre) {this.nombre = nombre;}
-    
-	public String validateNombre(String nom) {
-		if (nom.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
-		}
-	}
-    
-	@MemberOrder(sequence = "2")
-    @Column(allowsNull="false", length = NAME_LENGTH)
-    @Property(domainEvent = NameDomainEvent.class)
-    private String apellido;
-    public String getApellido() {return apellido;}
-	public void setApellido(String apellido) {this.apellido = apellido;}
+	//SECTOR
+    @MemberOrder(sequence = "0")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "false")
+	private Sector sector;
+	public Sector getSector() {return sector;}
+	public void setSector(final Sector sector) {this.sector = sector;}
 
-	public String validateApellido(String ape) {
-		if (ape.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
-		}
-	}
+	//FICHA
+    @MemberOrder(sequence = "1")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "false")
+	private String ficha;
+	public String getFicha() {return ficha;}
+	public void setFicha(final String ficha) {this.ficha = ficha;}
 	
-	
-	@MemberOrder(sequence = "4")
-    @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
-	private TipoDocumento tipoDocumento;
-	public TipoDocumento getTipoDocumento() {return tipoDocumento;}
-	public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
-
-	@MemberOrder(sequence = "5")
-    @Column(allowsNull="false", length = NAME_LENGTH)
-    @Property(domainEvent = NameDomainEvent.class)
-	private String documento;
-	public String getDocumento() {return documento;}
-	public void setDocumento(String documento) {this.documento = documento;}
-	
-
-//    public TranslatableString validateName(final String name) {
-//        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
-//    }
-
-
-
-
+	//NUMERO DE CAMISETA
+    @MemberOrder(sequence = "12")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "false")
+	private int numeroCamiseta;
+	public int getNumeroCamiseta() {return numeroCamiseta;}
+	public void setNumeroCamiseta(int numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
-    @Action(
+    
+	@Action(
             domainEvent = DeleteDomainEvent.class,
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
@@ -150,17 +112,14 @@ public class Jugador extends Persona implements Comparable<Jugador> {
         repositoryService.remove(this);
     }
 
-
     @Override
     public int compareTo(final Jugador other) {
-        return ObjectContracts.compare(this, other, "nombre");
+        return ObjectContracts.compare(this, other, "documento");
     }
-
 
     @javax.inject.Inject
     RepositoryService repositoryService;
     
     @javax.inject.Inject
     Jugadores jugadores;
-
 }

@@ -18,6 +18,8 @@
  */
 package domainapp.dom.jugador;
 
+import org.joda.time.LocalDate;
+
 import java.util.List;
 
 import org.apache.isis.applib.Identifier;
@@ -35,6 +37,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.estado.Estado;
+import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
 
 @DomainService(
@@ -104,16 +108,30 @@ public class Jugadores {
     )
     @MemberOrder(sequence = "3")
     public Jugador crear(
+            final @ParameterLayout(named="Sector") Sector sector,
+            final @ParameterLayout(named="Ficha") String ficha,
             final @ParameterLayout(named="Nombre") String nombre,
             final @ParameterLayout(named="Apellido") String apellido,
             final @ParameterLayout(named="Tipo de Documento") TipoDocumento tipoDocumento,
-            final @ParameterLayout(named="Documento") String documento
+            final @ParameterLayout(named="Documento") String documento,
+            final @ParameterLayout(named="Fecha de Nacimiento") LocalDate fechaNacimiento,
+            final @ParameterLayout(named="Estado") Estado estado,
+            final @ParameterLayout(named="Email") String email,
+            final @ParameterLayout(named="Telefono") String telefono,
+            final @ParameterLayout(named="Celular") String celular
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
+        obj.setSector(sector);
+        obj.setFicha(ficha);
         obj.setNombre(nombre);
         obj.setApellido(apellido);
-        obj.setDocumento(documento);
         obj.setTipoDocumento(tipoDocumento);
+        obj.setDocumento(documento);
+        obj.setFechaNacimiento(fechaNacimiento);
+        obj.setEstado(estado);
+        obj.setEmail(email);
+        obj.setTelefono(telefono);
+        obj.setCelular(celular);     
         repositoryService.persist(obj);
         return obj;
     }
