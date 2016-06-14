@@ -31,7 +31,7 @@
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="Nombre">
-                                <c:action id="delete"/>
+                                <!--  <c:action id="delete"/> -->
                                 <c:property id="sector" namedEscaped="true"/>
                                 <c:property id="ficha" namedEscaped="true"/>
                                 <c:property id="nombre" namedEscaped="true"/>

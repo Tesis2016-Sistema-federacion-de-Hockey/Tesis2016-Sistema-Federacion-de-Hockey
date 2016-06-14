@@ -102,15 +102,15 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public int getNumeroCamiseta() {return numeroCamiseta;}
 	public void setNumeroCamiseta(int numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
 
-	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
+//	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
     
-	@Action(
-            domainEvent = DeleteDomainEvent.class,
-            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-    )
-    public void delete() {
-        repositoryService.remove(this);
-    }
+//	@Action(
+//            domainEvent = DeleteDomainEvent.class,
+//            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+//    )
+//    public void delete() {
+//        repositoryService.remove(this);
+//    }
 
     @Override
     public int compareTo(final Jugador other) {
