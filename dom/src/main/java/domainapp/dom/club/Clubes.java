@@ -19,6 +19,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.jugador.Jugador;
+
 
 
 @DomainService(
@@ -35,7 +37,21 @@ public class Clubes {
     }
     //endregion
     
-  //region > create (action)
+  //region > listAll (action)
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "1")
+    public List<Club> listarTodosLosClubes() {
+        return repositoryService.allInstances(Club.class);
+    }
+    //endregion
+    
+    //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Clubes> {
         public CreateDomainEvent(final Clubes source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
