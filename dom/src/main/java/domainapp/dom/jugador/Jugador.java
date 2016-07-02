@@ -23,6 +23,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -38,6 +39,9 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
+
+
+
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -63,7 +67,7 @@ import domainapp.dom.tipodocumento.TipoDocumento;
                         + "WHERE documento.indexOf(:documento) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="Jugador_documento_UNQ", members = {"documento"})
-@DomainObject
+@DomainObject(bounded=true)
 @DomainObjectLayout
 public class Jugador extends Persona implements Comparable<Jugador> {
 
@@ -101,6 +105,13 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	private int numeroCamiseta;
 	public int getNumeroCamiseta() {return numeroCamiseta;}
 	public void setNumeroCamiseta(int numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
+	
+	
+	
+	
+	
+	
+	
 
 //	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
     
@@ -112,7 +123,9 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 //        repositoryService.remove(this);
 //    }
 
-    @Override
+    
+
+	@Override
     public int compareTo(final Jugador other) {
         return ObjectContracts.compare(this, other, "documento");
     }

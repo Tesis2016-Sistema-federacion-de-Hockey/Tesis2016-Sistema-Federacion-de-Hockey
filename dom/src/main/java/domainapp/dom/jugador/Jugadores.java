@@ -22,6 +22,7 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
+import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -32,7 +33,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -41,6 +42,7 @@ import domainapp.dom.estado.Estado;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
 
+@SuppressWarnings("deprecation")
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = Jugador.class
@@ -48,7 +50,7 @@ import domainapp.dom.tipodocumento.TipoDocumento;
 @DomainServiceLayout(
         menuOrder = "10"
 )
-public class Jugadores {
+public class Jugadores extends AbstractFactoryAndRepository{
 
     //region > title
     public TranslatableString title() {
@@ -71,26 +73,26 @@ public class Jugadores {
     //endregion
 
     //region > findByName (action)
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-    		cssClassFa="fa fa-search",
-            bookmarking = BookmarkPolicy.AS_ROOT
-            
-            
-    )
-    @MemberOrder(sequence = "2")
-    public List<Jugador> buscarPorDocumento(
-            @ParameterLayout(named="Documento")
-            final String documento
-    ) {
-    	return repositoryService.allMatches(
-                new QueryDefault<Jugador>(
-                        Jugador.class,
-                        "buscarPorDocumento",
-                        "documento", documento));
-    }
+//    @Action(
+//            semantics = SemanticsOf.SAFE
+//    )
+//    @ActionLayout(
+//    		cssClassFa="fa fa-search",
+//            bookmarking = BookmarkPolicy.AS_ROOT
+//            
+//            
+//    )
+//    @MemberOrder(sequence = "2")
+//    public List<Jugador> buscarPorDocumento(
+//            @ParameterLayout(named="Documento")
+//            final String documento
+//    ) {
+//    	return repositoryService.allMatches(
+//                new QueryDefault<Jugador>(
+//                        Jugador.class,
+//                        "buscarPorDocumento",
+//                        "documento", documento));
+//    }
     //endregion
 
     //region > create (action)
@@ -119,6 +121,7 @@ public class Jugadores {
             final @ParameterLayout(named="Email") String email,
             final @ParameterLayout(named="Telefono") String telefono,
             final @ParameterLayout(named="Celular") String celular
+            
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         obj.setSector(sector);
@@ -131,11 +134,16 @@ public class Jugadores {
         obj.setEstado(estado);
         obj.setEmail(email);
         obj.setTelefono(telefono);
-        obj.setCelular(celular);     
+        obj.setCelular(celular);
+        
         repositoryService.persist(obj);
         return obj;
     }
 
+    
+    
+    
+    
     //endregion
 
     //region > injected services
