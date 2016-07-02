@@ -43,6 +43,8 @@
                                 <c:property id="email" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="telefono" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="celular" namedEscaped="true" hidden="ALL_TABLES"/>
+                                <c:property id="numeroCamiseta" namedEscaped="true" hidden="ALL_TABLES"/>
+                                <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
                                 
                             </c:fieldSet>
                         </bs3:col>
@@ -55,7 +57,7 @@
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
-<!--
+
                 <bs3:tab name="Other">
                     <bs3:row>
                         <bs3:col span="12">
@@ -63,7 +65,7 @@
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
--->
+
             </bs3:tabGroup>
             <bs3:tabGroup>
             </bs3:tabGroup>
