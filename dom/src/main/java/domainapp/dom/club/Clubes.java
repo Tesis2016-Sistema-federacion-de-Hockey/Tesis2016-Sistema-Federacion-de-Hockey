@@ -19,6 +19,7 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 
 
@@ -72,9 +73,18 @@ public class Clubes {
             final @ParameterLayout(named="Id Interno") String idInterno,
             final @ParameterLayout(named="Personeria Juridica") String personeriaJuridica,
             final @ParameterLayout(named="Email") String email,
-            final @ParameterLayout(named="Telefono") String telefono            
+            final @ParameterLayout(named="Telefono") String telefono,
+            final @ParameterLayout(named="Calle") String calle,
+            final @ParameterLayout(named="Numero") int numero,
+            final @ParameterLayout(named="Piso") int piso,
+            final @ParameterLayout(named="Departamento") String departamento            
     		){
         final Club obj = repositoryService.instantiate(Club.class);
+        final Domicilio domicilio=new Domicilio();
+        domicilio.setCalle(calle);
+        domicilio.setNumero(numero);
+        domicilio.setPiso(piso);
+        domicilio.setDepartamento(departamento);
         obj.setNombre(nombre);
         obj.setNombreInstitucional(nombreInstitucional);
         obj.setAnioAfiliacion(anioAfiliacion);  
@@ -82,6 +92,7 @@ public class Clubes {
         obj.setPersoneriaJuridica(personeriaJuridica);
         obj.setEmail(email);
         obj.setTelefono(telefono);
+        obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
         return obj;
     }

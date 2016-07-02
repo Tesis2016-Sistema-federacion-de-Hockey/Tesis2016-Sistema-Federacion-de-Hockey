@@ -17,6 +17,8 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.domicilio.Domicilio;
+
 
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -130,6 +132,18 @@ public class Club implements Comparable<Club> {
 	public String getTelefono() {return telefono;}
 	public void setTelefono(String telefono) {this.telefono = telefono;}
 	
+	//DOMICILIO
+	@MemberOrder(sequence = "6")
+	@Property(editing = Editing.ENABLED)	
+	@Column(name="DOMICILIO_ID")	
+	private Domicilio domicilio;	
+	public Domicilio getDomicilio() {
+		return domicilio;
+	}
+	public void setDomicilio(Domicilio domicilio) {
+		this.domicilio = domicilio;
+	}
+
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "idInterno");
     }
