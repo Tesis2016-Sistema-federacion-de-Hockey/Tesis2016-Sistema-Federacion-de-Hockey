@@ -61,10 +61,15 @@ import domainapp.dom.sector.Sector;
                         + "FROM domainapp.dom.jugador.Jugador "
                         + "WHERE documento.indexOf(:documento) >= 0 "),
         @javax.jdo.annotations.Query(
-        		name = "ListarJugadoresActivos", language = "JDOQL",
+        		name = "listarJugadoresActivos", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "
-                        + "WHERE estado=='Activo'")       		
+                        + "WHERE estado=='Activo'"),
+        @javax.jdo.annotations.Query(
+        		name = "listarJugadoresInactivos", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.jugador.Jugador "
+                        + "WHERE estado=='Inactivo'")
         		
 })
 @javax.jdo.annotations.Unique(name="Jugador_documento_UNQ", members = {"documento"})

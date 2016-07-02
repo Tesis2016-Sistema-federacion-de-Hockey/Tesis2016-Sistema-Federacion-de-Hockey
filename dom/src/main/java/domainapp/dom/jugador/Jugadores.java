@@ -33,7 +33,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -85,7 +84,17 @@ public class Jugadores extends AbstractFactoryAndRepository{
 		});
 	}
     
-    
+    @MemberOrder(sequence = "1.2")
+	public List<Jugador> listarJugadoresInactivos() {
+		return allMatches(Jugador.class, new Predicate<Jugador>() {
+
+			@Override
+			public boolean apply(Jugador input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == Estado.INACTIVO ? true : false;
+			}
+		});
+	}
     
     
     
