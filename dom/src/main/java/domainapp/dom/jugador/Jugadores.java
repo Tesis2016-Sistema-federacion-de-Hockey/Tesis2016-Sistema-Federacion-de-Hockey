@@ -38,6 +38,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.google.common.base.Predicate;
+
 import domainapp.dom.estado.Estado;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
@@ -70,6 +72,26 @@ public class Jugadores extends AbstractFactoryAndRepository{
     public List<Jugador> listarTodosLosJugadores() {
         return repositoryService.allInstances(Jugador.class);
     }
+    
+    @MemberOrder(sequence = "1.1")
+	public List<Jugador> listarJugadoresActivos() {
+		return allMatches(Jugador.class, new Predicate<Jugador>() {
+
+			@Override
+			public boolean apply(Jugador input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == Estado.ACTIVO ? true : false;
+			}
+		});
+	}
+    
+    
+    
+    
+    
+    
+    
+    
     //endregion
 
     //region > findByName (action)

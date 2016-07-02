@@ -22,15 +22,11 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -38,7 +34,6 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
-import domainapp.dom.tipodocumento.TipoDocumento;
 
 
 
@@ -59,12 +54,18 @@ import domainapp.dom.tipodocumento.TipoDocumento;
         @javax.jdo.annotations.Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.jugador.Jugador "),
+                        + "FROM domainapp.dom.jugador.Jugador "),               
         @javax.jdo.annotations.Query(
                 name = "buscarPorDocumento", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "
-                        + "WHERE documento.indexOf(:documento) >= 0 ")
+                        + "WHERE documento.indexOf(:documento) >= 0 "),
+        @javax.jdo.annotations.Query(
+        		name = "ListarJugadoresActivos", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.jugador.Jugador "
+                        + "WHERE estado=='Activo'")       		
+        		
 })
 @javax.jdo.annotations.Unique(name="Jugador_documento_UNQ", members = {"documento"})
 @DomainObject(bounded=true)
@@ -80,7 +81,12 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     
     public String iconName(){return "jugador";}
     
-    public static class NameDomainEvent extends PropertyDomainEvent<Jugador,String> {}
+    public static class NameDomainEvent extends PropertyDomainEvent<Jugador,String> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
     
 	//SECTOR
     @MemberOrder(sequence = "0")
