@@ -20,30 +20,18 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.jugador.Jugador.NameDomainEvent;
 
 @javax.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE//,
-        //schema = "simple",
-        //table = "Club"
+        identityType=IdentityType.DATASTORE,
+        schema = "simple"        
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY//,
-         //column="idJugador"
+         
         )
 @javax.jdo.annotations.Version(
 //        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
-//@javax.jdo.annotations.Queries({
-//        @javax.jdo.annotations.Query(
-//                name = "find", language = "JDOQL",
-//                value = "SELECT "
-//                        + "FROM domainapp.dom.jugador.Jugador "),
-//        @javax.jdo.annotations.Query(
-//                name = "buscarPorDocumento", language = "JDOQL",
-//                value = "SELECT "
-//                        + "FROM domainapp.dom.jugador.Jugador "
-//                        + "WHERE documento.indexOf(:documento) >= 0 ")
-//})
-//@javax.jdo.annotations.Unique(name="Jugador_documento_UNQ", members = {"documento"})
+
 @DomainObject
 @DomainObjectLayout
 
