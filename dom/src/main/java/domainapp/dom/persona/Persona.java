@@ -67,7 +67,7 @@ public abstract class Persona {
 
 	//DOCUMENTO
 	@MemberOrder(sequence = "5")
-    @Column(allowsNull="false")
+    @Column(allowsNull="false", length=8)
     @Property(domainEvent = NameDomainEvent.class)
 	private String documento;
 	public String getDocumento() {return documento;}
@@ -144,7 +144,7 @@ public abstract class Persona {
 	
 	//TELEFONO FIJO
 	@MemberOrder(sequence = "9")
-    @Column(allowsNull="false", length = NAME_LENGTH)
+    @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class, editing=Editing.ENABLED)
     private String telefono;
     public String getTelefono() {return telefono;}
@@ -152,7 +152,7 @@ public abstract class Persona {
 
 	//CELULAR
 	@MemberOrder(sequence = "10")
-    @Column(allowsNull="false", length = NAME_LENGTH)
+    @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class, editing=Editing.ENABLED)
     private String celular;
     public String getCelular() {return celular;}
