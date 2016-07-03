@@ -52,6 +52,29 @@ public class Clubes {
     }
     //endregion
     
+  //region > findByName (action)
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-search",
+            bookmarking = BookmarkPolicy.AS_ROOT
+            
+            
+    )
+    @MemberOrder(sequence = "2")
+    public List<Club> buscarPorNombre(
+            @ParameterLayout(named="nombre")
+            final String nombre
+    ) {
+    	return repositoryService.allMatches(
+                new QueryDefault<Club>(
+                        Club.class,
+                        "buscarPorNombre",
+                        "nombre", nombre));
+    }
+    //endregion
+    
     //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Clubes> {
         public CreateDomainEvent(final Clubes source, final Identifier identifier, final Object... arguments) {

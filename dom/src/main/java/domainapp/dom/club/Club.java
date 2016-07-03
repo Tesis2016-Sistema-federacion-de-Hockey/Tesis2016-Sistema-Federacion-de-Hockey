@@ -39,10 +39,10 @@ import domainapp.dom.domicilio.Domicilio;
                 value = "SELECT "
                         + "FROM domainapp.dom.club.Club "),
         @javax.jdo.annotations.Query(
-                name = "buscarPorIdInterno", language = "JDOQL",
+                name = "buscarPorNombre", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.club.Club "
-                        + "WHERE idInterno.indexOf(:idInterno) >= 0 ")
+                        + "WHERE nombre.indexOf(:nombre) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="Club_idInterno_UNQ", members = {"idInterno"})
 @DomainObject
