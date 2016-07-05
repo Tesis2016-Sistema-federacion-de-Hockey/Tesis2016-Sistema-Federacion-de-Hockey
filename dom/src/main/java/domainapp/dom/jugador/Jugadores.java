@@ -39,6 +39,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 import com.google.common.base.Predicate;
 
+import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
@@ -150,11 +151,20 @@ public class Jugadores extends AbstractFactoryAndRepository{
             final @ParameterLayout(named="Fecha de Nacimiento") LocalDate fechaNacimiento,
             final @ParameterLayout(named="Estado") Estado estado,
             final @ParameterLayout(named="Email") String email,
+            final @ParameterLayout(named="Calle") String calle,
+            final @ParameterLayout(named="Numero") int numero,
+            final @ParameterLayout(named="Piso") int piso,
+            final @ParameterLayout(named="Departamento") String departamento,
             final @ParameterLayout(named="Telefono") String telefono,
             final @ParameterLayout(named="Celular") String celular
             
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
+        final Domicilio domicilio=new Domicilio();
+        domicilio.setCalle(calle);
+        domicilio.setNumero(numero);
+        domicilio.setPiso(piso);
+        domicilio.setDepartamento(departamento);
         obj.setSector(sector);
         obj.setFicha(ficha);
         obj.setNombre(nombre);
@@ -166,7 +176,7 @@ public class Jugadores extends AbstractFactoryAndRepository{
         obj.setEmail(email);
         obj.setTelefono(telefono);
         obj.setCelular(celular);
-        
+        obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
         return obj;
     }

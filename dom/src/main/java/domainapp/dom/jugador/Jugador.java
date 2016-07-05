@@ -32,6 +32,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
 
@@ -117,7 +118,17 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public int getNumeroCamiseta() {return numeroCamiseta;}
 	public void setNumeroCamiseta(int numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
 	
-	
+	//DOMICILIO
+	@MemberOrder(sequence = "13")
+	@Property(editing = Editing.ENABLED)	
+	@Column(name="DOMICILIO_ID")	
+	private Domicilio domicilio;	
+	public Domicilio getDomicilio() {
+		return domicilio;
+	}
+	public void setDomicilio(Domicilio domicilio) {
+		this.domicilio = domicilio;
+	}
 	
 	
 	
