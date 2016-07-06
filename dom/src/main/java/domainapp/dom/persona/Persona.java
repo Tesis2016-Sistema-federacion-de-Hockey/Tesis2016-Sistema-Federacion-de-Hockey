@@ -83,7 +83,7 @@ public abstract class Persona {
 	
 	//FECHA DE NACIMIENTO
 	@MemberOrder(sequence = "6")
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private LocalDate fechaNacimiento;
 	public LocalDate getFechaNacimiento() {return fechaNacimiento;}
 	public void setFechaNacimiento(final LocalDate fechaNacimiento) {
@@ -136,7 +136,7 @@ public abstract class Persona {
 
 	//EMAIL
 	@MemberOrder(sequence = "8")
-    @Column(allowsNull="false", length = NAME_LENGTH)
+    @Column(allowsNull="true", length = NAME_LENGTH)
     @Property(domainEvent = NameDomainEvent.class)
     private String email;
     public String getEmail() {return email;}
@@ -152,7 +152,7 @@ public abstract class Persona {
 
 	//CELULAR
 	@MemberOrder(sequence = "10")
-    @Column(allowsNull="false")
+    @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class, editing=Editing.ENABLED)
     private String celular;
     public String getCelular() {return celular;}
@@ -160,7 +160,7 @@ public abstract class Persona {
 	
 	//VISIBLE
 	@MemberOrder(sequence = "11")
-    @Column(allowsNull="false")
+    @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class, editing=Editing.DISABLED)
     private Boolean visible;
 	public Boolean getVisible() {return visible;}

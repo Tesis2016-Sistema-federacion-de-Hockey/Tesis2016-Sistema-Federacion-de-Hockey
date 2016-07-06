@@ -181,16 +181,6 @@ public class Jugadores extends AbstractFactoryAndRepository{
         return obj;
     }
 
-    
-    
-    
-    
-    //endregion
-
-    //region > injected services
-
     @javax.inject.Inject
     RepositoryService repositoryService;
-
-    //endregion
 }

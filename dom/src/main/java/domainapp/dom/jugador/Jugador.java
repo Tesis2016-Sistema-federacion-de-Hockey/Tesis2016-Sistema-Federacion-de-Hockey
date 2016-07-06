@@ -33,6 +33,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.estado.Estado;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
 
@@ -85,7 +86,15 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 				"Jugador: " + this.getApellido() + ", " + this.getNombre());
 	}
     
-    public String iconName(){return "jugador";}
+    //public String iconName(){return "jugador";}
+    
+    public String iconName(){
+    	return (getSector()==Sector.DAMAS)? "dama":"caballero";
+    }
+    
+    public String cssClass(){
+    	return (getEstado()==Estado.ACTIVO)? "activo":"inactivo";
+    }
     
     public static class NameDomainEvent extends PropertyDomainEvent<Jugador,String> {
 
@@ -134,6 +143,13 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
 
 //	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
     
@@ -147,9 +163,10 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 
     
 
+	@SuppressWarnings("deprecation")
 	@Override
     public int compareTo(final Jugador other) {
-        return ObjectContracts.compare(this, other, "documento");
+        return ObjectContracts.compare(this, other, getDocumento());
     }
 
     @javax.inject.Inject
