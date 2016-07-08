@@ -32,6 +32,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.persona.Persona;
@@ -139,7 +140,17 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		this.domicilio = domicilio;
 	}
 	
-	
+	//CLUB
+	@MemberOrder(sequence = "14")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "true")
+	private Club club;	
+	public Club getClub() {
+		return club;
+	}
+	public void setClub(Club club) {
+		this.club = club;
+	}
 	
 	
 	
@@ -163,6 +174,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 
     
 
+	
 	@SuppressWarnings("deprecation")
 	@Override
     public int compareTo(final Jugador other) {

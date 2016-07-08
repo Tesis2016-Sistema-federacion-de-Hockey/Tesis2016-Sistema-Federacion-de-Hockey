@@ -1,7 +1,15 @@
 package domainapp.dom.club;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.inject.Named;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
@@ -13,11 +21,13 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
+import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.jugador.Jugador;
 
 
 
@@ -143,11 +153,40 @@ public class Club implements Comparable<Club> {
 	public void setDomicilio(Domicilio domicilio) {
 		this.domicilio = domicilio;
 	}
+	
+	
+	
+	@Persistent(mappedBy="club", dependentElement="true")
+	@org.apache.isis.applib.annotation.Collection()
+    private SortedSet<Jugador> jugadores=new TreeSet<Jugador>();	
+	@Column(allowsNull = "true")
+	public SortedSet<Jugador> getJugadores() {
+		return jugadores;
+	}
+	public void setJugadores(SortedSet<Jugador> jugadores) {
+		this.jugadores = jugadores;
+	}
+	
+	@MemberOrder(sequence = "7")
+	public void addToJugadores(Jugador e) {
+
+		if(e == null || jugadores.contains(e)) return;
+	    e.setClub(this);
+	    jugadores.add(e);
+	}
+	public void removeFromJugadores(Jugador e) {
+	    if(e == null || !jugadores.contains(e)) return;
+	    e.setClub(null);
+	    jugadores.remove(e);
+	}
 
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "idInterno");
     }
-
+	
+//	@javax.inject.Inject
+//	FactoryService factoryService;
+	
     @javax.inject.Inject
     RepositoryService repositoryService;
     
