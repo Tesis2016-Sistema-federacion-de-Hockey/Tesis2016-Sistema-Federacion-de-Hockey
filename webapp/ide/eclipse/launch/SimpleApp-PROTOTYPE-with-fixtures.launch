@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/isis-core-webserver/src/main/java/org/apache/isis/WebServer.java"/>
+<listEntry value="/SIFHON-webapp"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
+<listEntry value="4"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.preferred_launchers">
 <mapEntry key="[debug]" value="org.eclipse.jdt.launching.localJavaApplication"/>
@@ -15,6 +15,6 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.apache.isis.WebServer"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--type SERVER_PROTOTYPE --port 8080 --manifest domainapp.app.DomainAppAppManifestWithFixtures"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Tesis2016-Sistema-federacion-de-Hockey-webapp"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SIFHON-webapp"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
