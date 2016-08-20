@@ -121,8 +121,6 @@ public class Localidad implements Comparable<Localidad> {
     @javax.inject.Inject
     RepositoryService repositoryService;
     
-    @javax.inject.Inject
-    Localidades localidades;
 	
 
 }
