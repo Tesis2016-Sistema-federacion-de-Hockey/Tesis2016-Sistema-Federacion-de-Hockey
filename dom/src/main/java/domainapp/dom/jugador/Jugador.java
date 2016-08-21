@@ -21,6 +21,7 @@ package domainapp.dom.jugador;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
+
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -30,6 +31,7 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+
 import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
@@ -82,8 +84,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 				"Jugador: " + this.getApellido() + ", " + this.getNombre());
 	}
     
-    //public String iconName(){return "jugador";}
-    
     public String iconName(){
     	return (getSector()==Sector.DAMAS)? "dama":"caballero";
     }
@@ -100,15 +100,15 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		private static final long serialVersionUID = 1L;}
     
 	//SECTOR
-    @MemberOrder(sequence = "0")
+    @MemberOrder(sequence = "1")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private Sector sector;
 	public Sector getSector() {return sector;}
 	public void setSector(final Sector sector) {this.sector = sector;}
 
 	//FICHA
-    @MemberOrder(sequence = "1")
+    @MemberOrder(sequence = "2")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String ficha;
@@ -118,43 +118,26 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	//NUMERO DE CAMISETA
     @MemberOrder(sequence = "12")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
-	private int numeroCamiseta;
-	public int getNumeroCamiseta() {return numeroCamiseta;}
-	public void setNumeroCamiseta(int numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
+	@Column(allowsNull = "true")
+	private String numeroCamiseta;
+	public String getNumeroCamiseta() {return numeroCamiseta;}
+	public void setNumeroCamiseta(String numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
 	
 	//DOMICILIO
 	@MemberOrder(sequence = "13")
 	@Property(editing = Editing.ENABLED)	
 	@Column(name="DOMICILIO_ID")	
 	private Domicilio domicilio;	
-	public Domicilio getDomicilio() {
-		return domicilio;
-	}
-	public void setDomicilio(Domicilio domicilio) {
-		this.domicilio = domicilio;
-	}
+	public Domicilio getDomicilio() {return domicilio;}
+	public void setDomicilio(Domicilio domicilio) {this.domicilio = domicilio;}
 	
 	//CLUB
 	@MemberOrder(sequence = "14")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private Club club;	
-	public Club getClub() {
-		return club;
-	}
-	public void setClub(Club club) {
-		this.club = club;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public Club getClub() {return club;}
+	public void setClub(Club club) {this.club = club;}
 	
 
 //	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
@@ -166,19 +149,19 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 //    public void delete() {
 //        repositoryService.remove(this);
 //    }
-
-    
-
+   
 	
-	@SuppressWarnings("deprecation")
-	@Override
-    public int compareTo(final Jugador other) {
-        return ObjectContracts.compare(this, other, getDocumento());
-    }
 
     @javax.inject.Inject
     RepositoryService repositoryService;
     
     @javax.inject.Inject
     Jugadores jugadores;
+
+
+	@Override
+	public int compareTo(Jugador o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

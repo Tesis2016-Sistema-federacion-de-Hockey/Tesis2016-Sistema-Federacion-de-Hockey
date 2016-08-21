@@ -31,6 +31,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -105,24 +107,23 @@ public class Jugadores{
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "3")
+    @MemberOrder(sequence = "4")
     public Jugador crear(
-            final @ParameterLayout(named="Sector") Sector sector,
+            final @ParameterLayout(named="Sector") @Parameter(optionality=Optionality.OPTIONAL) Sector sector,
             final @ParameterLayout(named="Ficha") String ficha,
             final @ParameterLayout(named="Nombre") String nombre,
             final @ParameterLayout(named="Apellido") String apellido,
-            final @ParameterLayout(named="Tipo de Documento") TipoDocumento tipoDocumento,
-            final @ParameterLayout(named="Documento") String documento,
-            final @ParameterLayout(named="Fecha de Nacimiento") LocalDate fechaNacimiento,
-            final @ParameterLayout(named="Estado") Estado estado,
-            final @ParameterLayout(named="Email") String email,
+            final @ParameterLayout(named="Tipo de Documento") @Parameter(optionality=Optionality.OPTIONAL) TipoDocumento tipoDocumento,
+            final @ParameterLayout(named="Documento") @Parameter(optionality=Optionality.OPTIONAL) String documento,
+            final @ParameterLayout(named="Fecha de Nacimiento") @Parameter(optionality=Optionality.OPTIONAL) LocalDate fechaNacimiento,
+            final @ParameterLayout(named="Estado") @Parameter(optionality=Optionality.OPTIONAL) Estado estado,
+            final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
             final @ParameterLayout(named="Calle") String calle,
             final @ParameterLayout(named="Numero") String numero,
-            final @ParameterLayout(named="Piso") String piso,
-            final @ParameterLayout(named="Departamento") String departamento,
-            final @ParameterLayout(named="Telefono") String telefono,
-            final @ParameterLayout(named="Celular") String celular
-            
+            final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
+            final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
+            final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
+            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         final Domicilio domicilio=new Domicilio();

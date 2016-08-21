@@ -32,14 +32,6 @@ public abstract class Persona {
     private String nombre;
     public String getNombre() {return nombre;}
     public void setNombre(final String nombre) {this.nombre = nombre;}
-    //VALIDA NOMBRE
-	public String validateNombre(String nom) {
-		if (nom.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
-		}
-	}
     
 	//APELLIDO
 	@MemberOrder(sequence = "3")
@@ -48,18 +40,10 @@ public abstract class Persona {
     private String apellido;
     public String getApellido() {return apellido;}
 	public void setApellido(String apellido) {this.apellido = apellido;}
-	//VALIDA APELLIDO
-	public String validateApellido(String ape) {
-		if (ape.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
-		}
-	}	
 	
 	//TIPO DE DOCUMENTO
 	@MemberOrder(sequence = "4")
-    @Column(allowsNull="false")
+    @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class)
 	private TipoDocumento tipoDocumento;
 	public TipoDocumento getTipoDocumento() {return tipoDocumento;}
@@ -67,68 +51,22 @@ public abstract class Persona {
 
 	//DOCUMENTO
 	@MemberOrder(sequence = "5")
-    @Column(allowsNull="false", length=8)
+    @Column(allowsNull="true", length=8)
     @Property(domainEvent = NameDomainEvent.class)
 	private String documento;
 	public String getDocumento() {return documento;}
 	public void setDocumento(String documento) {this.documento = documento;}
-	//VALIDA DOCUMENTO
-	public String validateDocumento(String doc) {
-		if (doc.matches("[0-9]+") == false) {
-			return "Datos erroneos, ingrese el número sin puntos ni espacios.";
-		} else {
-			return null;
-		}
-	}
 	
 	//FECHA DE NACIMIENTO
 	@MemberOrder(sequence = "6")
 	@Column(allowsNull = "true")
 	private LocalDate fechaNacimiento;
 	public LocalDate getFechaNacimiento() {return fechaNacimiento;}
-	public void setFechaNacimiento(final LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;}
+	public void setFechaNacimiento(final LocalDate fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
 
-	final LocalDate fecha_actual = LocalDate.now();
-	//VALIDA FECHA DE NACIMIENTO
-	public String validateFechaNacimiento(final LocalDate fechaNacimiento) {
-
-		if (fechaNacimiento.isAfter(fecha_actual))
-			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
-		if (validaMayorEdad(fechaNacimiento) == false)
-			return "La persona es menor de edad";
-		if (validaMayorCien(fechaNacimiento) == false)
-			return "La persona no puede ser mayor a 100 años";
-		return "";
-	}
-	@ActionLayout(hidden = Where.EVERYWHERE)
-	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
-
-		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
-			return true;
-		}
-		return false;
-	}
-
-	@ActionLayout(hidden = Where.EVERYWHERE)
-	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
-
-		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36500) {
-			return true;
-		}
-		return false;
-	}
-
-	@ActionLayout(hidden = Where.EVERYWHERE)
-	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
-
-		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
-		return meses.getDays();
-	}
-	
 	//ESTADO
 	@MemberOrder(sequence = "7")
-    @Column(allowsNull="false")
+    @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class)
 	private Estado estado;
 	public Estado getEstado() {return estado;}
@@ -165,8 +103,4 @@ public abstract class Persona {
     private Boolean visible;
 	public Boolean getVisible() {return visible;}
 	public void setVisible(Boolean visible) {this.visible = visible;}
-	
-	
-	
-
 }
