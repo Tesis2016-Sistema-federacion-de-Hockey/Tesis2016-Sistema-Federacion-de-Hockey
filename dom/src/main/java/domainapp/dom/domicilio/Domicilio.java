@@ -3,21 +3,11 @@ package domainapp.dom.domicilio;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
-
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
-import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.apache.isis.applib.services.repository.RepositoryService;
-import org.apache.isis.applib.util.ObjectContracts;
-
-import domainapp.dom.jugador.Jugador.NameDomainEvent;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -34,50 +24,37 @@ import domainapp.dom.jugador.Jugador.NameDomainEvent;
 
 @DomainObject
 @DomainObjectLayout
-
 public class Domicilio {
 	
-	public String iconName() {
-		return "direccion";
-	}
+	public String iconName() {return "domicilio";}
 
-	public String title() {
-		return getCalle();
-	}
+	public String title() {return getCalle()+" "+getNumero();}
 	
-	@MemberOrder(sequence = "0")
+	@MemberOrder(sequence = "1")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String calle;
 	public String getCalle() {return calle;}
 	public void setCalle(String calle) {this.calle = calle;}
 	
-	@MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
-	private int numero;
-	public int getNumero() {return numero;}
-	public void setNumero(int numero) {this.numero = numero;}
-	
 	@MemberOrder(sequence = "2")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
-	private int piso;
-	public int getPiso() {return piso;}
-	public void setPiso(int piso) {this.piso = piso;}
+	private String numero;
+	public String getNumero() {return numero;}
+	public void setNumero(String numero) {this.numero = numero;}
 	
 	@MemberOrder(sequence = "3")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
+	private String piso;
+	public String getPiso() {return piso;}
+	public void setPiso(String piso) {this.piso = piso;}
+	
+	@MemberOrder(sequence = "4")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "true")
 	private String departamento;
 	public String getDepartamento() {return departamento;}
 	public void setDepartamento(String departamento) {this.departamento = departamento;}
-	
-	
-	
-	
-		
-	
-	
-
 }

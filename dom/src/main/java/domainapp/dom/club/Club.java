@@ -34,7 +34,7 @@ import domainapp.dom.jugador.Jugador;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "club"
+        table = "Club"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -54,7 +54,7 @@ import domainapp.dom.jugador.Jugador;
                         + "FROM domainapp.dom.club.Club "
                         + "WHERE nombre.indexOf(:nombre) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="Club_idInterno_UNQ", members = {"idInterno"})
+@javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"nombre"})
 @DomainObject
 @DomainObjectLayout
 public class Club implements Comparable<Club> {
@@ -71,47 +71,31 @@ public class Club implements Comparable<Club> {
     public static class NameDomainEvent extends PropertyDomainEvent<Club,String> {}
     
     //NOMBRE
-    @MemberOrder(sequence = "0")
+    @MemberOrder(sequence = "1")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
 	public void setNombre(final String nombre) {this.nombre = nombre;}
-	//VALIDA NOMBRE
-	public String validateNombre(String nom) {
-		if (nom.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
-		}
-	}
-		
+			
 	//NOMBRE INSTITUCIONAL
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "2")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private String nombreInstitucional;
 	public String getNombreInstitucional() {return nombreInstitucional;}
 	public void setNombreInstitucional(final String nombreInstitucional) {this.nombreInstitucional = nombreInstitucional;}
-	//VALIDA NOMBRE
-	public String validateNombreInstitucional(String nom) {
-		if (nom.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
-		}
-	}
 	
 	//ANIO AFILIACION
-	@MemberOrder(sequence = "2")
+	@MemberOrder(sequence = "3")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
-	private int anioAfiliacion;
-	public int getAnioAfiliacion() {return anioAfiliacion;}
-	public void setAnioAfiliacion(final int anioAfiliacion) {this.anioAfiliacion = anioAfiliacion;}
+	@Column(allowsNull = "true")
+	private String anioAfiliacion;
+	public String getAnioAfiliacion() {return anioAfiliacion;}
+	public void setAnioAfiliacion(final String anioAfiliacion) {this.anioAfiliacion = anioAfiliacion;}
 	
 	//ID INTERNO
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "4")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String idInterno;
@@ -119,78 +103,70 @@ public class Club implements Comparable<Club> {
 	public void setIdInterno(String idInterno) {this.idInterno = idInterno;}
 	
 	//PERSONERIA JURIDICA
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "5")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private String personeriaJuridica;
 	public String getPersoneriaJuridica(){return personeriaJuridica;}
 	public void setPersoneriaJuridica(String personeriaJuridica) {this.personeriaJuridica = personeriaJuridica;}
 	
 	//EMAIL
-	@MemberOrder(sequence = "4")
+	@MemberOrder(sequence = "5")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private String email;
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}
 	
 	//TELEFONO
-	@MemberOrder(sequence = "5")
+	@MemberOrder(sequence = "6")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private String telefono;
 	public String getTelefono() {return telefono;}
 	public void setTelefono(String telefono) {this.telefono = telefono;}
 	
 	//DOMICILIO
-	@MemberOrder(sequence = "6")
+	@MemberOrder(sequence = "7")
 	@Property(editing = Editing.ENABLED)	
 	@Column(name="DOMICILIO_ID")	
 	private Domicilio domicilio;	
-	public Domicilio getDomicilio() {
-		return domicilio;
-	}
-	public void setDomicilio(Domicilio domicilio) {
-		this.domicilio = domicilio;
-	}
+	public Domicilio getDomicilio() {return domicilio;}
+	public void setDomicilio(Domicilio domicilio) {this.domicilio = domicilio;}
 	
 	
 	
-	@Persistent(mappedBy="club", dependentElement="true")
-	@org.apache.isis.applib.annotation.Collection()
-    private SortedSet<Jugador> jugadores=new TreeSet<Jugador>();	
-	@Column(allowsNull = "true")
-	public SortedSet<Jugador> getJugadores() {
-		return jugadores;
-	}
-	public void setJugadores(SortedSet<Jugador> jugadores) {
-		this.jugadores = jugadores;
-	}
 	
-	@MemberOrder(sequence = "7")
-	public void addToJugadores(Jugador e) {
+//	//LISTADO DE JUGADORES DEL CLUB
+//	
+//	@Persistent(mappedBy="club", dependentElement="true")
+//	@org.apache.isis.applib.annotation.Collection()
+//    private SortedSet<Jugador> jugadores=new TreeSet<Jugador>();	
+//	@Column(allowsNull = "true")
+//	public SortedSet<Jugador> getJugadores() {return jugadores;}
+//	public void setJugadores(SortedSet<Jugador> jugadores) {this.jugadores = jugadores;}
+//	
+//	@MemberOrder(sequence = "8")
+//	public void addToJugadores(Jugador e) {
+//
+//		if(e == null || jugadores.contains(e)) return;
+//	    e.setClub(this);
+//	    jugadores.add(e);
+//	}
+//	public void removeFromJugadores(Jugador e) {
+//	    if(e == null || !jugadores.contains(e)) return;
+//	    e.setClub(null);
+//	    jugadores.remove(e);
+//	}
 
-		if(e == null || jugadores.contains(e)) return;
-	    e.setClub(this);
-	    jugadores.add(e);
-	}
-	public void removeFromJugadores(Jugador e) {
-	    if(e == null || !jugadores.contains(e)) return;
-	    e.setClub(null);
-	    jugadores.remove(e);
-	}
-
+	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
-        return ObjectContracts.compare(this, other, "idInterno");
+        return ObjectContracts.compare(this, other, "nombre");
     }
-	
-//	@javax.inject.Inject
-//	FactoryService factoryService;
 	
     @javax.inject.Inject
     RepositoryService repositoryService;
     
     @javax.inject.Inject
     Club clubes;
-	
 }

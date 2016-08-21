@@ -50,17 +50,12 @@ import domainapp.dom.tipodocumento.TipoDocumento;
         repositoryFor = Jugador.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "2"
 )
-public class Jugadores extends AbstractFactoryAndRepository{
+public class Jugadores{
 
-    //region > title
-    public TranslatableString title() {
-        return TranslatableString.tr("Jugadores");
-    }
-    //endregion
+    public TranslatableString title() {return TranslatableString.tr("Jugadores");}
 
-    //region > listAll (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -73,9 +68,9 @@ public class Jugadores extends AbstractFactoryAndRepository{
         return repositoryService.allInstances(Jugador.class);
     }
     
-    @MemberOrder(sequence = "1.1")
+    @MemberOrder(sequence = "2")
 	public List<Jugador> listarJugadoresActivos() {
-		return allMatches(Jugador.class, new Predicate<Jugador>() {
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
 
 			@Override
 			public boolean apply(Jugador input) {
@@ -85,9 +80,9 @@ public class Jugadores extends AbstractFactoryAndRepository{
 		});
 	}
     
-    @MemberOrder(sequence = "1.2")
+    @MemberOrder(sequence = "3")
 	public List<Jugador> listarJugadoresInactivos() {
-		return allMatches(Jugador.class, new Predicate<Jugador>() {
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
 
 			@Override
 			public boolean apply(Jugador input) {
@@ -98,36 +93,6 @@ public class Jugadores extends AbstractFactoryAndRepository{
 	}
     
     
-    
-    
-    
-    
-    //endregion
-
-    //region > findByName (action)
-//    @Action(
-//            semantics = SemanticsOf.SAFE
-//    )
-//    @ActionLayout(
-//    		cssClassFa="fa fa-search",
-//            bookmarking = BookmarkPolicy.AS_ROOT
-//            
-//            
-//    )
-//    @MemberOrder(sequence = "2")
-//    public List<Jugador> buscarPorDocumento(
-//            @ParameterLayout(named="Documento")
-//            final String documento
-//    ) {
-//    	return repositoryService.allMatches(
-//                new QueryDefault<Jugador>(
-//                        Jugador.class,
-//                        "buscarPorDocumento",
-//                        "documento", documento));
-//    }
-    //endregion
-
-    //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Jugadores> {
         public CreateDomainEvent(final Jugadores source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
@@ -152,8 +117,8 @@ public class Jugadores extends AbstractFactoryAndRepository{
             final @ParameterLayout(named="Estado") Estado estado,
             final @ParameterLayout(named="Email") String email,
             final @ParameterLayout(named="Calle") String calle,
-            final @ParameterLayout(named="Numero") int numero,
-            final @ParameterLayout(named="Piso") int piso,
+            final @ParameterLayout(named="Numero") String numero,
+            final @ParameterLayout(named="Piso") String piso,
             final @ParameterLayout(named="Departamento") String departamento,
             final @ParameterLayout(named="Telefono") String telefono,
             final @ParameterLayout(named="Celular") String celular

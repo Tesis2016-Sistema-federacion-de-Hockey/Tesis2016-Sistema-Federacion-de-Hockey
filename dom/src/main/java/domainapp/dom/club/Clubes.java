@@ -12,6 +12,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
@@ -29,16 +31,13 @@ import domainapp.dom.jugador.Jugador;
         repositoryFor = Club.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "1"
 )
 public class Clubes {
-	//region > title
     public TranslatableString title() {
         return TranslatableString.tr("Clubes");
     }
-    //endregion
     
-  //region > listAll (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -50,17 +49,13 @@ public class Clubes {
     public List<Club> listarTodosLosClubes() {
         return repositoryService.allInstances(Club.class);
     }
-    //endregion
     
-  //region > findByName (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
     		cssClassFa="fa fa-search",
             bookmarking = BookmarkPolicy.AS_ROOT
-            
-            
     )
     @MemberOrder(sequence = "2")
     public List<Club> buscarPorNombre(
@@ -73,9 +68,6 @@ public class Clubes {
                         "buscarPorNombre",
                         "nombre", nombre));
     }
-    //endregion
-    
-    //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Clubes> {
         public CreateDomainEvent(final Clubes source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
@@ -90,17 +82,17 @@ public class Clubes {
     )
     @MemberOrder(sequence = "3")
     public Club crear(
-            final @ParameterLayout(named="Nombre") String nombre,
-            final @ParameterLayout(named="Nombre institucional") String nombreInstitucional,
-            final @ParameterLayout(named="Anio de afiliacion") int anioAfiliacion,
+    		final @ParameterLayout(named="Nombre") String nombre,
+            final @ParameterLayout(named="Nombre institucional") @Parameter(optionality=Optionality.OPTIONAL) String nombreInstitucional,
+            final @ParameterLayout(named="Anio de afiliacion") @Parameter(optionality=Optionality.OPTIONAL) String anioAfiliacion,
             final @ParameterLayout(named="Id Interno") String idInterno,
-            final @ParameterLayout(named="Personeria Juridica") String personeriaJuridica,
-            final @ParameterLayout(named="Email") String email,
-            final @ParameterLayout(named="Telefono") String telefono,
+            final @ParameterLayout(named="Personeria Juridica") @Parameter(optionality=Optionality.OPTIONAL) String personeriaJuridica,
+            final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
+            final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
             final @ParameterLayout(named="Calle") String calle,
-            final @ParameterLayout(named="Numero") int numero,
-            final @ParameterLayout(named="Piso") int piso,
-            final @ParameterLayout(named="Departamento") String departamento            
+            final @ParameterLayout(named="Numero") String numero,
+            final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
+            final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento            
     		){
         final Club obj = repositoryService.instantiate(Club.class);
         final Domicilio domicilio=new Domicilio();
@@ -120,12 +112,6 @@ public class Clubes {
         return obj;
     }
 
-    //endregion
-
-    //region > injected services
-
     @javax.inject.Inject
     RepositoryService repositoryService;
-
-    //endregion
 }

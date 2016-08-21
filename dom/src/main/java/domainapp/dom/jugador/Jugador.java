@@ -21,7 +21,6 @@ package domainapp.dom.jugador;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
-
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -31,15 +30,11 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
-
 import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
-
-
-
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -75,8 +70,8 @@ import domainapp.dom.sector.Sector;
                         + "WHERE estado=='Inactivo'")
         		
 })
-@javax.jdo.annotations.Unique(name="Jugador_documento_UNQ", members = {"documento"})
-@DomainObject(bounded=true)
+@javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
+@DomainObject
 @DomainObjectLayout
 public class Jugador extends Persona implements Comparable<Jugador> {
 

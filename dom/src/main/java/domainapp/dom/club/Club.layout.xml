@@ -32,6 +32,7 @@
                         <bs3:col span="12">
                             <c:fieldSet name="Nombre">
                                 <!--  <c:action id="delete"/> -->
+                                <c:property id="nombre" namedEscaped="true"/>
                                 <c:property id="nombreInstitucional" namedEscaped="true"/>
                                 <c:property id="anioAfiliacion" namedEscaped="true"/>
                                 <c:property id="idInterno" namedEscaped="true"/>
