@@ -35,12 +35,16 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
+import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import com.google.common.base.Predicate;
 
+import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.sector.Sector;
@@ -96,7 +100,12 @@ public class Jugadores{
     
     
     public static class CreateDomainEvent extends ActionDomainEvent<Jugadores> {
-        public CreateDomainEvent(final Jugadores source, final Identifier identifier, final Object... arguments) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public CreateDomainEvent(final Jugadores source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
@@ -108,22 +117,23 @@ public class Jugadores{
     		cssClassFa="fa fa-plus-square"
     )
     @MemberOrder(sequence = "4")
-    public Jugador crear(
+    public Jugador crearJugador(
             final @ParameterLayout(named="Sector") @Parameter(optionality=Optionality.OPTIONAL) Sector sector,
             final @ParameterLayout(named="Ficha") String ficha,
             final @ParameterLayout(named="Nombre") String nombre,
             final @ParameterLayout(named="Apellido") String apellido,
-            final @ParameterLayout(named="Tipo de Documento") @Parameter(optionality=Optionality.OPTIONAL) TipoDocumento tipoDocumento,
+            final @ParameterLayout(named="Tipo de Documento") @Parameter(optionality=Optionality.OPTIONAL) TipoDocumento tipo,
             final @ParameterLayout(named="Documento") @Parameter(optionality=Optionality.OPTIONAL) String documento,
             final @ParameterLayout(named="Fecha de Nacimiento") @Parameter(optionality=Optionality.OPTIONAL) LocalDate fechaNacimiento,
             final @ParameterLayout(named="Estado") @Parameter(optionality=Optionality.OPTIONAL) Estado estado,
             final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
-            final @ParameterLayout(named="Calle") String calle,
-            final @ParameterLayout(named="Numero") String numero,
+            final @ParameterLayout(named="Calle") @Parameter(optionality=Optionality.OPTIONAL) String calle,
+            final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,
             final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
             final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
-            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular
+            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular,
+            final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         final Domicilio domicilio=new Domicilio();
@@ -135,7 +145,7 @@ public class Jugadores{
         obj.setFicha(ficha);
         obj.setNombre(nombre);
         obj.setApellido(apellido);
-        obj.setTipoDocumento(tipoDocumento);
+        obj.setTipo(tipo);
         obj.setDocumento(documento);
         obj.setFechaNacimiento(fechaNacimiento);
         obj.setEstado(estado);
@@ -144,8 +154,18 @@ public class Jugadores{
         obj.setCelular(celular);
         obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
+        obj.setClub(club);
         return obj;
     }
+    
+    
+    
+    @ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Jugador> buscarJugador(String jugador) {
+		return repositoryService.allMatches(QueryDefault
+				.create(Jugador.class, "traerTodos"));
+	}
+    
 
     @javax.inject.Inject
     RepositoryService repositoryService;

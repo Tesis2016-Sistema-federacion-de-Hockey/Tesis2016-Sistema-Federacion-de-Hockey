@@ -20,13 +20,18 @@ package domainapp.dom.jugador;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -45,14 +50,14 @@ import domainapp.dom.sector.Sector;
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
-         column="idJugador")
+         column="jugador_id")
 @javax.jdo.annotations.Version(
 //        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "find", language = "JDOQL",
+                name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "),               
         @javax.jdo.annotations.Query(
@@ -73,7 +78,7 @@ import domainapp.dom.sector.Sector;
         		
 })
 @javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
-@DomainObject
+@DomainObject(autoCompleteRepository = Jugadores.class, autoCompleteAction = "buscarJugador")
 @DomainObjectLayout
 public class Jugador extends Persona implements Comparable<Jugador> {
 
@@ -126,29 +131,53 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	//DOMICILIO
 	@MemberOrder(sequence = "13")
 	@Property(editing = Editing.ENABLED)	
-	@Column(name="DOMICILIO_ID")	
+	@Column(name="domicilio_id")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}
 	public void setDomicilio(Domicilio domicilio) {this.domicilio = domicilio;}
 	
 	//CLUB
+	private Club club;
 	@MemberOrder(sequence = "14")
-	@Property(editing = Editing.ENABLED)
+//	@Persistent(table = "lista_jugadores", mappedBy="listaJugadores")
+//	@Join(column = "club_id")
 	@Column(allowsNull = "true")
-	private Club club;	
+//	@Property(editing = Editing.ENABLED)
 	public Club getClub() {return club;}
-	public void setClub(Club club) {this.club = club;}
+	public void setClub(final Club club) {this.club = club;}
+	
+//	@MemberOrder(sequence = "14")
+//	public void modifyClub(Club p) {
+//        if(p==null || club==p) return;
+//        if(club != null) {
+//        	club.quitarJugador(this);
+//        }
+//        p.agregarJugador(this);
+//    }
+//   public void clearClub() {
+//        if(club==null) return;
+//        club.quitarJugador(this);
+//    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
-//	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
+	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
     
-//	@Action(
-//            domainEvent = DeleteDomainEvent.class,
-//            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-//    )
-//    public void delete() {
-//        repositoryService.remove(this);
-//    }
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+    public void delete() {
+        repositoryService.remove(this);
+    }
    
 	
 
@@ -159,9 +188,10 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     Jugadores jugadores;
 
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public int compareTo(Jugador o) {
+	public int compareTo(final Jugador o) {
 		// TODO Auto-generated method stub
-		return 0;
+		return org.apache.isis.applib.util.ObjectContracts.compare(this, o, "club", "nombre");
 	}
 }

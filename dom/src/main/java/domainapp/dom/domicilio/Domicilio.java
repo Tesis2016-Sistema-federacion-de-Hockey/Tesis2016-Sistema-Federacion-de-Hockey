@@ -32,14 +32,14 @@ public class Domicilio {
 	
 	@MemberOrder(sequence = "1")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private String calle;
 	public String getCalle() {return calle;}
 	public void setCalle(String calle) {this.calle = calle;}
 	
 	@MemberOrder(sequence = "2")
 	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "false")
+	@Column(allowsNull = "true")
 	private String numero;
 	public String getNumero() {return numero;}
 	public void setNumero(String numero) {this.numero = numero;}

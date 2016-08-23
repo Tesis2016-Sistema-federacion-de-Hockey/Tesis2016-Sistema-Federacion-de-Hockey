@@ -1,7 +1,5 @@
 package domainapp.dom.club;
 
-import org.joda.time.LocalDate;
-
 import java.util.List;
 
 import org.apache.isis.applib.Identifier;
@@ -16,15 +14,13 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.domicilio.Domicilio;
-import domainapp.dom.jugador.Jugador;
-
-
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -81,7 +77,7 @@ public class Clubes {
     		cssClassFa="fa fa-plus-square"
     )
     @MemberOrder(sequence = "3")
-    public Club crear(
+    public Club crearClub(
     		final @ParameterLayout(named="Nombre") String nombre,
             final @ParameterLayout(named="Nombre institucional") @Parameter(optionality=Optionality.OPTIONAL) String nombreInstitucional,
             final @ParameterLayout(named="Anio de afiliacion") @Parameter(optionality=Optionality.OPTIONAL) String anioAfiliacion,
@@ -89,8 +85,8 @@ public class Clubes {
             final @ParameterLayout(named="Personeria Juridica") @Parameter(optionality=Optionality.OPTIONAL) String personeriaJuridica,
             final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
-            final @ParameterLayout(named="Calle") String calle,
-            final @ParameterLayout(named="Numero") String numero,
+            final @ParameterLayout(named="Calle") @Parameter(optionality=Optionality.OPTIONAL) String calle,
+            final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,
             final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
             final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento            
     		){
@@ -111,6 +107,12 @@ public class Clubes {
         repositoryService.persist(obj);
         return obj;
     }
+    
+    @ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Club> buscarClub(String club) {
+		return repositoryService.allMatches(QueryDefault
+				.create(Club.class, "traerTodos"));
+	}
 
     @javax.inject.Inject
     RepositoryService repositoryService;

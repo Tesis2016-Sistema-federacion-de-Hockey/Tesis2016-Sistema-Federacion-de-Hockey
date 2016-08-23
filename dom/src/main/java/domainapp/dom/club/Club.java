@@ -1,11 +1,8 @@
 package domainapp.dom.club;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.inject.Named;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Join;
@@ -13,23 +10,27 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+import org.joda.time.LocalDate;
 
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.estado.Estado;
 import domainapp.dom.jugador.Jugador;
-
-
+import domainapp.dom.sector.Sector;
+import domainapp.dom.tipodocumento.TipoDocumento;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -38,14 +39,14 @@ import domainapp.dom.jugador.Jugador;
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
-         column="idClub")
+         column="club_id")
 @javax.jdo.annotations.Version(
 //        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "find", language = "JDOQL",
+                name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.club.Club "),
         @javax.jdo.annotations.Query(
@@ -55,8 +56,8 @@ import domainapp.dom.jugador.Jugador;
                         + "WHERE nombre.indexOf(:nombre) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"nombre"})
-@DomainObject
-@DomainObjectLayout
+@DomainObject(autoCompleteRepository = Clubes.class, autoCompleteAction = "buscarClub")
+@DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
 public class Club implements Comparable<Club> {
 	
 	public static final int NAME_LENGTH = 40;
@@ -137,34 +138,102 @@ public class Club implements Comparable<Club> {
 	
 	
 	
-//	//LISTADO DE JUGADORES DEL CLUB
-//	
-//	@Persistent(mappedBy="club", dependentElement="true")
-//	@org.apache.isis.applib.annotation.Collection()
-//    private SortedSet<Jugador> jugadores=new TreeSet<Jugador>();	
-//	@Column(allowsNull = "true")
-//	public SortedSet<Jugador> getJugadores() {return jugadores;}
-//	public void setJugadores(SortedSet<Jugador> jugadores) {this.jugadores = jugadores;}
-//	
-//	@MemberOrder(sequence = "8")
-//	public void addToJugadores(Jugador e) {
-//
-//		if(e == null || jugadores.contains(e)) return;
-//	    e.setClub(this);
-//	    jugadores.add(e);
+	//LISTADO DE JUGADORES DEL CLUB
+//	@Column(allowsNull = "false")
+	@Persistent(mappedBy="club", dependentElement="true")
+//	@Join(column = "jugador_id")
+	private SortedSet<Jugador> listaJugadores=new TreeSet<Jugador>();
+    
+	@MemberOrder(sequence = "8")
+	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
+	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
+
+//	@Action()
+//	public Club agregarJugador(final Jugador jug){
+//		
+//		final Jugador obj= factoryService.instantiate(Jugador.class);
+//		obj.setClub(this);
+//		getListaJugadores().add(obj);
+//		repositoryService.persist(obj);
+//		return this;
 //	}
-//	public void removeFromJugadores(Jugador e) {
-//	    if(e == null || !jugadores.contains(e)) return;
-//	    e.setClub(null);
-//	    jugadores.remove(e);
+	
+	
+	
+//	@Action()
+//	public Club agregarJugador(
+//			final @ParameterLayout(named="Sector") @Parameter(optionality=Optionality.OPTIONAL) Sector sector,
+//            final @ParameterLayout(named="Ficha") String ficha,
+//            final @ParameterLayout(named="Nombre") String nombre,
+//            final @ParameterLayout(named="Apellido") String apellido,
+//            final @ParameterLayout(named="Tipo") @Parameter(optionality=Optionality.OPTIONAL) TipoDocumento tipo,
+//            final @ParameterLayout(named="Documento") @Parameter(optionality=Optionality.OPTIONAL) String documento,
+//            final @ParameterLayout(named="Fecha de Nacimiento") @Parameter(optionality=Optionality.OPTIONAL) LocalDate fechaNacimiento,
+//            final @ParameterLayout(named="Estado") @Parameter(optionality=Optionality.OPTIONAL) Estado estado,
+//            final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
+//            final @ParameterLayout(named="Calle") @Parameter(optionality=Optionality.OPTIONAL) String calle,
+//            final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,
+//            final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
+//            final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
+//            final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
+//            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular
+//			){
+//		final Jugador obj= factoryService.instantiate(Jugador.class);
+//		final Domicilio domicilio=new Domicilio();
+//		obj.setClub(this);
+//		domicilio.setCalle(calle);
+//        domicilio.setNumero(numero);
+//        domicilio.setPiso(piso);
+//        domicilio.setDepartamento(departamento);
+//        obj.setSector(sector);
+//        obj.setFicha(ficha);
+//        obj.setNombre(nombre);
+//        obj.setApellido(apellido);
+//        obj.setTipo(tipo);
+//        obj.setDocumento(documento);
+//        obj.setFechaNacimiento(fechaNacimiento);
+//        obj.setEstado(estado);
+//        obj.setEmail(email);
+//        obj.setTelefono(telefono);
+//        obj.setCelular(celular);
+//        obj.setDomicilio(domicilio);
+//		getListaJugadores().add(obj);
+//		repositoryService.persist(obj);
+//		return this;
 //	}
+	
+	
+	
+	@MemberOrder(sequence = "9")
+	public void agregarJugador(Jugador e) {
+
+		if(e == null || listaJugadores.contains(e)) return;
+	    e.setClub(this);
+	    listaJugadores.add(e);
+	}
+	@MemberOrder(sequence = "10")
+	public void quitarJugador(Jugador e) {
+	    if(e == null || !listaJugadores.contains(e)) return;
+	    
+	    //e.setClub(null);
+//	    e.setNombre(e.getNombre());
+	    
+    //listaJugadores.remove(e);
+	}
+	
+	
+	
+
 
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "nombre");
     }
 	
-    @javax.inject.Inject
+	@javax.inject.Inject
+	FactoryService factoryService;
+	
+	@javax.inject.Inject
     RepositoryService repositoryService;
     
     @javax.inject.Inject

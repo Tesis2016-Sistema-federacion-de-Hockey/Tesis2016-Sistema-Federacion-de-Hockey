@@ -45,9 +45,9 @@ public abstract class Persona {
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class)
-	private TipoDocumento tipoDocumento;
-	public TipoDocumento getTipoDocumento() {return tipoDocumento;}
-	public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
+	private TipoDocumento tipo;
+	public TipoDocumento getTipo() {return tipo;}
+	public void setTipo(TipoDocumento tipo) {this.tipo = tipo;}
 
 	//DOCUMENTO
 	@MemberOrder(sequence = "5")
