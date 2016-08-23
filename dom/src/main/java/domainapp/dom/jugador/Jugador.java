@@ -146,22 +146,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
 	
-//	@MemberOrder(sequence = "14")
-//	public void modifyClub(Club p) {
-//        if(p==null || club==p) return;
-//        if(club != null) {
-//        	club.quitarJugador(this);
-//        }
-//        p.agregarJugador(this);
-//    }
-//   public void clearClub() {
-//        if(club==null) return;
-//        club.quitarJugador(this);
-//    }
-	
-	
-	
-	
 	
 	
 	
@@ -169,7 +153,12 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	
 	
 
-	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {}
+	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
     
 	@Action(
             domainEvent = DeleteDomainEvent.class,
@@ -178,9 +167,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     public void delete() {
         repositoryService.remove(this);
     }
-   
 	
-
     @javax.inject.Inject
     RepositoryService repositoryService;
     
@@ -192,6 +179,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	@Override
 	public int compareTo(final Jugador o) {
 		// TODO Auto-generated method stub
-		return org.apache.isis.applib.util.ObjectContracts.compare(this, o, "club", "nombre");
+		return org.apache.isis.applib.util.ObjectContracts.compare(this, o, "apellido", "nombre");
 	}
 }

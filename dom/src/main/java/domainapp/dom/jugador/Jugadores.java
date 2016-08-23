@@ -22,7 +22,6 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -38,7 +37,6 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
@@ -97,7 +95,6 @@ public class Jugadores{
 			}
 		});
 	}
-    
     
     public static class CreateDomainEvent extends ActionDomainEvent<Jugadores> {
         /**
@@ -158,14 +155,11 @@ public class Jugadores{
         return obj;
     }
     
-    
-    
     @ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Jugador> buscarJugador(String jugador) {
 		return repositoryService.allMatches(QueryDefault
 				.create(Jugador.class, "traerTodos"));
 	}
-    
 
     @javax.inject.Inject
     RepositoryService repositoryService;

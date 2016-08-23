@@ -148,59 +148,6 @@ public class Club implements Comparable<Club> {
 	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
 	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
 
-//	@Action()
-//	public Club agregarJugador(final Jugador jug){
-//		
-//		final Jugador obj= factoryService.instantiate(Jugador.class);
-//		obj.setClub(this);
-//		getListaJugadores().add(obj);
-//		repositoryService.persist(obj);
-//		return this;
-//	}
-	
-	
-	
-//	@Action()
-//	public Club agregarJugador(
-//			final @ParameterLayout(named="Sector") @Parameter(optionality=Optionality.OPTIONAL) Sector sector,
-//            final @ParameterLayout(named="Ficha") String ficha,
-//            final @ParameterLayout(named="Nombre") String nombre,
-//            final @ParameterLayout(named="Apellido") String apellido,
-//            final @ParameterLayout(named="Tipo") @Parameter(optionality=Optionality.OPTIONAL) TipoDocumento tipo,
-//            final @ParameterLayout(named="Documento") @Parameter(optionality=Optionality.OPTIONAL) String documento,
-//            final @ParameterLayout(named="Fecha de Nacimiento") @Parameter(optionality=Optionality.OPTIONAL) LocalDate fechaNacimiento,
-//            final @ParameterLayout(named="Estado") @Parameter(optionality=Optionality.OPTIONAL) Estado estado,
-//            final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
-//            final @ParameterLayout(named="Calle") @Parameter(optionality=Optionality.OPTIONAL) String calle,
-//            final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,
-//            final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
-//            final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
-//            final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
-//            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular
-//			){
-//		final Jugador obj= factoryService.instantiate(Jugador.class);
-//		final Domicilio domicilio=new Domicilio();
-//		obj.setClub(this);
-//		domicilio.setCalle(calle);
-//        domicilio.setNumero(numero);
-//        domicilio.setPiso(piso);
-//        domicilio.setDepartamento(departamento);
-//        obj.setSector(sector);
-//        obj.setFicha(ficha);
-//        obj.setNombre(nombre);
-//        obj.setApellido(apellido);
-//        obj.setTipo(tipo);
-//        obj.setDocumento(documento);
-//        obj.setFechaNacimiento(fechaNacimiento);
-//        obj.setEstado(estado);
-//        obj.setEmail(email);
-//        obj.setTelefono(telefono);
-//        obj.setCelular(celular);
-//        obj.setDomicilio(domicilio);
-//		getListaJugadores().add(obj);
-//		repositoryService.persist(obj);
-//		return this;
-//	}
 	
 	
 	
@@ -215,16 +162,31 @@ public class Club implements Comparable<Club> {
 	public void quitarJugador(Jugador e) {
 	    if(e == null || !listaJugadores.contains(e)) return;
 	    
-	    //e.setClub(null);
-//	    e.setNombre(e.getNombre());
+	    //Duplico el jugador e y luego lo elimino
+	    final Jugador obj = repositoryService.instantiate(Jugador.class);
+//        final Domicilio domicilio=new Domicilio();
+//        domicilio.setCalle(e.getDomicilio().getCalle());
+//        domicilio.setNumero(e.getDomicilio().getNumero());
+//        domicilio.setPiso(e.getDomicilio().getPiso());
+//        domicilio.setDepartamento(e.getDomicilio().getDepartamento());
+        obj.setSector(e.getSector());
+        obj.setFicha(e.getFicha());
+        obj.setNombre(e.getNombre());
+        obj.setApellido(e.getApellido());
+        obj.setTipo(e.getTipo());
+        obj.setDocumento(e.getDocumento());
+        obj.setFechaNacimiento(e.getFechaNacimiento());
+        obj.setEstado(e.getEstado());
+        obj.setEmail(e.getEmail());
+        obj.setTelefono(e.getTelefono());
+        obj.setCelular(e.getCelular());
+        obj.setDomicilio(e.getDomicilio());
+        repositoryService.persist(obj);
+        obj.setClub(null);
 	    
-    //listaJugadores.remove(e);
+	    listaJugadores.remove(e);
 	}
 	
-	
-	
-
-
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "nombre");
