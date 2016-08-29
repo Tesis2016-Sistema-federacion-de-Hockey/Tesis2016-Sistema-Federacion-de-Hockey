@@ -30,6 +30,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
@@ -136,23 +137,13 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public Domicilio getDomicilio() {return domicilio;}
 	public void setDomicilio(Domicilio domicilio) {this.domicilio = domicilio;}
 	
-	//CLUB
+	//CLUB	
 	private Club club;
 	@MemberOrder(sequence = "14")
-//	@Persistent(table = "lista_jugadores", mappedBy="listaJugadores")
-//	@Join(column = "club_id")
 	@Column(allowsNull = "true")
-//	@Property(editing = Editing.ENABLED)
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
 	
-	
-	
-	
-	
-	
-	
-
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 
 		/**

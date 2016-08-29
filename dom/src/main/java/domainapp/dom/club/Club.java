@@ -1,5 +1,6 @@
 package domainapp.dom.club;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -10,21 +11,28 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Exploration;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+import org.apache.isis.applib.util.TitleBuffer;
 import org.joda.time.LocalDate;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
@@ -66,6 +74,14 @@ public class Club implements Comparable<Club> {
 		return TranslatableString.tr("{nombre}", "nombre",
 				"Club: " + this.getNombre());
 	}
+	
+//	public String title(){
+//		TitleBuffer buf=new TitleBuffer();
+//		buf.append(getTelefono());
+//		buf.append(getNombre()).append(getIdInterno());
+//		return buf.toString();
+//	}
+	
 
     public String iconName(){return "club";}
     
@@ -141,34 +157,34 @@ public class Club implements Comparable<Club> {
 	//LISTADO DE JUGADORES DEL CLUB
 //	@Column(allowsNull = "false")
 	@Persistent(mappedBy="club", dependentElement="true")
-//	@Join(column = "jugador_id")
 	private SortedSet<Jugador> listaJugadores=new TreeSet<Jugador>();
     
 	@MemberOrder(sequence = "8")
 	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
 	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
 
-	
-	
-	
 	@MemberOrder(sequence = "9")
 	public void agregarJugador(Jugador e) {
-
 		if(e == null || listaJugadores.contains(e)) return;
 	    e.setClub(this);
 	    listaJugadores.add(e);
 	}
+	
+	public List<Jugador> choices0AgregarJugador(Jugador j){
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+			@Override
+			public boolean apply(Jugador jug) {
+				return listaJugadores.contains(jug)?false:true;
+			}
+		});
+	}
+	
 	@MemberOrder(sequence = "10")
 	public void quitarJugador(Jugador e) {
 	    if(e == null || !listaJugadores.contains(e)) return;
 	    
 	    //Duplico el jugador e y luego lo elimino
 	    final Jugador obj = repositoryService.instantiate(Jugador.class);
-//        final Domicilio domicilio=new Domicilio();
-//        domicilio.setCalle(e.getDomicilio().getCalle());
-//        domicilio.setNumero(e.getDomicilio().getNumero());
-//        domicilio.setPiso(e.getDomicilio().getPiso());
-//        domicilio.setDepartamento(e.getDomicilio().getDepartamento());
         obj.setSector(e.getSector());
         obj.setFicha(e.getFicha());
         obj.setNombre(e.getNombre());
@@ -186,6 +202,28 @@ public class Club implements Comparable<Club> {
 	    
 	    listaJugadores.remove(e);
 	}
+	
+	public List<Jugador> choices0QuitarJugador(){
+		
+		return Lists.newArrayList(getListaJugadores());
+		
+		
+	}
+	
+	//OTRA FORMA DE HACERLO
+	
+//	public List<Jugador> choices0QuitarJugador(Jugador j){
+//		
+//		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+//
+//			@Override
+//			public boolean apply(Jugador jug) {
+//				return listaJugadores.contains(jug)?true:false;
+//			}
+//
+//		});
+//	}
+	
 	
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
