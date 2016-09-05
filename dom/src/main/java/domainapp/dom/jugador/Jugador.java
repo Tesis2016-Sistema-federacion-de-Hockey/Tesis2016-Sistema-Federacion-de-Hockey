@@ -75,11 +75,16 @@ import domainapp.dom.sector.Sector;
         		name = "listarJugadoresInactivos", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "
-                        + "WHERE estado=='Inactivo'")
+                        + "WHERE estado=='Inactivo'"),
+        @javax.jdo.annotations.Query(
+        		name = "listarJugadoresSinClub", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.jugador.Jugador "
+                        + "WHERE club_club_id_OID==1")
         		
 })
 @javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
-@DomainObject(autoCompleteRepository = Jugadores.class, autoCompleteAction = "buscarJugador")
+@DomainObject(bounded=true)		//autoCompleteRepository = JugadorServicio.class, autoCompleteAction = "buscarJugador")
 @DomainObjectLayout
 public class Jugador extends Persona implements Comparable<Jugador> {
 
@@ -127,7 +132,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	@Column(allowsNull = "true")
 	private String numeroCamiseta;
 	public String getNumeroCamiseta() {return numeroCamiseta;}
-	public void setNumeroCamiseta(String numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
+	public void setNumeroCamiseta(final String numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
 	
 	//DOMICILIO
 	@MemberOrder(sequence = "13")
@@ -135,12 +140,12 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	@Column(name="domicilio_id")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}
-	public void setDomicilio(Domicilio domicilio) {this.domicilio = domicilio;}
+	public void setDomicilio(final Domicilio domicilio) {this.domicilio = domicilio;}
 	
 	//CLUB	
-	private Club club;
 	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "true")
+	private Club club;
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
 	
@@ -162,8 +167,8 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     @javax.inject.Inject
     RepositoryService repositoryService;
     
-    @javax.inject.Inject
-    Jugadores jugadores;
+//    @javax.inject.Inject
+//    JugadorServicio jugadorServicio;
 
 
 	@SuppressWarnings("deprecation")

@@ -27,9 +27,10 @@ import domainapp.dom.domicilio.Domicilio;
         repositoryFor = Club.class
 )
 @DomainServiceLayout(
-        menuOrder = "1"
+        menuOrder = "1",
+        named="Clubes"
 )
-public class Clubes {
+public class ClubServicio {
     public TranslatableString title() {
         return TranslatableString.tr("Clubes");
     }
@@ -64,8 +65,8 @@ public class Clubes {
                         "buscarPorNombre",
                         "nombre", nombre));
     }
-    public static class CreateDomainEvent extends ActionDomainEvent<Clubes> {
-        public CreateDomainEvent(final Clubes source, final Identifier identifier, final Object... arguments) {
+    public static class CreateDomainEvent extends ActionDomainEvent<ClubServicio> {
+        public CreateDomainEvent(final ClubServicio source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }

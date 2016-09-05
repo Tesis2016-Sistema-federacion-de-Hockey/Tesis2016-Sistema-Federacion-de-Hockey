@@ -14,7 +14,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.Jugadores;
+import domainapp.dom.jugador.JugadorServicio;
 import domainapp.dom.jugador.Jugador.NameDomainEvent;
 
 

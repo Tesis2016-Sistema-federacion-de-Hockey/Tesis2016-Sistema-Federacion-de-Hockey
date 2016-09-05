@@ -33,7 +33,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.Jugadores;
+import domainapp.dom.jugador.JugadorServicio;
 import domainapp.fixture.dom.simple.SimpleObjectsTearDown;
 import domainapp.fixture.scenarios.RecreateSimpleObjects;
 import domainapp.integtests.tests.DomainAppIntegTest;
@@ -44,7 +44,7 @@ public class SimpleObjectsIntegTest extends DomainAppIntegTest {
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    Jugadores simpleObjects;
+    JugadorServicio simpleObjects;
 
     public static class ListAll extends SimpleObjectsIntegTest {
 

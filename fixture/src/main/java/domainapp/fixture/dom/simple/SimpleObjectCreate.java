@@ -22,7 +22,7 @@ package domainapp.fixture.dom.simple;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.Jugadores;
+import domainapp.dom.jugador.JugadorServicio;
 
 public class SimpleObjectCreate extends FixtureScript {
 
@@ -66,6 +66,6 @@ public class SimpleObjectCreate extends FixtureScript {
     }
 
     @javax.inject.Inject
-    private Jugadores simpleObjects;
+    private JugadorServicio simpleObjects;
 
 }

@@ -21,7 +21,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.Jugadores;
+import domainapp.dom.jugador.JugadorServicio;
 
 import org.jmock.Expectations;
 import org.jmock.Sequence;
@@ -43,11 +43,11 @@ public class SimpleObjectsTest {
     @Mock
     RepositoryService mockRepositoryService;
     
-    Jugadores simpleObjects;
+    JugadorServicio simpleObjects;
 
     @Before
     public void setUp() throws Exception {
-        simpleObjects = new Jugadores();
+        simpleObjects = new JugadorServicio();
         simpleObjects.repositoryService = mockRepositoryService;
     }
 

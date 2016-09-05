@@ -37,6 +37,7 @@ import com.google.common.collect.Lists;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.JugadorServicio;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
 
@@ -64,7 +65,8 @@ import domainapp.dom.tipodocumento.TipoDocumento;
                         + "WHERE nombre.indexOf(:nombre) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"nombre"})
-@DomainObject(autoCompleteRepository = Clubes.class, autoCompleteAction = "buscarClub")
+//@DomainObject(autoCompleteRepository = ClubServicio.class, autoCompleteAction = "buscarClub")
+@DomainObject(bounded=true)
 @DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
 public class Club implements Comparable<Club> {
 	
@@ -74,18 +76,15 @@ public class Club implements Comparable<Club> {
 		return TranslatableString.tr("{nombre}", "nombre",
 				"Club: " + this.getNombre());
 	}
-	
-//	public String title(){
-//		TitleBuffer buf=new TitleBuffer();
-//		buf.append(getTelefono());
-//		buf.append(getNombre()).append(getIdInterno());
-//		return buf.toString();
-//	}
-	
 
     public String iconName(){return "club";}
     
-    public static class NameDomainEvent extends PropertyDomainEvent<Club,String> {}
+    public static class NameDomainEvent extends PropertyDomainEvent<Club,String> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
     
     //NOMBRE
     @MemberOrder(sequence = "1")
@@ -117,7 +116,7 @@ public class Club implements Comparable<Club> {
 	@Column(allowsNull = "false")
 	private String idInterno;
 	public String getIdInterno() {return idInterno;}
-	public void setIdInterno(String idInterno) {this.idInterno = idInterno;}
+	public void setIdInterno(final String idInterno) {this.idInterno = idInterno;}
 	
 	//PERSONERIA JURIDICA
 	@MemberOrder(sequence = "5")
@@ -125,7 +124,7 @@ public class Club implements Comparable<Club> {
 	@Column(allowsNull = "true")
 	private String personeriaJuridica;
 	public String getPersoneriaJuridica(){return personeriaJuridica;}
-	public void setPersoneriaJuridica(String personeriaJuridica) {this.personeriaJuridica = personeriaJuridica;}
+	public void setPersoneriaJuridica(final String personeriaJuridica) {this.personeriaJuridica = personeriaJuridica;}
 	
 	//EMAIL
 	@MemberOrder(sequence = "5")
@@ -133,7 +132,7 @@ public class Club implements Comparable<Club> {
 	@Column(allowsNull = "true")
 	private String email;
 	public String getEmail() {return email;}
-	public void setEmail(String email) {this.email = email;}
+	public void setEmail(final String email) {this.email = email;}
 	
 	//TELEFONO
 	@MemberOrder(sequence = "6")
@@ -141,7 +140,7 @@ public class Club implements Comparable<Club> {
 	@Column(allowsNull = "true")
 	private String telefono;
 	public String getTelefono() {return telefono;}
-	public void setTelefono(String telefono) {this.telefono = telefono;}
+	public void setTelefono(final String telefono) {this.telefono = telefono;}
 	
 	//DOMICILIO
 	@MemberOrder(sequence = "7")
@@ -149,20 +148,16 @@ public class Club implements Comparable<Club> {
 	@Column(name="DOMICILIO_ID")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}
-	public void setDomicilio(Domicilio domicilio) {this.domicilio = domicilio;}
-	
-	
-	
+	public void setDomicilio(final Domicilio domicilio) {this.domicilio = domicilio;}
 	
 	//LISTADO DE JUGADORES DEL CLUB
-//	@Column(allowsNull = "false")
+	@MemberOrder(sequence = "8")
 	@Persistent(mappedBy="club", dependentElement="true")
 	private SortedSet<Jugador> listaJugadores=new TreeSet<Jugador>();
-    
-	@MemberOrder(sequence = "8")
 	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
 	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
 
+	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE JUGADORES DEL CLUB
 	@MemberOrder(sequence = "9")
 	public void agregarJugador(Jugador e) {
 		if(e == null || listaJugadores.contains(e)) return;
@@ -170,15 +165,22 @@ public class Club implements Comparable<Club> {
 	    listaJugadores.add(e);
 	}
 	
-	public List<Jugador> choices0AgregarJugador(Jugador j){
+	public List<Jugador> choices0AgregarJugador(){
+		
 		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
 			@Override
 			public boolean apply(Jugador jug) {
-				return listaJugadores.contains(jug)?false:true;
+				
+				return jugadorServicio.listarJugadoresSinClub().contains(jug)?true:false;
 			}
 		});
 	}
 	
+	public Jugador default0AgregarJugador(final Jugador j){
+		return j!=null? getListaJugadores().first():null;
+	}
+	
+	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE JUGADORES DEL CLUB
 	@MemberOrder(sequence = "10")
 	public void quitarJugador(Jugador e) {
 	    if(e == null || !listaJugadores.contains(e)) return;
@@ -210,21 +212,6 @@ public class Club implements Comparable<Club> {
 		
 	}
 	
-	//OTRA FORMA DE HACERLO
-	
-//	public List<Jugador> choices0QuitarJugador(Jugador j){
-//		
-//		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
-//
-//			@Override
-//			public boolean apply(Jugador jug) {
-//				return listaJugadores.contains(jug)?true:false;
-//			}
-//
-//		});
-//	}
-	
-	
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "nombre");
@@ -237,5 +224,8 @@ public class Club implements Comparable<Club> {
     RepositoryService repositoryService;
     
     @javax.inject.Inject
-    Club clubes;
+    ClubServicio clubServicio;
+    
+    @javax.inject.Inject
+    JugadorServicio jugadorServicio;
 }

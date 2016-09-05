@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.isis.applib.annotation.ViewModel;
 
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.Jugadores;
+import domainapp.dom.jugador.JugadorServicio;
 
 @ViewModel
 public class HomePageViewModel {
@@ -44,7 +44,7 @@ public class HomePageViewModel {
     //region > injected services
 
     @javax.inject.Inject
-    Jugadores jugadores;
+    JugadorServicio jugadores;
 
     //endregion
 }

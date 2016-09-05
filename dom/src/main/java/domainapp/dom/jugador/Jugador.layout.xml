@@ -36,8 +36,8 @@
                                 <c:property id="ficha" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="nombre" namedEscaped="true"/>
                                 <c:property id="apellido" namedEscaped="true"/>
-                                <c:property id="tipo" namedEscaped="true"/>
-                                <c:property id="documento" namedEscaped="true"/>
+                                <c:property id="tipo" namedEscaped="true" hidden="PARENTED_TABLES"/>
+                                <c:property id="documento" namedEscaped="true" hidden="PARENTED_TABLES"/>
                                 <c:property id="fechaNacimiento" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="estado" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="email" namedEscaped="true" hidden="ALL_TABLES"/>

@@ -24,7 +24,7 @@ import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.Jugadores;
+import domainapp.dom.jugador.JugadorServicio;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -33,7 +33,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     @Given("^there are.* (\\d+) simple objects$")
     public void there_are_N_simple_objects(int n) throws Throwable {
         try {
-            final List<Jugador> findAll = service(Jugadores.class).listarTodosLosJugadores();
+            final List<Jugador> findAll = service(JugadorServicio.class).listarTodosLosJugadores();
             assertThat(findAll.size(), is(n));
             putVar("list", "all", findAll);
             

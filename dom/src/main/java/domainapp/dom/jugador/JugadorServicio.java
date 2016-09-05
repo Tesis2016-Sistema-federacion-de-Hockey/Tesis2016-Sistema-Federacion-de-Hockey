@@ -54,9 +54,10 @@ import domainapp.dom.tipodocumento.TipoDocumento;
         repositoryFor = Jugador.class
 )
 @DomainServiceLayout(
-        menuOrder = "2"
+        menuOrder = "2",
+        named="Jugadores"
 )
-public class Jugadores{
+public class JugadorServicio{
 
     public TranslatableString title() {return TranslatableString.tr("Jugadores");}
 
@@ -96,13 +97,26 @@ public class Jugadores{
 		});
 	}
     
-    public static class CreateDomainEvent extends ActionDomainEvent<Jugadores> {
+    @MemberOrder(sequence = "3.1")
+    public List<Jugador> listarJugadoresSinClub() {
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+
+			@Override
+			public boolean apply(Jugador input) {
+				// TODO Auto-generated method stub
+				return input.getClub()==null?true:false;
+			}
+		});
+	}
+    
+    
+    public static class CreateDomainEvent extends ActionDomainEvent<JugadorServicio> {
         /**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public CreateDomainEvent(final Jugadores source, final Identifier identifier, final Object... arguments) {
+		public CreateDomainEvent(final JugadorServicio source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
@@ -129,8 +143,8 @@ public class Jugadores{
             final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
             final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
-            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular,
-            final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club
+            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular
+            //,final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         final Domicilio domicilio=new Domicilio();
@@ -151,7 +165,7 @@ public class Jugadores{
         obj.setCelular(celular);
         obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
-        obj.setClub(club);
+        //obj.setClub(club);
         return obj;
     }
     
