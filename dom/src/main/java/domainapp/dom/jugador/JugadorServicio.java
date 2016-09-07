@@ -143,8 +143,8 @@ public class JugadorServicio{
             final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
             final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
-            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular
-            //,final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club
+            final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular,
+            final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         final Domicilio domicilio=new Domicilio();
@@ -165,7 +165,7 @@ public class JugadorServicio{
         obj.setCelular(celular);
         obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
-        //obj.setClub(club);
+        obj.setClub(club);
         return obj;
     }
     

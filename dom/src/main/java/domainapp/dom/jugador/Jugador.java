@@ -144,6 +144,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	
 	//CLUB	
 	@MemberOrder(sequence = "14")
+	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private Club club;
 	public Club getClub() {return club;}

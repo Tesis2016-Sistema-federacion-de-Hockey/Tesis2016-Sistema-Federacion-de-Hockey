@@ -96,7 +96,7 @@
                     <plugin>
                         <groupId>org.apache.isis.tool</groupId>
                         <artifactId>isis-maven-plugin</artifactId>
-                        <version>${isis.version}</version>
+                        <version>1.13.0</version>
                         <configuration>
                             <appManifest>domainapp.app.DomainAppAppManifest</appManifest>
                             <visibilities>
