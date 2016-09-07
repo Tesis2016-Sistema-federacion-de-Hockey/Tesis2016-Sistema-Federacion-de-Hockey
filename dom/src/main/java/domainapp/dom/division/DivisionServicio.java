@@ -1,15 +1,17 @@
 package domainapp.dom.division;
 
+import java.util.List;
+
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -17,8 +19,6 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.temporada.Temporada;
 import domainapp.dom.torneo.Torneo;
-import domainapp.dom.torneo.TorneoServicio;
-import domainapp.dom.torneo.TorneoServicio.CreateDomainEvent;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -31,6 +31,18 @@ import domainapp.dom.torneo.TorneoServicio.CreateDomainEvent;
 public class DivisionServicio {
 	public TranslatableString title() {
         return TranslatableString.tr("Divisiones");
+    }
+	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "5.1")
+    public List<Division> listarTodasLasDivisiones() {
+        return repositoryService.allInstances(Division.class);
     }
 	
 	public static class CreateDomainEvent extends ActionDomainEvent<DivisionServicio> {
