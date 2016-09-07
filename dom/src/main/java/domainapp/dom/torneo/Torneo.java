@@ -4,14 +4,18 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.estado.Estado;
@@ -102,6 +106,25 @@ public class Torneo implements Comparable<Torneo>{
 	public Boolean getVisible() {return visible;}
 	public void setVisible(final Boolean visible) {this.visible = visible;}
 
+	public static class DeleteDomainEvent extends ActionDomainEvent<Torneo> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	public void delete() {
+        repositoryService.remove(this);
+    }
+	
+	@javax.inject.Inject
+    RepositoryService repositoryService;
+	
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Torneo o) {

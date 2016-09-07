@@ -31,6 +31,7 @@
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="Torneo">
+                            	<c:action id="delete"/>
                                 <c:property id="nombre" namedEscaped="true"/>
                                 <c:property id="estado" namedEscaped="true"/>
                                 <c:property id="temporada" namedEscaped="true"/>
