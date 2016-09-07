@@ -39,7 +39,19 @@ import domainapp.dom.temporada.Temporada;
 public class TorneoServicio {
 	public TranslatableString title() {
         return TranslatableString.tr("Torneos");
-    }		
+    }
+	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "4.1")
+    public List<Torneo> listarTodosLosTorneos() {
+        return repositoryService.allInstances(Torneo.class);
+    }
 	
     public static class CreateDomainEvent extends ActionDomainEvent<TorneoServicio> {
         /**
