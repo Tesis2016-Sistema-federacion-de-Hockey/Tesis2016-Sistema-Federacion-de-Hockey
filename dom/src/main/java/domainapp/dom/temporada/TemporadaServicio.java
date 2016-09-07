@@ -35,6 +35,18 @@ public class TemporadaServicio {
         return TranslatableString.tr("Temporadas");
     }
 	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "1")
+    public List<Temporada> listarTodasLasTemporadas() {
+        return repositoryService.allInstances(Temporada.class);
+    }
+	
     public static class CreateDomainEvent extends ActionDomainEvent<TemporadaServicio> {
         /**
 		 * 
