@@ -6,40 +6,26 @@ import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Exploration;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
-import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
-import org.apache.isis.applib.util.TitleBuffer;
-import org.joda.time.LocalDate;
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.domicilio.Domicilio;
-import domainapp.dom.estado.Estado;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
-import domainapp.dom.sector.Sector;
-import domainapp.dom.tipodocumento.TipoDocumento;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -77,7 +63,7 @@ public class Club implements Comparable<Club> {
 				"Club: " + this.getNombre());
 	}
 
-    public String iconName(){return "club";}
+    public String iconName(){return "Club";}
     
     public static class NameDomainEvent extends PropertyDomainEvent<Club,String> {
 

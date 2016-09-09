@@ -46,7 +46,8 @@ public class Torneo implements Comparable<Torneo>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Torneo: " + this.getNombre());
+				"Torneo: " + this.getNombre()+" (Temp. "+this.getTemporada().getNombre()+
+				")");
 	}
 	
 	public String iconName(){return "torneo";}

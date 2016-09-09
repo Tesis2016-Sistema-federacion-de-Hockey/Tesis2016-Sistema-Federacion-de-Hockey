@@ -1,5 +1,6 @@
 package domainapp.dom.equipo;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -20,6 +21,8 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+
+import com.google.common.base.Predicate;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
@@ -110,7 +113,24 @@ public class Equipo implements Comparable<Equipo>{
 	public SortedSet<Jugador> getListaJugadoresEquipo() {return listaJugadoresEquipo;}
 	public void setListaJugadoresEquipo(SortedSet<Jugador> listaJugadoresEquipo) {this.listaJugadoresEquipo = listaJugadoresEquipo;}
 
-
+	//METODO PARA AGREGAR UN JUGADOR AL EQUIPO
+	@MemberOrder(sequence = "6")
+	public void agregarJugadorAEquipo(Jugador e) {
+		if(e == null || listaJugadoresEquipo.contains(e)) return;
+	    e.setEquipo(this);
+	    listaJugadoresEquipo.add(e);
+	}
+	
+	public List<Jugador> choices0AgregarJugadorAEquipo(){
+		
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+			@Override
+			public boolean apply(Jugador jug) {
+				
+				return jugadorServicio.listarJugadoresActivos().contains(jug)?true:false;
+			}			
+		});
+	}
 	
 	
 	
