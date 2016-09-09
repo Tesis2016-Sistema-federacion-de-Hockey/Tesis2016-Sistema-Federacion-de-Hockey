@@ -46,8 +46,6 @@ public class EquipoServicio {
         return repositoryService.allInstances(Equipo.class);
     }
 	
-	
-	
 	public static class CreateDomainEvent extends ActionDomainEvent<EquipoServicio> {
         /**
 		 * 
@@ -82,7 +80,7 @@ public class EquipoServicio {
         return obj;
     }
 	
-    //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
+    //POR DEFECTO, SE SETEA EL VALOR DEL ESTADO A ACTIVO
     public Estado default1CrearEquipo(){    	
     	return Estado.ACTIVO;
     }
