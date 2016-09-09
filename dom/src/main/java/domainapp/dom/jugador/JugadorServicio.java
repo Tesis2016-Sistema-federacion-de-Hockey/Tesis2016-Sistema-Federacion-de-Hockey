@@ -172,6 +172,14 @@ public class JugadorServicio{
         return obj;
     }
     
+    public Estado default7CrearJugador(){    	
+    	return Estado.ACTIVO;
+    }
+    
+    public TipoDocumento default4CrearJugador(){
+    	return TipoDocumento.DNI;
+    }
+    
     @ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Jugador> buscarJugador(String jugador) {
 		return repositoryService.allMatches(QueryDefault
