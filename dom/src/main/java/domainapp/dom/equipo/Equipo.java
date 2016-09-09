@@ -1,34 +1,31 @@
-package domainapp.dom.torneo;
+package domainapp.dom.equipo;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.PropertyLayout;
-import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.club.Club;
+import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
-import domainapp.dom.temporada.Temporada;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "Torneo"
+        table = "Equipo"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
-         column="torneo_id")
+         column="equipo_id")
 @javax.jdo.annotations.Version(
 //        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
@@ -37,28 +34,28 @@ import domainapp.dom.temporada.Temporada;
         @javax.jdo.annotations.Query(
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.torneo.Torneo")
+                        + "FROM domainapp.dom.equipo.Equipo")
 })
-@javax.jdo.annotations.Unique(name="Torneo_nombre_UNQ", members = {"nombre","temporada"})
+@javax.jdo.annotations.Unique(name="Equipo_nombre_UNQ", members = {"nombre","club","division"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
-public class Torneo implements Comparable<Torneo>{
+public class Equipo implements Comparable<Equipo>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Torneo: " + this.getNombre());
+				"Equipo: " + this.getNombre());
 	}
 	
-	public String iconName(){return "torneo";}
+	public String iconName(){return "equipo";}
 	
-	public static class NameDomainEvent extends PropertyDomainEvent<Torneo,String>{
+	public static class NameDomainEvent extends PropertyDomainEvent<Equipo,String>{
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;}
 	
 	
-    //NOMBRE DEL TORNEO
+    //NOMBRE DEL EQUIPO
     @MemberOrder(sequence = "1")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
@@ -66,68 +63,58 @@ public class Torneo implements Comparable<Torneo>{
 	public String getNombre() {return nombre;}
 	public void setNombre(final String nombre) {this.nombre = nombre;}
 	
-	//ESTADO DEL TORNEO
+	//ESTADO DEL EQUIPO
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
+	@Property(editing = Editing.ENABLED)
 	private Estado estado;
 	public Estado getEstado() {return estado;}
 	public void setEstado(final Estado estado) {this.estado = estado;}
 	
-	//TEMPORADA
+	//CLUB
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
-	private Temporada temporada;
-	public Temporada getTemporada() {return temporada;}
-	public void setTemporada(final Temporada temporada) {this.temporada = temporada;}
-	
-	
-	//MODALIDAD
-    @MemberOrder(sequence = "4")
-	@Column(allowsNull = "true")
-    @PropertyLayout(describedAs="TODOS CONTRA TODOS / DIVIDIR EN ZONAS")
-	private String modalidad;
-	public String getModalidad() {return modalidad;}
-	public void setModalidad(String modalidad) {this.modalidad = modalidad;}
+	@Property(editing = Editing.ENABLED)
+	private Club club;
+	public Club getClub() {return club;}
+	public void setClub(final Club club) {this.club = club;}
 
-	//OBSERVACIONES
-    @MemberOrder(sequence = "9")
-	@Column(allowsNull = "true")
-	private String observaciones;
-	public String getObservaciones() {return observaciones;}
-	public void setObservaciones(final String observaciones) {this.observaciones = observaciones;}
+	//DIVISION
+	@MemberOrder(sequence = "4")
+    @Column(allowsNull="false")
+	@Property(editing = Editing.ENABLED)
+	private Division division;
+	public Division getDivision() {return division;}
+	public void setDivision(Division division) {this.division = division;}
 	
 	//VISIBLE
 	@MemberOrder(sequence = "10")
     @Column(allowsNull="true")
-    @Property(domainEvent = NameDomainEvent.class, editing=Editing.DISABLED)
-    private Boolean visible;
+	@Property(editing = Editing.DISABLED)
+    private Boolean visible=true;
 	public Boolean getVisible() {return visible;}
 	public void setVisible(final Boolean visible) {this.visible = visible;}
-
-	public static class DeleteDomainEvent extends ActionDomainEvent<Torneo> {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;}
 	
-	@Action(
-            domainEvent = DeleteDomainEvent.class,
-            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-    )
-	public void delete() {
-        repositoryService.remove(this);
-    }
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	
-	
 	@SuppressWarnings("deprecation")
 	@Override
-	public int compareTo(final Torneo o) {
+	public int compareTo(final Equipo o) {
 		return ObjectContracts.compare(this, o, "nombre");
 	}
 }
