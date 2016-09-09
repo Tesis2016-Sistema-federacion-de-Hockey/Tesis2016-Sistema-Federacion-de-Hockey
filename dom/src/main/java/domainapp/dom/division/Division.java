@@ -3,18 +3,19 @@ package domainapp.dom.division;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
-
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
-
 import domainapp.dom.estado.Estado;
 import domainapp.dom.temporada.Temporada;
 import domainapp.dom.torneo.Torneo;
@@ -37,7 +38,7 @@ import domainapp.dom.torneo.Torneo;
                 value = "SELECT "
                         + "FROM domainapp.dom.division.Division")
 })
-@javax.jdo.annotations.Unique(name="Division_nombre_UNQ", members = {"nombre"})
+@javax.jdo.annotations.Unique(name="Division_nombre_UNQ", members = {"nombre","temporada","torneo"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class Division implements Comparable<Division>{
@@ -131,6 +132,22 @@ public class Division implements Comparable<Division>{
 	public Boolean getVisible() {return visible;}
 	public void setVisible(final Boolean visible) {this.visible = visible;}
 
+	public static class DeleteDomainEvent extends ActionDomainEvent<Division> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	public void delete() {
+        repositoryService.remove(this);
+    }
+	
+	
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	

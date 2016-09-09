@@ -87,6 +87,22 @@ public class DivisionServicio {
         return obj;
     }
 	
+    //POR DEFECTO, AL CREAR LA DIVISION ES ACTIVA
+    public Estado default1CrearDivision(){    	
+    	return Estado.ACTIVO;
+    }    
+    //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
+    public int default5CrearDivision(){    	
+    	return 3;
+    }
+    //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
+    public int default6CrearDivision(){    	
+    	return 1;
+    }
+    //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
+    public int default7CrearDivision(){    	
+    	return 0;
+    }
 	
     @javax.inject.Inject
     RepositoryService repositoryService;
