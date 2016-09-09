@@ -1,7 +1,11 @@
 package domainapp.dom.equipo;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
@@ -20,26 +24,26 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 
-@javax.jdo.annotations.PersistenceCapable(
+	@javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "Equipo"
-)
-@javax.jdo.annotations.DatastoreIdentity(
+        table = "Equipo")
+	@javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="equipo_id")
-@javax.jdo.annotations.Version(
-//        strategy=VersionStrategy.VERSION_NUMBER,
+	@javax.jdo.annotations.Version(
+	//  strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
-@javax.jdo.annotations.Queries({
+	@javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.equipo.Equipo")
-})
+	})
 @javax.jdo.annotations.Unique(name="Equipo_nombre_UNQ", members = {"nombre","club","division"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
@@ -99,7 +103,13 @@ public class Equipo implements Comparable<Equipo>{
 	public Boolean getVisible() {return visible;}
 	public void setVisible(final Boolean visible) {this.visible = visible;}
 	
-	
+	//LISTA DE JUGADORES QUE PERTENECEN AL EQUIPO
+	@MemberOrder(sequence = "5")
+	@Persistent(mappedBy="equipo", dependentElement="true")
+	private SortedSet<Jugador> listaJugadoresEquipo=new TreeSet<Jugador>();
+	public SortedSet<Jugador> getListaJugadoresEquipo() {return listaJugadoresEquipo;}
+	public void setListaJugadoresEquipo(SortedSet<Jugador> listaJugadoresEquipo) {this.listaJugadoresEquipo = listaJugadoresEquipo;}
+
 
 	
 	

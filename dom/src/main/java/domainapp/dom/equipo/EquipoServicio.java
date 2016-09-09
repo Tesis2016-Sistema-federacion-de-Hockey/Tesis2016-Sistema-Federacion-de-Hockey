@@ -76,6 +76,7 @@ public class EquipoServicio {
         obj.setEstado(estado);
         obj.setClub(club);
         obj.setDivision(division);
+        obj.setVisible(true);
         repositoryService.persist(obj);
         return obj;
     }

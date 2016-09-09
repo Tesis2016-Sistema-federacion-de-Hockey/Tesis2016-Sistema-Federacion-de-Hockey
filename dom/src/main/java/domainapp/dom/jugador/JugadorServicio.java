@@ -44,6 +44,7 @@ import com.google.common.base.Predicate;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
@@ -144,7 +145,8 @@ public class JugadorServicio{
             final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
             final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular,
-            final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club
+            final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club,
+            final @ParameterLayout(named="Equipo") @Parameter(optionality=Optionality.OPTIONAL) Equipo equipo
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         final Domicilio domicilio=new Domicilio();
@@ -166,6 +168,7 @@ public class JugadorServicio{
         obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
         obj.setClub(club);
+        obj.setEquipo(equipo);
         return obj;
     }
     

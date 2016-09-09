@@ -40,6 +40,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
@@ -149,6 +150,14 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	private Club club;
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
+	
+	//EQUIPO	
+	@MemberOrder(sequence = "15")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "true")
+	private Equipo equipo;
+	public Equipo getEquipo() {return equipo;}
+	public void setEquipo(final Equipo equipo) {this.equipo = equipo;}
 	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 

@@ -50,6 +50,7 @@
                                 <c:property id="numeroCamiseta" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="club" namedEscaped="true"/>
+                                <c:property id="equipo" namedEscaped="true"/>
                                 
                             </c:fieldSet>
                         </bs3:col>
