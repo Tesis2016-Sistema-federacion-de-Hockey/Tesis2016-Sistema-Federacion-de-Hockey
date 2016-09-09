@@ -17,6 +17,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.jugador.JugadorServicio;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -106,8 +107,8 @@ public class Equipo implements Comparable<Equipo>{
 	
 	
 	
-	
-	
+	@javax.inject.Inject
+    JugadorServicio jugadorServicio;
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
