@@ -187,6 +187,7 @@ public class Club implements Comparable<Club> {
         obj.setDomicilio(e.getDomicilio());
         repositoryService.persist(obj);
         obj.setClub(null);
+        obj.setEquipo(null);
 	    
 	    listaJugadores.remove(e);
 	}

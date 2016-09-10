@@ -18,6 +18,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
+import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -54,8 +55,9 @@ public class Equipo implements Comparable<Equipo>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Equipo: " + this.getNombre());
-	}
+				"Equipo: " + this.getNombre()+" ("+this.getDivision().getNombre()+", "+getDivision().getTemporada().getNombre()+")");
+
+    }
 	
 	public String iconName(){return "equipo";}
 	
@@ -127,9 +129,11 @@ public class Equipo implements Comparable<Equipo>{
 			@Override
 			public boolean apply(Jugador jug) {
 				
-				return jugadorServicio.listarJugadoresActivos().contains(jug)?true:false;
-			}			
+				return jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)?true:false;
+			}
 		});
+
+		
 	}
 	
 	

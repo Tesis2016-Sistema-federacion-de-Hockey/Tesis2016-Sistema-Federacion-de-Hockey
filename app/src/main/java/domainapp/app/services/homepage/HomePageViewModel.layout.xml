@@ -28,7 +28,7 @@
                     <action id="downloadLayoutXml" hidden="EVERYWHERE"/>
                     <action id="rebuildMetamodel" hidden="EVERYWHERE"/>
                 </bs3:col>
-            </bs3:row>
+            </bs3:row>       
         </bs3:col>
         <bs3:col span="12" unreferencedCollections="true">
             <bs3:row>

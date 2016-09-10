@@ -45,7 +45,7 @@ public class Division implements Comparable<Division>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Division: " + this.getNombre());
+				"Division: " + this.getNombre()+" ("+this.getTorneo().getNombre()+", "+this.getTemporada().getNombre()+")"      );
 	}
 	
 	public String iconName(){return "division";}

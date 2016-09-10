@@ -110,6 +110,15 @@ public class JugadorServicio{
 		});
 	}
     
+    @MemberOrder(sequence = "3.2")
+    public List<Jugador> listarJugadoresActivosSegunClub(Club club) {
+    	
+    	return repositoryService.allMatches(new QueryDefault<Jugador>(Jugador.class, "listarJugadoresActivosSegunClub", "club", club));
+    	
+    	
+    }
+    
+    
     
     public static class CreateDomainEvent extends ActionDomainEvent<JugadorServicio> {
         /**

@@ -22,29 +22,29 @@ import java.util.List;
 
 import org.apache.isis.applib.annotation.ViewModel;
 
-import domainapp.dom.jugador.Jugador;
-import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.club.Club;
+import domainapp.dom.club.ClubServicio;
 
 @ViewModel
 public class HomePageViewModel {
 
     //region > title
     public String title() {
-        return getJugadores().size() + " jugadores";
+        return getClubes().size() + " clubes";
     }
     //endregion
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<Jugador> getJugadores() {
-        return jugadores.listarTodosLosJugadores();
+    public List<Club> getClubes() {
+        return clubServicio.listarTodosLosClubes();
     }
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
-    JugadorServicio jugadores;
+    ClubServicio clubServicio;
 
     //endregion
 }

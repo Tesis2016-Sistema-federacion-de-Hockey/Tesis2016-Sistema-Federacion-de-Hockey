@@ -81,7 +81,12 @@ import domainapp.dom.sector.Sector;
         		name = "listarJugadoresSinClub", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "
-                        + "WHERE club_club_id_OID==1")
+                        + "WHERE club_club_id_OID==1"),
+        @javax.jdo.annotations.Query(
+        		name = "listarJugadoresActivosSegunClub", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.jugador.Jugador "
+                        + "WHERE (club == :club) && (estado == 'ACTIVO')")
         		
 })
 @javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
