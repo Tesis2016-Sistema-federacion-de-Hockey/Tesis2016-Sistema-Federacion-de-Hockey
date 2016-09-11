@@ -46,7 +46,7 @@ public class Torneo implements Comparable<Torneo>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Torneo: " + this.getNombre()+" (Temp. "+this.getTemporada().getNombre()+
+				"Torneo: " + this.getNombre()+" ("+this.getTemporada().getNombre()+
 				")");
 	}
 	
@@ -82,15 +82,6 @@ public class Torneo implements Comparable<Torneo>{
 	private Temporada temporada;
 	public Temporada getTemporada() {return temporada;}
 	public void setTemporada(final Temporada temporada) {this.temporada = temporada;}
-	
-	
-	//MODALIDAD
-    @MemberOrder(sequence = "4")
-	@Column(allowsNull = "true")
-    @PropertyLayout(describedAs="TODOS CONTRA TODOS / DIVIDIR EN ZONAS")
-	private String modalidad;
-	public String getModalidad() {return modalidad;}
-	public void setModalidad(String modalidad) {this.modalidad = modalidad;}
 
 	//OBSERVACIONES
     @MemberOrder(sequence = "9")
