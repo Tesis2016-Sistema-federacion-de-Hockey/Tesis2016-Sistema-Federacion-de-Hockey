@@ -11,6 +11,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -178,8 +179,13 @@ public class Equipo implements Comparable<Equipo>{
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
 	public void delete() {
-        repositoryService.remove(this);
+			repositoryService.remove(this);
     }
+	
+	public String disableDelete(){
+		return !listaJugadoresEquipo.isEmpty()?"La lista de buena fe debe estar vacia.":null;
+	}
+	
 	
 	@javax.inject.Inject
     JugadorServicio jugadorServicio;
