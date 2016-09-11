@@ -36,21 +36,21 @@
                                 <c:property id="ficha" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="nombre" namedEscaped="true"/>
                                 <c:property id="apellido" namedEscaped="true"/>
-                                <c:property id="tipo" namedEscaped="true" hidden="PARENTED_TABLES"/>
-                                <c:property id="documento" namedEscaped="true" hidden="PARENTED_TABLES"/>
+                                <c:property id="tipo" namedEscaped="true" />
+                                <c:property id="documento" namedEscaped="true" />
                                 <c:property id="fechaNacimiento" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="estado" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="email" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="telefono" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="celular" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="calle" namedEscaped="true"/>
+                                <c:property id="calle" namedEscaped="true" />
                                 <c:property id="numero" namedEscaped="true"/>
                                 <c:property id="piso" namedEscaped="true"/>
                                 <c:property id="departamento" namedEscaped="true"/>
                                 <c:property id="numeroCamiseta" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="club" namedEscaped="true"/>
-                                <c:property id="equipo" namedEscaped="true"/>
+                                <c:property id="club" namedEscaped="true" hidden="PARENTED_TABLES"/>
+                                <c:property id="equipo" namedEscaped="true" hidden="PARENTED_TABLES"/>
                                 
                             </c:fieldSet>
                         </bs3:col>

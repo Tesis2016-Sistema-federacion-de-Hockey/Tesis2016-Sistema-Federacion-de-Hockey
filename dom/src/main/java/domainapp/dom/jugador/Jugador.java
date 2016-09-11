@@ -33,6 +33,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -142,7 +143,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	
 	//DOMICILIO
 	@MemberOrder(sequence = "13")
-	@Property(editing = Editing.ENABLED)	
+	@Property(editing = Editing.ENABLED, hidden=Where.ALL_TABLES)	
 	@Column(name="domicilio_id")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}

@@ -15,11 +15,13 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
@@ -130,7 +132,7 @@ public class Club implements Comparable<Club> {
 	
 	//DOMICILIO
 	@MemberOrder(sequence = "7")
-	@Property(editing = Editing.ENABLED)	
+	@Property(editing = Editing.ENABLED, hidden=Where.ALL_TABLES)	
 	@Column(name="DOMICILIO_ID")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}

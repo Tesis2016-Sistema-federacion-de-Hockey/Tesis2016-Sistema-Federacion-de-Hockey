@@ -34,7 +34,8 @@
                             	<c:action id="delete"/>
                                 <c:property id="nombre" namedEscaped="true"/>
                                 <c:property id="estado" namedEscaped="true"/>
-                                <c:property id="observaciones" namedEscaped="true"/>
+                                <c:property id="observaciones" namedEscaped="true" hidden="ALL_TABLES"/>
+                                <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
@@ -54,8 +55,8 @@
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
-
             </bs3:tabGroup>
+            
             <bs3:tabGroup>
             </bs3:tabGroup>
         </bs3:col>
