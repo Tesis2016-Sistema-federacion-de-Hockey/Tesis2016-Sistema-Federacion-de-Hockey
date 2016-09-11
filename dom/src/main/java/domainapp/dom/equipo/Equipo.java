@@ -129,7 +129,7 @@ public class Equipo implements Comparable<Equipo>{
 			@Override
 			public boolean apply(Jugador jug) {
 				
-				return jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)?true:false;
+				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaJugadoresEquipo.contains(jug))    ?true:false;
 			}
 		});
 
