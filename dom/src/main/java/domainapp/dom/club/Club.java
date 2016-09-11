@@ -197,8 +197,6 @@ public class Club implements Comparable<Club> {
 	public List<Jugador> choices0QuitarJugador(){
 		
 		return Lists.newArrayList(getListaJugadores());
-		
-		
 	}
 	
 	@SuppressWarnings("deprecation")

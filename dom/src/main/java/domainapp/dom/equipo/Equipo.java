@@ -24,6 +24,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
@@ -132,15 +133,38 @@ public class Equipo implements Comparable<Equipo>{
 				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaJugadoresEquipo.contains(jug))    ?true:false;
 			}
 		});
-
-		
 	}
 	
-	
-	
-	
-	
-	
+	//METODO PARA QUITAR UN JUGADOR DEL EQUIPO
+		@MemberOrder(sequence = "7")
+		public void quitarJugadorDelEquipo(Jugador e) {
+			if(e == null || !listaJugadoresEquipo.contains(e)) return;
+			
+			//Duplico el jugador e y luego lo elimino
+		    final Jugador obj = repositoryService.instantiate(Jugador.class);
+	        obj.setSector(e.getSector());
+	        obj.setFicha(e.getFicha());
+	        obj.setNombre(e.getNombre());
+	        obj.setApellido(e.getApellido());
+	        obj.setTipo(e.getTipo());
+	        obj.setDocumento(e.getDocumento());
+	        obj.setFechaNacimiento(e.getFechaNacimiento());
+	        obj.setEstado(e.getEstado());
+	        obj.setEmail(e.getEmail());
+	        obj.setTelefono(e.getTelefono());
+	        obj.setCelular(e.getCelular());
+	        obj.setDomicilio(e.getDomicilio());
+	        obj.setClub(e.getClub());
+	        repositoryService.persist(obj);
+	        obj.setEquipo(null);
+			
+		    listaJugadoresEquipo.remove(e);
+		}
+		
+		public List<Jugador> choices0QuitarJugadorDelEquipo(){
+			
+			return Lists.newArrayList(getListaJugadoresEquipo());
+		}
 	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
 
