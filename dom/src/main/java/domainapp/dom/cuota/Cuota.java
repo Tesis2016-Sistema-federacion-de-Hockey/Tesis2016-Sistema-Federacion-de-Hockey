@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.joda.time.LocalDate;
 
 import domainapp.dom.jugador.Jugador.NameDomainEvent;
 
@@ -14,30 +15,18 @@ import domainapp.dom.jugador.Jugador.NameDomainEvent;
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class Cuota {
 	
-	public static final int NAME_LENGTH = 40;
 	
-	//NUMERO
-	@MemberOrder(sequence = "2")
-    @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
-    private String numero;
-	public String getNumero() {
-		return numero;
-	}
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-	
+
 	
 	//VALOR
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
-    private String valor;
-	public String getValor() {
+    private Double valor;
+	public Double getValor() {
 		return valor;
 	}
-	public void setValor(String valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 	
@@ -46,11 +35,11 @@ public abstract class Cuota {
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
-    private String vencimiento;
-	public String getVencimiento() {
+    private LocalDate vencimiento;
+	public LocalDate getVencimiento() {
 		return vencimiento;
 	}
-	public void setVencimiento(String vencimiento) {
+	public void setVencimiento(LocalDate vencimiento) {
 		this.vencimiento = vencimiento;
 	}
 	

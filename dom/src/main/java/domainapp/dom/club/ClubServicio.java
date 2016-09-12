@@ -66,7 +66,13 @@ public class ClubServicio {
                         "nombre", nombre));
     }
     public static class CreateDomainEvent extends ActionDomainEvent<ClubServicio> {
-        public CreateDomainEvent(final ClubServicio source, final Identifier identifier, final Object... arguments) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@SuppressWarnings("deprecation")
+		public CreateDomainEvent(final ClubServicio source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
