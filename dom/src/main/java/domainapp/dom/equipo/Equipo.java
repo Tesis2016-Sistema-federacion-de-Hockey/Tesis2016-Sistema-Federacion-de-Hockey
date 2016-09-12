@@ -11,6 +11,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -24,6 +25,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
@@ -129,18 +131,41 @@ public class Equipo implements Comparable<Equipo>{
 			@Override
 			public boolean apply(Jugador jug) {
 				
-				return jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)?true:false;
+				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaJugadoresEquipo.contains(jug)&&jug.getEquipo()==null)?true:false;
 			}
 		});
-
-		
 	}
 	
-	
-	
-	
-	
-	
+	//METODO PARA QUITAR UN JUGADOR DEL EQUIPO
+		@MemberOrder(sequence = "7")
+		public void quitarJugadorDelEquipo(Jugador e) {
+			if(e == null || !listaJugadoresEquipo.contains(e)) return;
+			
+			//Duplico el jugador e y luego lo elimino
+		    final Jugador obj = repositoryService.instantiate(Jugador.class);
+	        obj.setSector(e.getSector());
+	        obj.setFicha(e.getFicha());
+	        obj.setNombre(e.getNombre());
+	        obj.setApellido(e.getApellido());
+	        obj.setTipo(e.getTipo());
+	        obj.setDocumento(e.getDocumento());
+	        obj.setFechaNacimiento(e.getFechaNacimiento());
+	        obj.setEstado(e.getEstado());
+	        obj.setEmail(e.getEmail());
+	        obj.setTelefono(e.getTelefono());
+	        obj.setCelular(e.getCelular());
+	        obj.setDomicilio(e.getDomicilio());
+	        obj.setClub(e.getClub());
+	        repositoryService.persist(obj);
+	        obj.setEquipo(null);
+			
+		    listaJugadoresEquipo.remove(e);
+		}
+		
+		public List<Jugador> choices0QuitarJugadorDelEquipo(){
+			
+			return Lists.newArrayList(getListaJugadoresEquipo());
+		}
 	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
 
@@ -154,8 +179,13 @@ public class Equipo implements Comparable<Equipo>{
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
 	public void delete() {
-        repositoryService.remove(this);
+			repositoryService.remove(this);
     }
+	
+	public String disableDelete(){
+		return !listaJugadoresEquipo.isEmpty()?"La lista de buena fe debe estar vacia.":null;
+	}
+	
 	
 	@javax.inject.Inject
     JugadorServicio jugadorServicio;

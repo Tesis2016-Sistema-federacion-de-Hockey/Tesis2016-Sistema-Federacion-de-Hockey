@@ -76,21 +76,19 @@ public class TorneoServicio {
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Estado") Estado estado,
     		final @ParameterLayout(named="Temporada") Temporada temporada,
-    		final @ParameterLayout(named="Modalidad") String modalidad,
     		final @ParameterLayout(named="Observaciones") @Parameter(optionality=Optionality.OPTIONAL) String observaciones
     		){
         final Torneo obj = repositoryService.instantiate(Torneo.class);
         obj.setNombre(nombre);
         obj.setEstado(estado);
         obj.setTemporada(temporada);
-        obj.setModalidad(modalidad);
         obj.setObservaciones(observaciones);
         obj.setVisible(true);
         repositoryService.persist(obj);
         return obj;
     }
 
-  //POR DEFECTO, AL CREAR EL TORNEO SE SETEA A ACTIVO
+    //POR DEFECTO, AL CREAR EL TORNEO SE SETEA A ACTIVO
     public Estado default1CrearTorneo(){    	
     	return Estado.ACTIVO;
     }    
@@ -100,7 +98,6 @@ public class TorneoServicio {
 		return repositoryService.allMatches(QueryDefault
 				.create(Torneo.class, "traerTodos"));
 	}
-	
 
     @javax.inject.Inject
     RepositoryService repositoryService;

@@ -9,12 +9,15 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.factory.FactoryService;
@@ -26,6 +29,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.equipo.Equipo;
+import domainapp.dom.equipo.Equipo.DeleteDomainEvent;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 
@@ -197,9 +202,27 @@ public class Club implements Comparable<Club> {
 	public List<Jugador> choices0QuitarJugador(){
 		
 		return Lists.newArrayList(getListaJugadores());
-		
-		
 	}
+	
+	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	public void delete() {
+			repositoryService.remove(this);
+    }
+	
+	public String disableDelete(){
+		return !listaJugadores.isEmpty()?"La lista de jugadores debe estar vacia.":null;
+	}
+	
 	
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
