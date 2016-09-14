@@ -59,7 +59,7 @@ public class SimpleObjectCreate extends FixtureScript {
 
         String name = checkParam("name", ec, String.class);
 
-        //this.simpleObject = wrap(simpleObjects).crear(null, name, null, null, null, name, null, null, name, name, 0, 0, name, name, name);
+        this.simpleObject = wrap(simpleObjects).crearJugador(null, name, name, name, null, name, null, null, name, name, name, name, name, name, name, null, null);
 
         // also make available to UI
         ec.addResult(this, simpleObject);

@@ -57,7 +57,7 @@ import domainapp.dom.jugador.JugadorServicio;
                         + "FROM domainapp.dom.club.Club "
                         + "WHERE nombre.indexOf(:nombre) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"nombre"})
+@javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"idInterno"})
 //@DomainObject(autoCompleteRepository = ClubServicio.class, autoCompleteAction = "buscarClub")
 @DomainObject(bounded=true)
 @DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
