@@ -55,10 +55,15 @@ import domainapp.dom.jugador.JugadorServicio;
                 name = "buscarPorNombre", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.club.Club "
-                        + "WHERE nombre.indexOf(:nombre) >= 0 ")
+                        + "WHERE nombre.indexOf(:nombre) >= 0 "),
+        @javax.jdo.annotations.Query(
+                name = "traerClub", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.club.Club "
+                        + "WHERE nombre == :nombre "
+                        + "|| nombre.indexOf(:nombre) >= 0")
 })
 @javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"idInterno"})
-//@DomainObject(autoCompleteRepository = ClubServicio.class, autoCompleteAction = "buscarClub")
 @DomainObject(bounded=true)
 @DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
 public class Club implements Comparable<Club> {
@@ -228,9 +233,6 @@ public class Club implements Comparable<Club> {
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "nombre");
     }
-	
-	@javax.inject.Inject
-	FactoryService factoryService;
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

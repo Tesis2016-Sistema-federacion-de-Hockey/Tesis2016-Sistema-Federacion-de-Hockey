@@ -12,6 +12,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -45,6 +46,20 @@ public class EquipoServicio {
     public List<Equipo> listarTodosLosEquipos() {
         return repositoryService.allInstances(Equipo.class);
     }
+	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "5.2")
+    public List<Equipo> listarTodosLosEquiposDelClub(Club club){
+		
+    	return repositoryService.allMatches(new QueryDefault<Equipo>(Equipo.class, "listarTodosLosEquiposDelClub", "club", club));
+    }
+	
 	
 	public static class CreateDomainEvent extends ActionDomainEvent<EquipoServicio> {
         /**

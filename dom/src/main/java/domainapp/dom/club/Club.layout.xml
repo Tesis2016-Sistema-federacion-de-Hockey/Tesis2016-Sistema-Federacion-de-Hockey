@@ -67,6 +67,22 @@
         </bs3:col>
         <bs3:col span="7">
             <bs3:tabGroup  unreferencedCollections="true">
+            	<bs3:tab name="Listar Todos Los Equipos Del Club">
+                    <bs3:row>
+                        <bs3:col span="12" size="MD">
+                            <c:collection defaultView="table" id="listarTodosLosEquiposDelClub"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+            </bs3:tabGroup>
+            <bs3:tabGroup  unreferencedCollections="true">
+                <bs3:tab name="Lista Jugadores">
+                    <bs3:row>
+                        <bs3:col span="12" size="MD">
+                            <c:collection defaultView="table" id="listaJugadores"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
             </bs3:tabGroup>
         </bs3:col>
     </bs3:row>

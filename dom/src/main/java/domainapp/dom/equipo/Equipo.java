@@ -11,7 +11,6 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -19,7 +18,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
-import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -48,7 +46,17 @@ import domainapp.dom.jugador.JugadorServicio;
         @javax.jdo.annotations.Query(
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.equipo.Equipo")
+                        + "FROM domainapp.dom.equipo.Equipo"),
+        @javax.jdo.annotations.Query(
+                name = "traerEquipo", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.equipo.Equipo "
+                		+ "WHERE club == :club"),
+        @javax.jdo.annotations.Query(
+                name = "listarTodosLosEquiposDelClub", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.equipo.Equipo "
+                		+ "WHERE (club == :club) && (estado == 'ACTIVO')")
 	})
 @javax.jdo.annotations.Unique(name="Equipo_nombre_UNQ", members = {"nombre","club","division"})
 @DomainObject(bounded=true)
