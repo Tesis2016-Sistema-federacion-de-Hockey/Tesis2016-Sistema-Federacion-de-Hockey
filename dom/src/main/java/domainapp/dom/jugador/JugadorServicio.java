@@ -1,21 +1,3 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License.  You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- */
 package domainapp.dom.jugador;
 
 import org.joda.time.LocalDate;
@@ -45,6 +27,7 @@ import com.google.common.base.Predicate;
 import domainapp.dom.club.Club;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
+import domainapp.dom.equipo.EquipoServicio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
@@ -189,12 +172,44 @@ public class JugadorServicio{
     	return TipoDocumento.DNI;
     }
     
+    public List<Equipo> choices16CrearJugador(
+    		final Sector sector,
+            final String ficha,
+            final String nombre,
+            final String apellido,
+            final TipoDocumento tipo,
+            final String documento,
+            final LocalDate fechaNacimiento,
+            final Estado estado,
+            final String email,
+            final String calle,
+            final String numero,
+            final String piso,
+            final String departamento,
+            final String telefono,
+            final String celular,
+            final Club clubs
+    		){    	
+		return repositoryService.allMatches(QueryDefault.create(Equipo.class, "traerEquipo", "club", clubs));
+		
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     @ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Jugador> buscarJugador(String jugador) {
 		return repositoryService.allMatches(QueryDefault
 				.create(Jugador.class, "traerTodos"));
 	}
 
+    @javax.inject.Inject
+    EquipoServicio equipoServicio;
+    
     @javax.inject.Inject
     RepositoryService repositoryService;
 }
