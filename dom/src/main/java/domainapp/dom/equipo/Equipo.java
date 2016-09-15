@@ -65,7 +65,7 @@ public class Equipo implements Comparable<Equipo>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Equipo: " + this.getNombre()+" ("+this.getDivision().getNombre()+", "+getDivision().getTemporada().getNombre()+")");
+				"Equipo: " + this.getNombre()+" ("+this.getDivision().getNombre()+")");
 
     }
 	

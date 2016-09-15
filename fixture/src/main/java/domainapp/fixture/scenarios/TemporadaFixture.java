@@ -31,11 +31,11 @@ public class TemporadaFixture extends FixtureScript {
     	creaTemporada("2015", Estado.INACTIVO, "Sin observaciones", executionContext);
     	creaTemporada("2014", Estado.INACTIVO, "Sin observaciones", executionContext);
     	
-    	divisionServicio.crearDivision("PRIMERA DAMAS", Estado.ACTIVO, tempo01, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, tempo01, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("7MA DAMAS", Estado.ACTIVO, tempo01, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("6TA DAMAS", Estado.ACTIVO, tempo01, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("5TA DAMAS", Estado.ACTIVO, tempo01, tor01, "Todos contra todos", 3, 1, 0);
+    	divisionServicio.crearDivision("PRIMERA DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
+    	divisionServicio.crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
+    	divisionServicio.crearDivision("7MA DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
+    	divisionServicio.crearDivision("6TA DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
+    	divisionServicio.crearDivision("5TA DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
 
     	
     	

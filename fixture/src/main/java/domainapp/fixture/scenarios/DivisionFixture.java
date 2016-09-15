@@ -5,7 +5,6 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import domainapp.dom.division.Division;
 import domainapp.dom.division.DivisionServicio;
 import domainapp.dom.estado.Estado;
-import domainapp.dom.temporada.Temporada;
 import domainapp.dom.torneo.Torneo;
 
 public class DivisionFixture extends FixtureScript {
@@ -18,11 +17,11 @@ public class DivisionFixture extends FixtureScript {
 
 //    	BorrarDBDivision(executionContext);
         
-    	crearDivision("PRIMERA DAMAS", Estado.ACTIVO, null, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, null, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("7MA DAMAS", Estado.ACTIVO, null, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("6TA DAMAS", Estado.ACTIVO, null, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("5TA DAMAS", Estado.ACTIVO, null, null, "Todos contra todos", 3, 1, 0, executionContext);
+    	crearDivision("PRIMERA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
+    	crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
+    	crearDivision("7MA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
+    	crearDivision("6TA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
+    	crearDivision("5TA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
 
     }
 	
@@ -30,14 +29,13 @@ public class DivisionFixture extends FixtureScript {
     	private Division crearDivision(
                 final String nombre,
                 final Estado estado,
-                final Temporada temporada,
                 final Torneo torneo,
                 final String modalidad,
                 final int puntosGanar,
                 final int puntosEmpatar,
                 final int puntosPerder,
                 ExecutionContext executionContext) {
-    	return executionContext.add(this, divisionServicio.crearDivision(nombre, Estado.ACTIVO, null, null, modalidad,
+    	return executionContext.add(this, divisionServicio.crearDivision(nombre, Estado.ACTIVO, null, modalidad,
     			puntosGanar, puntosEmpatar, puntosPerder));
     }
    

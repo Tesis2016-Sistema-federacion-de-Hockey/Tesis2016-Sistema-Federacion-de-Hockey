@@ -39,10 +39,13 @@
                                 <c:property id="personeriaJuridica" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="email" namedEscaped="true"/>
                                 <c:property id="telefono" namedEscaped="true"/>
+                                <c:property id="domicilio" namedEscaped="true"/>
+<!--                                 
                                 <c:property id="calle" namedEscaped="true"/>
                                 <c:property id="numero" namedEscaped="true"/>
                                 <c:property id="piso" namedEscaped="true"/>
                                 <c:property id="departamento" namedEscaped="true"/>
+-->                                
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
