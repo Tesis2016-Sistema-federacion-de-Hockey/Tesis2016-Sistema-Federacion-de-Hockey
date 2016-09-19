@@ -27,6 +27,7 @@ import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.pagoJugador.PagoJugador;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
 
@@ -150,10 +151,20 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public void setEquipo(final Equipo equipo) {this.equipo = equipo;}
 	
 	//CUOTAS
+	@MemberOrder(sequence = "16")
 	@Persistent(mappedBy = "jugadores", dependentElement = "true")
 	private SortedSet<CuotaJugador> cuotas = new TreeSet<CuotaJugador>();	
 	public SortedSet<CuotaJugador> getCuotas() {return cuotas;}
 	public void setCuotas(SortedSet<CuotaJugador> cuotas) {this.cuotas = cuotas;}
+	
+	//PAGOS
+	@MemberOrder(sequence = "17")
+	@Persistent(mappedBy="jugador", dependentElement="true")
+	private SortedSet<PagoJugador> pagosJugador=new TreeSet<PagoJugador>();
+	public SortedSet<PagoJugador> getPagosJugador() {return pagosJugador;}
+	public void setPagosJugador(SortedSet<PagoJugador> pagosJugador) {this.pagosJugador = pagosJugador;}
+	
+	
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 
