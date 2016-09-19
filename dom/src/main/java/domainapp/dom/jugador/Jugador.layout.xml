@@ -43,12 +43,16 @@
                                 <c:property id="email" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="telefono" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="celular" namedEscaped="true" hidden="ALL_TABLES"/>
+                                <c:property id="domicilio" namedEscaped="true"/>
+<!--
                                 <c:property id="calle" namedEscaped="true" />
                                 <c:property id="numero" namedEscaped="true"/>
                                 <c:property id="piso" namedEscaped="true"/>
                                 <c:property id="departamento" namedEscaped="true"/>
+
                                 <c:property id="numeroCamiseta" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
+-->
                                 <c:property id="club" namedEscaped="true" hidden="PARENTED_TABLES"/>
                                 <c:property id="equipo" namedEscaped="true" hidden="PARENTED_TABLES"/>
                                 

@@ -20,7 +20,6 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
-import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -29,8 +28,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.domicilio.Domicilio;
-import domainapp.dom.equipo.Equipo;
-import domainapp.dom.equipo.Equipo.DeleteDomainEvent;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 
@@ -55,10 +52,15 @@ import domainapp.dom.jugador.JugadorServicio;
                 name = "buscarPorNombre", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.club.Club "
-                        + "WHERE nombre.indexOf(:nombre) >= 0 ")
+                        + "WHERE nombre.indexOf(:nombre) >= 0 "),
+        @javax.jdo.annotations.Query(
+                name = "traerClub", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.club.Club "
+                        + "WHERE nombre == :nombre "
+                        + "|| nombre.indexOf(:nombre) >= 0")
 })
-@javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"nombre"})
-//@DomainObject(autoCompleteRepository = ClubServicio.class, autoCompleteAction = "buscarClub")
+@javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"idInterno"})
 @DomainObject(bounded=true)
 @DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
 public class Club implements Comparable<Club> {
@@ -138,7 +140,7 @@ public class Club implements Comparable<Club> {
 	//DOMICILIO
 	@MemberOrder(sequence = "7")
 	@Property(editing = Editing.ENABLED, hidden=Where.ALL_TABLES)	
-	@Column(name="DOMICILIO_ID")	
+	@Column(name="domicilio_id")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}
 	public void setDomicilio(final Domicilio domicilio) {this.domicilio = domicilio;}
@@ -228,9 +230,6 @@ public class Club implements Comparable<Club> {
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "nombre");
     }
-	
-	@javax.inject.Inject
-	FactoryService factoryService;
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

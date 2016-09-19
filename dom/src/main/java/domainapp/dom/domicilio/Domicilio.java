@@ -9,7 +9,6 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.Where;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -28,7 +27,7 @@ import org.apache.isis.applib.annotation.Where;
 @DomainObjectLayout
 public class Domicilio {
 	
-	public String iconName() {return "domicilio";}
+	public String iconName() {return "Domicilio";}
 
 	public String title() {return getCalle()+" "+getNumero();}
 	

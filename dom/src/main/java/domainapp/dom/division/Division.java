@@ -17,7 +17,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.estado.Estado;
-import domainapp.dom.temporada.Temporada;
 import domainapp.dom.torneo.Torneo;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -38,14 +37,15 @@ import domainapp.dom.torneo.Torneo;
                 value = "SELECT "
                         + "FROM domainapp.dom.division.Division")
 })
-@javax.jdo.annotations.Unique(name="Division_nombre_UNQ", members = {"nombre","temporada","torneo"})
+@javax.jdo.annotations.Unique(name="Division_nombre_UNQ", members = {"nombre", "torneo"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class Division implements Comparable<Division>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Division: " + this.getNombre()+" ("+this.getTorneo().getNombre()+", "+this.getTemporada().getNombre()+")"      );
+				"Division: " + this.getNombre()+" ("+this.getTorneo().getNombre()
+				+", "+this.getTorneo().getTemporada().getNombre()+")");
 	}
 	
 	public String iconName(){return "division";}
@@ -72,14 +72,6 @@ public class Division implements Comparable<Division>{
 	private Estado estado;
 	public Estado getEstado() {return estado;}
 	public void setEstado(final Estado estado) {this.estado = estado;}
-	
-	//TEMPORADA
-	@MemberOrder(sequence = "3")
-    @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
-	private Temporada temporada;
-	public Temporada getTemporada() {return temporada;}
-	public void setTemporada(final Temporada temporada) {this.temporada = temporada;}
 	
 	//TORNEO
 	@MemberOrder(sequence = "4")
@@ -121,8 +113,6 @@ public class Division implements Comparable<Division>{
 	private int puntosPerder;
 	public int getPuntosPerder() {return puntosPerder;}
 	public void setPuntosPerder(final int puntosPerder) {this.puntosPerder = puntosPerder;}	
-	
-	
 	
 	//VISIBLE
 	@MemberOrder(sequence = "10")

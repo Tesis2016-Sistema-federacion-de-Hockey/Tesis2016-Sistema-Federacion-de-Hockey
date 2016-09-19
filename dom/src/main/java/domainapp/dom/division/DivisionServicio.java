@@ -17,7 +17,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.estado.Estado;
-import domainapp.dom.temporada.Temporada;
 import domainapp.dom.torneo.Torneo;
 
 @DomainService(
@@ -67,7 +66,6 @@ public class DivisionServicio {
     public Division crearDivision(
 		final @ParameterLayout(named="Nombre") String nombre,
 		final @ParameterLayout(named="Estado") Estado estado,
-		final @ParameterLayout(named="Temporada") Temporada temporada,
 		final @ParameterLayout(named="Torneo") Torneo torneo,
 		final @ParameterLayout(named="Modalidad") String modalidad,
 		final @ParameterLayout(named="Puntos GANAR") int puntosGanar,
@@ -77,7 +75,6 @@ public class DivisionServicio {
     final Division obj = repositoryService.instantiate(Division.class);
         obj.setNombre(nombre);
         obj.setEstado(estado);
-        obj.setTemporada(temporada);
         obj.setTorneo(torneo);
         obj.setModalidad(modalidad);
         obj.setPuntosGanar(puntosGanar);
@@ -92,15 +89,15 @@ public class DivisionServicio {
     	return Estado.ACTIVO;
     }    
     //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
-    public int default5CrearDivision(){    	
+    public int default4CrearDivision(){    	
     	return 3;
     }
     //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
-    public int default6CrearDivision(){    	
+    public int default5CrearDivision(){    	
     	return 1;
     }
     //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
-    public int default7CrearDivision(){    	
+    public int default6CrearDivision(){    	
     	return 0;
     }
 	

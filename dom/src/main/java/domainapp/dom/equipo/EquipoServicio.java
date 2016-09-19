@@ -12,6 +12,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -46,6 +48,20 @@ public class EquipoServicio {
         return repositoryService.allInstances(Equipo.class);
     }
 	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "5.2")
+    public List<Equipo> listarTodosLosEquiposDelClub(Club club){
+		
+    	return repositoryService.allMatches(new QueryDefault<Equipo>(Equipo.class, "listarTodosLosEquiposDelClub", "club", club));
+    }
+	
+	
 	public static class CreateDomainEvent extends ActionDomainEvent<EquipoServicio> {
         /**
 		 * 
@@ -64,7 +80,7 @@ public class EquipoServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "5.2")
+    @MemberOrder(sequence = "5.3")
     public Equipo crearEquipo(
 		final @ParameterLayout(named="Nombre") String nombre,
 		final @ParameterLayout(named="Estado") Estado estado,
@@ -84,6 +100,24 @@ public class EquipoServicio {
     //POR DEFECTO, SE SETEA EL VALOR DEL ESTADO A ACTIVO
     public Estado default1CrearEquipo(){    	
     	return Estado.ACTIVO;
+    }
+    
+    @ActionLayout(hidden=Where.EVERYWHERE)
+    public String buscarEquipo(final Club club, Equipo equipo){
+    	return "";
+    }    
+    public List<Club> choices0BuscarEquipo(final Club club){
+    	return repositoryService.allMatches(QueryDefault.create(Club.class, "traerClub", "club",club));
+    }
+    public Club default0BuscarEquipo(final Club cl){
+    	return repositoryService.allInstances(Club.class, 0).get(0);
+    }
+    public List<Club>choices1BuscarEquipo(final Club club, Equipo equipo){
+    	return repositoryService.allMatches(QueryDefault.create(Club.class, "traerEquipo", "club",club, "equipo",equipo));
+    }
+    @ActionLayout(hidden=Where.EVERYWHERE)
+    public List<Club> buscarClub(String cl){
+    	return repositoryService.allMatches(QueryDefault.create(Club.class, "traerClub", "nombre",cl));
     }
     
 	

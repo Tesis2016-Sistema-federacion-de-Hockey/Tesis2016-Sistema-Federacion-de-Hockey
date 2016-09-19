@@ -1,21 +1,3 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License.  You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- */
 package domainapp.dom.jugador;
 
 import java.util.SortedSet;
@@ -23,8 +5,6 @@ import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Join;
-import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
@@ -33,15 +13,12 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
-import org.apache.isis.applib.util.ObjectContracts;
-
 import domainapp.dom.club.Club;
 import domainapp.dom.cuota.Cuota;
 import domainapp.dom.cuotajugador.CuotaJugador;
@@ -96,7 +73,7 @@ import domainapp.dom.sector.Sector;
         		
 })
 @javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
-@DomainObject(bounded=true)		//autoCompleteRepository = JugadorServicio.class, autoCompleteAction = "buscarJugador")
+@DomainObject(bounded=true)
 @DomainObjectLayout
 public class Jugador extends Persona implements Comparable<Jugador> {
 
@@ -194,10 +171,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     @javax.inject.Inject
     RepositoryService repositoryService;
     
-//    @javax.inject.Inject
-//    JugadorServicio jugadorServicio;
-
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Jugador o) {
