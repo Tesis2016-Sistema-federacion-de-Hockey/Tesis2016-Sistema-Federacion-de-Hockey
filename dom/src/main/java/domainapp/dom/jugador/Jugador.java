@@ -18,6 +18,9 @@
  */
 package domainapp.dom.jugador;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Join;
@@ -40,6 +43,8 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
+import domainapp.dom.cuota.Cuota;
+import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
@@ -165,6 +170,12 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public Equipo getEquipo() {return equipo;}
 	public void setEquipo(final Equipo equipo) {this.equipo = equipo;}
 	
+	//CUOTAS
+	@Persistent(mappedBy = "jugadores", dependentElement = "true")
+	private SortedSet<CuotaJugador> cuotas = new TreeSet<CuotaJugador>();	
+	public SortedSet<CuotaJugador> getCuotas() {return cuotas;}
+	public void setCuotas(SortedSet<CuotaJugador> cuotas) {this.cuotas = cuotas;}
+
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 
 		/**

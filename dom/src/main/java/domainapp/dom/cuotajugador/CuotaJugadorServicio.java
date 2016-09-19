@@ -1,6 +1,10 @@
 package domainapp.dom.cuotajugador;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
@@ -82,6 +86,9 @@ public class CuotaJugadorServicio {
         repositoryService.persist(obj);
         return obj;
     }
+    
+  
+
     
     @javax.inject.Inject
     RepositoryService repositoryService;

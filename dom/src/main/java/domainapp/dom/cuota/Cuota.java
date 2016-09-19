@@ -19,7 +19,7 @@ public abstract class Cuota {
 
 	
 	//VALOR
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
     private Double valor;
@@ -32,7 +32,7 @@ public abstract class Cuota {
 	
 	
 	//VENCIMIENTO
-	@MemberOrder(sequence = "4")
+	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
     private LocalDate vencimiento;
@@ -44,7 +44,7 @@ public abstract class Cuota {
 	}
 	
 	//DETALLE
-	@MemberOrder(sequence = "5")
+	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
 	private String detalle;
