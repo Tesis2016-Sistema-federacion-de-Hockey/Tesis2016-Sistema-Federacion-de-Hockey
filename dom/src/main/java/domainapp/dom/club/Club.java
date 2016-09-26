@@ -27,6 +27,8 @@ import org.apache.isis.applib.util.ObjectContracts;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import domainapp.dom.cuotaclub.CuotaClub;
+import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
@@ -206,6 +208,13 @@ public class Club implements Comparable<Club> {
 		return Lists.newArrayList(getListaJugadores());
 	}
 	
+	//CUOTAS
+	@MemberOrder(sequence = "11")
+	@Persistent(mappedBy = "clubes", dependentElement = "true")
+	private SortedSet<CuotaClub> cuotasClub = new TreeSet<CuotaClub>();
+	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
+	public void setCuotasClub(SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
+
 	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
 
 		/**
