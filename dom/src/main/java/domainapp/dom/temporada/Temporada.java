@@ -115,6 +115,10 @@ public class Temporada implements Comparable<Temporada>{
         repositoryService.remove(this);
     }
 	
+	public String disableDelete(){
+		return !listaTorneos.isEmpty()?"La lista de torneos debe estar vacia.":null;
+	}
+	
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	
