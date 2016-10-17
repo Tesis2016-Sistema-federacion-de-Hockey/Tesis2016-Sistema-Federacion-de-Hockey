@@ -1,7 +1,11 @@
 package domainapp.dom.division;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
@@ -16,6 +20,8 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+
+import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.torneo.Torneo;
 
@@ -112,7 +118,14 @@ public class Division implements Comparable<Division>{
 	@Property(editing = Editing.ENABLED)
 	private int puntosPerder;
 	public int getPuntosPerder() {return puntosPerder;}
-	public void setPuntosPerder(final int puntosPerder) {this.puntosPerder = puntosPerder;}	
+	public void setPuntosPerder(final int puntosPerder) {this.puntosPerder = puntosPerder;}
+	
+	//LISTA DE EQUIPOS DE UNA DIVISION
+	@MemberOrder(sequence = "9")
+	@Persistent(mappedBy="division", dependentElement="true")
+	private SortedSet<Equipo> listaEquipos=new TreeSet<Equipo>();
+	public SortedSet<Equipo> getListaEquipos() {return listaEquipos;}
+	public void setListaEquipos(SortedSet<Equipo> listaEquipos) {this.listaEquipos = listaEquipos;}
 	
 	//VISIBLE
 	@MemberOrder(sequence = "10")
