@@ -21,7 +21,7 @@
 
     <parent>
         <groupId>com.ifes.SIFHON</groupId>
-        <artifactId>Tesis2016-Sistema-federacion-de-Hockey</artifactId>
+        <artifactId>SIFHON</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
