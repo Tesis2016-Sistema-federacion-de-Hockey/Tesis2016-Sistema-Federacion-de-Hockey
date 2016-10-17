@@ -156,10 +156,11 @@ public class Club implements Comparable<Club> {
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE JUGADORES DEL CLUB
 	@MemberOrder(sequence = "9")
-	public void agregarJugador(Jugador e) {
-		if(e == null || listaJugadores.contains(e)) return;
+	public Club agregarJugador(Jugador e) {
+		if(e == null || listaJugadores.contains(e)) return this;
 	    e.setClub(this);
 	    listaJugadores.add(e);
+	    return this;
 	}
 	
 	public List<Jugador> choices0AgregarJugador(){
@@ -179,8 +180,8 @@ public class Club implements Comparable<Club> {
 	
 	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE JUGADORES DEL CLUB
 	@MemberOrder(sequence = "10")
-	public void quitarJugador(Jugador e) {
-	    if(e == null || !listaJugadores.contains(e)) return;
+	public Club quitarJugador(Jugador e) {
+	    if(e == null || !listaJugadores.contains(e)) return this;
 	    
 	    //Duplico el jugador e y luego lo elimino
 	    final Jugador obj = repositoryService.instantiate(Jugador.class);
@@ -201,6 +202,7 @@ public class Club implements Comparable<Club> {
         obj.setEquipo(null);
 	    
 	    listaJugadores.remove(e);
+	    return this;
 	}
 	
 	public List<Jugador> choices0QuitarJugador(){
