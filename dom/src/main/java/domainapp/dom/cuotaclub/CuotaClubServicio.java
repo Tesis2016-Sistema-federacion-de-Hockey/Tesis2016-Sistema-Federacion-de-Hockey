@@ -27,8 +27,8 @@ import domainapp.dom.cuotajugador.CuotaJugadorServicio.CreateDomainEvent;
         repositoryFor = CuotaClub.class
 )
 @DomainServiceLayout(
-        menuOrder = "2",
-        named="CuotasClub"
+        menuOrder = "3",
+        named="Cuotas"
 )
 
 public class CuotaClubServicio {
@@ -51,7 +51,7 @@ public class CuotaClubServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "3")
+    @MemberOrder(name="Cuotas", sequence = "3.1")
     public CuotaClub crearCuotaClub(
     		final @ParameterLayout(named="Valor") Double valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,

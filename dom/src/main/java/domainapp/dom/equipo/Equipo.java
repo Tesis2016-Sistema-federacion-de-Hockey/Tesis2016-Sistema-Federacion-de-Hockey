@@ -127,10 +127,11 @@ public class Equipo implements Comparable<Equipo>{
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE BUENA FE DEL EQUIPO
 	@MemberOrder(sequence = "6")
-	public void agregarJugadorAListaBuenaFe(Jugador e) {
-		if(e == null || listaBuenaFe.contains(e)) return;
+	public Equipo agregarJugadorAListaBuenaFe(Jugador e) {
+		if(e == null || listaBuenaFe.contains(e)) return this;
 	    e.setEquipo(this);
 	    listaBuenaFe.add(e);
+	    return this;
 	}
 		
 	public List<Jugador> choices0AgregarJugadorAListaBuenaFe(){
@@ -146,8 +147,8 @@ public class Equipo implements Comparable<Equipo>{
 		
 	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
 	@MemberOrder(sequence = "7")
-	public void quitarJugadorDeListaBuenaFe(Jugador e) {
-		if(e == null || !listaBuenaFe.contains(e)) return;
+	public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
+		if(e == null || !listaBuenaFe.contains(e)) return this;
 		
 		//Duplico el jugador e y luego lo elimino
 	    final Jugador obj = repositoryService.instantiate(Jugador.class);
@@ -168,6 +169,7 @@ public class Equipo implements Comparable<Equipo>{
         obj.setEquipo(null);
 		
 	    listaBuenaFe.remove(e);
+	    return this;
 	}
 	
 	public List<Jugador> choices0QuitarJugadorDeListaBuenaFe(){

@@ -27,7 +27,7 @@ import domainapp.dom.domicilio.Domicilio;
         repositoryFor = Club.class
 )
 @DomainServiceLayout(
-        menuOrder = "1",
+        menuOrder = "2",
         named="Clubes"
 )
 public class ClubServicio {

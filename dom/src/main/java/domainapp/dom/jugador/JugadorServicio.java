@@ -38,7 +38,7 @@ import domainapp.dom.tipodocumento.TipoDocumento;
         repositoryFor = Jugador.class
 )
 @DomainServiceLayout(
-        menuOrder = "2",
+        menuOrder = "1",
         named="Jugadores"
 )
 public class JugadorServicio{

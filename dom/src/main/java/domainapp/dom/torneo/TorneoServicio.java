@@ -33,8 +33,7 @@ import domainapp.dom.temporada.Temporada;
         repositoryFor = Torneo.class
 )
 @DomainServiceLayout(
-        menuOrder = "4",
-        named="Torneos"
+		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="5"
 )
 public class TorneoServicio {
 	public TranslatableString title() {
@@ -48,8 +47,9 @@ public class TorneoServicio {
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT
     )
-    @MemberOrder(sequence = "4.1")
-    public List<Torneo> listarTodosLosTorneos() {
+    //@MemberOrder(sequence = "4.1")
+	@MemberOrder(name="Planificacion", sequence = "5.3")
+	public List<Torneo> listarTodosLosTorneos() {
         return repositoryService.allInstances(Torneo.class);
     }
 	
@@ -71,7 +71,8 @@ public class TorneoServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "4.2")
+    //@MemberOrder(sequence = "4.2")
+    @MemberOrder(name="Planificacion", sequence = "5.4")
     public Torneo crearTorneo(
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Estado") Estado estado,

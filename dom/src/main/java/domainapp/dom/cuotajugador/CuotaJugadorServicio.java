@@ -37,8 +37,8 @@ import domainapp.dom.jugador.Jugador;
         repositoryFor = CuotaJugador.class
 )
 @DomainServiceLayout(
-        menuOrder = "2",
-        named="CuotasFederativas"
+        //menuOrder = "2",
+        //named="CuotasFederativas"
 )
 public class CuotaJugadorServicio {
 	public TranslatableString title() {return TranslatableString.tr("CuotasFederativas");}
@@ -50,7 +50,7 @@ public class CuotaJugadorServicio {
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT
     )
-    @MemberOrder(sequence = "1")
+    @MemberOrder(name="Cuotas", sequence = "3.2")
     public List<CuotaJugador> listarCuotasJugadores() {
         return repositoryService.allInstances(CuotaJugador.class);
     }
@@ -72,7 +72,7 @@ public class CuotaJugadorServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "3")
+    @MemberOrder(name="Cuotas", sequence = "3.3")
     public CuotaJugador crearCuotaFederativa(
     		final @ParameterLayout(named="Valor") Double valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,

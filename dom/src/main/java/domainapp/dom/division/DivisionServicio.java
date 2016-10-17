@@ -24,8 +24,7 @@ import domainapp.dom.torneo.Torneo;
         repositoryFor = Division.class
 )
 @DomainServiceLayout(
-        menuOrder = "5",
-        named="Divisiones"
+		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="6"
 )
 public class DivisionServicio {
 	public TranslatableString title() {
@@ -39,7 +38,7 @@ public class DivisionServicio {
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT
     )
-    @MemberOrder(sequence = "5.1")
+	@MemberOrder(name="Planificacion", sequence = "6.5")
     public List<Division> listarTodasLasDivisiones() {
         return repositoryService.allInstances(Division.class);
     }
@@ -62,7 +61,7 @@ public class DivisionServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "5.2")
+    @MemberOrder(name="Planificacion", sequence = "6.6")
     public Division crearDivision(
 		final @ParameterLayout(named="Nombre") String nombre,
 		final @ParameterLayout(named="Estado") Estado estado,

@@ -25,8 +25,7 @@ import domainapp.dom.estado.Estado;
         repositoryFor = Temporada.class
 )
 @DomainServiceLayout(
-        menuOrder = "3",
-        named="Temporadas"
+        named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="4"
 )
 public class TemporadaServicio {
 	public TranslatableString title() {
@@ -40,7 +39,7 @@ public class TemporadaServicio {
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT
     )
-    @MemberOrder(sequence = "1")
+    @MemberOrder(name="Planificacion", sequence = "4.1")
     public List<Temporada> listarTodasLasTemporadas() {
         return repositoryService.allInstances(Temporada.class);
     }
@@ -63,7 +62,7 @@ public class TemporadaServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "3")
+    @MemberOrder(name="Planificacion", sequence = "4.2")
     public Temporada crearTemporada(
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Estado") Estado estado,
