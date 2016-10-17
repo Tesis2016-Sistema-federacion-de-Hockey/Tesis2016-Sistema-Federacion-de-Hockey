@@ -125,6 +125,10 @@ public class Torneo implements Comparable<Torneo>{
         repositoryService.remove(this);
     }
 	
+	public String disableDelete(){
+		return !listaDivisiones.isEmpty()?"La lista de divisiones debe estar vacia.":null;
+	}
+	
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	
