@@ -1,7 +1,11 @@
 package domainapp.dom.torneo;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
@@ -18,6 +22,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.temporada.Temporada;
 
@@ -82,6 +87,13 @@ public class Torneo implements Comparable<Torneo>{
 	private Temporada temporada;
 	public Temporada getTemporada() {return temporada;}
 	public void setTemporada(final Temporada temporada) {this.temporada = temporada;}
+	
+	//LISTA DE DIVISIONES DE UN TORNEO
+	@MemberOrder(sequence = "4")
+	@Persistent(mappedBy="torneo", dependentElement="true")
+	private SortedSet<Division> listaDivisiones=new TreeSet<Division>();
+	public SortedSet<Division> getListaDivisiones() {return listaDivisiones;}
+	public void setListaDivisiones(SortedSet<Division> listaDivisiones) {this.listaDivisiones = listaDivisiones;}
 
 	//OBSERVACIONES
     @MemberOrder(sequence = "9")
