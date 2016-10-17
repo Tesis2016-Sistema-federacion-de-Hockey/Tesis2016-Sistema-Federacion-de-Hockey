@@ -150,6 +150,9 @@ public class Division implements Comparable<Division>{
         repositoryService.remove(this);
     }
 	
+	public String disableDelete(){
+		return !listaEquipos.isEmpty()?"La lista de equipos debe estar vacia.":null;
+	}
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
