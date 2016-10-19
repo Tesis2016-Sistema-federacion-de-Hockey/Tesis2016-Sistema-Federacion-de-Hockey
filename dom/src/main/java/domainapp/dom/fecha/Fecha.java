@@ -42,7 +42,7 @@ import domainapp.dom.estado.Estado;
                 value = "SELECT "
                         + "FROM domainapp.dom.fecha.Fecha")
 })
-@javax.jdo.annotations.Unique(name="Fecha_nombre_UNQ", members = {"nroFecha","division"})
+@javax.jdo.annotations.Unique(name="Fecha_nroFecha_UNQ", members = {"nroFecha","division"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class Fecha implements Comparable<Fecha>{
