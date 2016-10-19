@@ -25,21 +25,16 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="5">
+        <bs3:col span="6">
             <bs3:tabGroup>
-                <bs3:tab name="Datos de la Division">
+                <bs3:tab name="Datos de domicilio">
                     <bs3:row>
                         <bs3:col span="12">
-                            <c:fieldSet name="Division">
-                            	<c:action id="delete"/>
-                                <c:property id="nombre" namedEscaped="true"/>
-                                <c:property id="estado" namedEscaped="true"/>
-                                <c:property id="torneo" namedEscaped="true"/>
-                                <c:property id="modalidad" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="puntosGanar" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="puntosEmpatar" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="puntosPerder" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
+                            <c:fieldSet name="Fecha">
+                                <!--  <c:action id="delete"/> -->
+                                <c:property id="nroFecha" namedEscaped="true"/>
+                                <c:property id="isCompleta" namedEscaped="true"/>
+                                <c:property id="division" namedEscaped="true" hidden="ALL_EXCEPT_STANDALONE_TABLES" />
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
@@ -64,24 +59,8 @@
             <bs3:tabGroup>
             </bs3:tabGroup>
         </bs3:col>
-        <bs3:col span="7">
+        <bs3:col span="6">
             <bs3:tabGroup  unreferencedCollections="true">
-            	<bs3:tab name="Lista de todos los Equipos">
-                    <bs3:row>
-                        <bs3:col span="12" size="MD">
-                            <c:collection defaultView="table" id="listaEquipos"/>
-                        </bs3:col>
-                    </bs3:row>
-                </bs3:tab>
-            </bs3:tabGroup>
-            <bs3:tabGroup  unreferencedCollections="true">
-                <bs3:tab name="Lista de Fechas de la Division">
-                    <bs3:row>
-                        <bs3:col span="12" size="MD">
-                            <c:collection defaultView="table" id="listaFechas"/>
-                        </bs3:col>
-                    </bs3:row>
-                </bs3:tab>
             </bs3:tabGroup>
         </bs3:col>
     </bs3:row>

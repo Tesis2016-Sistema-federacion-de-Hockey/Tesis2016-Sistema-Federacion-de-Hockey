@@ -70,7 +70,7 @@ public class Fecha implements Comparable<Fecha>{
 	public int getNroFecha() {return nroFecha;}
 	public void setNroFecha(int nroFecha) {this.nroFecha = nroFecha;}
 
-	//ESTADO DE LA FECHA
+	//ESTADO DE LA FECHA, SI ESTA COMPLETA
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)

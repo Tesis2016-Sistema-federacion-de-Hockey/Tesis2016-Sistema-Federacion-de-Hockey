@@ -23,6 +23,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.fecha.Fecha;
 import domainapp.dom.torneo.Torneo;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -126,6 +127,14 @@ public class Division implements Comparable<Division>{
 	private SortedSet<Equipo> listaEquipos=new TreeSet<Equipo>();
 	public SortedSet<Equipo> getListaEquipos() {return listaEquipos;}
 	public void setListaEquipos(SortedSet<Equipo> listaEquipos) {this.listaEquipos = listaEquipos;}
+	
+	//LISTA DE FECHAS
+	@MemberOrder(sequence = "9")
+	@Persistent(mappedBy="division", dependentElement="true")
+	private SortedSet<Fecha> listaFechas=new TreeSet<Fecha>();
+	public SortedSet<Fecha> getListaFechas() {return listaFechas;}
+	public void setListaFechas(SortedSet<Fecha> listaFechas) {this.listaFechas = listaFechas;}
+	
 	
 	//VISIBLE
 	@MemberOrder(sequence = "10")
