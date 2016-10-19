@@ -22,6 +22,9 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.estado.EstadoPartido;
+import domainapp.dom.fecha.Fecha;
+import domainapp.dom.partido.Partido;
 import domainapp.dom.torneo.Torneo;
 
 @DomainService(
@@ -225,17 +228,21 @@ public class DivisionServicio {
 		java.util.Collections.shuffle(listaEquiposDuplicada);
 		
 		String mensaje02="";
-		for (int i=0; i<cantEquipos;i++){
+		for (int i=0; i<division.getListaEquipos().size();i++){
 			mensaje02+= listaEquiposDuplicada.get(i).getNombre()+" ";
 		}		
 		JOptionPane.showMessageDialog(null, mensaje02);
 		
 		
-//		for (int i=0; i<filas; i++){
-//			
-//			Fecha fecha=new Fecha();
-//			fecha.setNroFecha(i+1);
-//			
+//		final Division obj = repositoryService.instantiate(Division.class);
+		for (int i=0; i<filas; i++){
+			
+			Fecha fecha=new Fecha();
+			fecha.setNroFecha(i+1);
+			fecha.setCompleta(false);
+			fecha.setDivision(division);
+			fecha.setListaPartidos(null);
+			
 //			for (int j=0; j<columnas; j=j+2){
 //				
 //				Partido partido=new Partido();
@@ -244,8 +251,9 @@ public class DivisionServicio {
 //				//matrizAuxiliar[i][j]=matrizFixture[i][j];
 //				fecha.getListaPartidos().add(partido);
 //			}
-//			division.getListaFechas().add(fecha);
-//		}
+			division.getListaFechas().add(fecha);			
+		}
+		//repositoryService.persist(obj);
 		
 		
 		

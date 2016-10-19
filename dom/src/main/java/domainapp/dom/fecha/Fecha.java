@@ -23,6 +23,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.partido.Partido;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -87,11 +88,11 @@ public class Fecha implements Comparable<Fecha>{
 	public void setDivision(Division division) {this.division = division;}
 
 	//LISTA DE PARTIDOS DE UNA FECHA
-//	@MemberOrder(sequence = "4")
-//	@Persistent(mappedBy="fecha", dependentElement="true")
-//	private SortedSet<Partido> listaPartidos=new TreeSet<Partido>();
-//	public SortedSet<Partido> getListaPartidos() {return listaPartidos;}
-//	public void setListaPartidos(SortedSet<Partido> listaPartidos) {this.listaPartidos = listaPartidos;}
+	@MemberOrder(sequence = "4")
+	@Persistent(mappedBy="fecha", dependentElement="true")
+	private SortedSet<Partido> listaPartidos=new TreeSet<Partido>();
+	public SortedSet<Partido> getListaPartidos() {return listaPartidos;}
+	public void setListaPartidos(SortedSet<Partido> listaPartidos) {this.listaPartidos = listaPartidos;}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Fecha> {
 
@@ -119,6 +120,6 @@ public class Fecha implements Comparable<Fecha>{
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Fecha o) {
-		return ObjectContracts.compare(this, o, "nombre");
+		return ObjectContracts.compare(this, o, "nroFecha");
 	}
 }

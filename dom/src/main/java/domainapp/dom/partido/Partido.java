@@ -102,7 +102,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//CUANDO DE JUGO
 	@MemberOrder(sequence = "4")
-    @Column(allowsNull="true")
+    @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
 	private LocalDate fechaHora;
 	public LocalDate getFechaHora() {return fechaHora;}
@@ -110,7 +110,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//GOLES DEL EQUIPO LOCAL
 	@MemberOrder(sequence = "5")
-    @Column(allowsNull="true")
+    @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
 	private int golesLocal;
 	public int getGolesLocal() {return golesLocal;}
@@ -118,7 +118,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//GOLES DEL EQUIPO VISITANTE
 	@MemberOrder(sequence = "6")
-    @Column(allowsNull="true")
+    @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
 	private int golesVisitante;
 	public int getGolesVisitante() {return golesVisitante;}
