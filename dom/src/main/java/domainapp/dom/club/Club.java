@@ -15,6 +15,7 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -154,7 +155,7 @@ public class Club implements Comparable<Club> {
 	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
 	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
 
-	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE JUGADORES DEL CLUB
+	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE JUGADORES DEL CLUB		
 	@MemberOrder(sequence = "9")
 	public Club agregarJugador(Jugador e) {
 		if(e == null || listaJugadores.contains(e)) return this;
@@ -235,7 +236,7 @@ public class Club implements Comparable<Club> {
 	public String disableDelete(){
 		return !listaJugadores.isEmpty()?"La lista de jugadores debe estar vacia.":null;
 	}
-	
+		
 	
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
