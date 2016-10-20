@@ -19,6 +19,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.joda.time.LocalDate;
 
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
@@ -111,21 +112,26 @@ public class DivisionServicio {
   //METODO PARA CREAR UN FIXTURE
     public Division crearFixture(@ParameterLayout(named="Ingrese Division") final Division division){
     	
-    	int cantEquipos=division.getListaEquipos().size();
+    	int tope=division.getListaEquipos().size();
+    	int comodin=tope;
+    	boolean bandera=false;
     	
-    	if (cantEquipos<3){
+    	if (tope<3){
     		JOptionPane.showMessageDialog(null, "Cantidad de equipos insuficiente para realizar un fixture (minimo = 3)");
     		return division;
     	}
     	
     	//SI EL NUMERO DE EQUIPOS ES IMPAR, EL TOPE SE INCREMENTA EN 1 UNIDAD
-    	if (cantEquipos%2!=0){cantEquipos=cantEquipos+1;}
+    	if (tope%2!=0){
+    		tope=tope+1;
+    		comodin=tope;
+    	}
     	
-		int filas=cantEquipos-1;
-		int columnas=cantEquipos;
+		int filas=tope-1;
+		int columnas=tope;
 		int aux=1;
-		int coef1=cantEquipos/2-1;
-		int coef2=cantEquipos-2;
+		int coef1=tope/2-1;
+		int coef2=tope-2;
 		
 		int[][] matrizFixture =new int[filas][columnas];
 		int[][] matrizAuxiliar =new int[filas][columnas];
@@ -142,7 +148,7 @@ public class DivisionServicio {
 		
 		//HAGO LA SEGUNDA COLUMNA IGUAL TOPE, TOPE-1, TOPE-2, ....  
 		for (int i=1; i<filas; i++){
-			matrizFixture[i][1]=cantEquipos-i+1;
+			matrizFixture[i][1]=tope-i+1;
 		}
 		
 		//LOGICA DIFICIL DE EXPLICAR...ARMO EL RESTO DE LA MATRIZ
@@ -212,7 +218,7 @@ public class DivisionServicio {
 			}
 			mensaje01+="\n";
 		}
-		//JOptionPane.showMessageDialog(null, mensaje01);
+//		JOptionPane.showMessageDialog(null, mensaje01);
 		
 		
 		//DUPLICO LA LISTA DE EQUIPOS DE LA DIVISION
@@ -225,83 +231,54 @@ public class DivisionServicio {
 		}
 		
 		//DESORDENO LA LISTA DE EQUIPOS DUPLICADA
-		java.util.Collections.shuffle(listaEquiposDuplicada);
+//		java.util.Collections.shuffle(listaEquiposDuplicada);
 		
 		String mensaje02="";
 		for (int i=0; i<division.getListaEquipos().size();i++){
 			mensaje02+= listaEquiposDuplicada.get(i).getNombre()+" ";
 		}		
-		JOptionPane.showMessageDialog(null, mensaje02);
+//		JOptionPane.showMessageDialog(null, mensaje02);
 		
+
 		
-//		final Division obj = repositoryService.instantiate(Division.class);
+		//RECORRO LA MATRIZ FIXTURE
 		for (int i=0; i<filas; i++){
 			
+			bandera=false;
 			Fecha fecha=new Fecha();
 			fecha.setNroFecha(i+1);
 			fecha.setCompleta(false);
 			fecha.setDivision(division);
-			fecha.setListaPartidos(null);
+			fecha.getListaPartidos().clear();
 			
-//			for (int j=0; j<columnas; j=j+2){
-//				
-//				Partido partido=new Partido();
-//				partido.setNombre("F0"+i+"P0"+j);
-//				partido.setEstadoPartido(EstadoPartido.PENDIENTE);
-//				//matrizAuxiliar[i][j]=matrizFixture[i][j];
-//				fecha.getListaPartidos().add(partido);
-//			}
+			for (int j=0; j<columnas; j=j+2){
+				
+				Partido partido=new Partido();
+				
+				Equipo eq1=new Equipo();
+				Equipo eq2=new Equipo();
+				
+				if(((matrizFixture[i][j]!=comodin)&&(matrizFixture[i][j+1]!=comodin))||(comodin==division.getListaEquipos().size())){
+				
+					eq1=listaEquiposDuplicada.get(matrizFixture[i][j]-1);
+					eq2=listaEquiposDuplicada.get(matrizFixture[i][j+1]-1);
+					
+					partido.setEquipoLocal(eq1);
+					partido.setEquipoVisitante(eq2);
+					partido.setGolesLocal(0);
+					partido.setGolesVisitante(0);
+					partido.setEstadoPartido(EstadoPartido.PENDIENTE);
+					partido.setFecha(fecha);
+					partido.setFechaHora(LocalDate.now());
+					partido.setNombre("F"+Integer.toString(i+1)+"-P"+Integer.toString((j+2)/2));
+					
+					fecha.getListaPartidos().add(partido);
+				}
+			}
 			division.getListaFechas().add(fecha);			
 		}
-		//repositoryService.persist(obj);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		return division;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     @javax.inject.Inject
     RepositoryService repositoryService;

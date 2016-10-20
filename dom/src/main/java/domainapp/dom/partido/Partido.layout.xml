@@ -27,7 +27,7 @@
     <bs3:row>
         <bs3:col span="6">
             <bs3:tabGroup>
-                <bs3:tab name="Datos">
+                <bs3:tab name="Datos del Partido">
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="Nombre">

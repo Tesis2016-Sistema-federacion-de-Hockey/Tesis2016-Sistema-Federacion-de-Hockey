@@ -47,8 +47,8 @@ public class Partido implements Comparable<Partido>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Partido: " + this.getNombre()+" ("+this.getFecha().getNroFecha()+
-				")");
+				"Partido: " + this.getNombre()
+				);
 	}
 	
 	public String iconName(){return "partido";}
@@ -70,7 +70,7 @@ public class Partido implements Comparable<Partido>{
 	
     //EQUIPO LOCAL
     @MemberOrder(sequence = "1.1")
-	@Property(editing = Editing.ENABLED)
+	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
 	private Equipo equipoLocal;
 	public Equipo getEquipoLocal() {return equipoLocal;}
@@ -78,7 +78,7 @@ public class Partido implements Comparable<Partido>{
 
     //EQUIPO VISITANTE
     @MemberOrder(sequence = "1.2")
-	@Property(editing = Editing.ENABLED)
+	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
 	private Equipo equipoVisitante;
 	public Equipo getEquipoVisitante() {return equipoVisitante;}
@@ -95,7 +95,6 @@ public class Partido implements Comparable<Partido>{
 	//FECHA
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
 	private Fecha fecha;
 	public Fecha getFecha() {return fecha;}
 	public void setFecha(Fecha fecha) {this.fecha = fecha;}
