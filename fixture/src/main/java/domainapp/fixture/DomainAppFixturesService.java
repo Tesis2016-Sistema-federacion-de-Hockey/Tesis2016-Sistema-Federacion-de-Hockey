@@ -72,7 +72,7 @@ public class DomainAppFixturesService extends FixtureScripts {
 	  @MemberOrder(sequence="99")
 	    public String IntstalarTodosLosFixtures()
 	    {
-	    	this.instalarFixturesClub();
+//	    	this.instalarFixturesClub();
 	    	
 	    	this.instalarFixturesJugador();
 

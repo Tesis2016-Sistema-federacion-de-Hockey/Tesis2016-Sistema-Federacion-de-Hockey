@@ -231,7 +231,7 @@ public class DivisionServicio {
 		}
 		
 		//DESORDENO LA LISTA DE EQUIPOS DUPLICADA
-//		java.util.Collections.shuffle(listaEquiposDuplicada);
+		java.util.Collections.shuffle(listaEquiposDuplicada);
 		
 		String mensaje02="";
 		for (int i=0; i<division.getListaEquipos().size();i++){
