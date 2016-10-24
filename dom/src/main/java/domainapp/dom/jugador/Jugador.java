@@ -14,6 +14,7 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -182,6 +183,24 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     public void delete() {
         repositoryService.remove(this);
     }
+	
+	@Action(
+			invokeOn=InvokeOn.COLLECTION_ONLY
+			)
+	@MemberOrder(name="estado", sequence="1")
+	public Jugador cambiarEstado(){		
+		if(this.getEstado()==Estado.ACTIVO){
+			setEstado(Estado.INACTIVO);
+		}
+		else if(this.getEstado()==Estado.INACTIVO){
+			setEstado(Estado.ACTIVO);
+		}
+		return actionInvocationContext.getInvokedOn().isObject()?this:null;
+	}
+	
+//	public String cssClass(){
+//    	return getEstado()==Estado.ACTIVO?"on":"off";
+//    }	
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;
