@@ -5,6 +5,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import domainapp.dom.division.Division;
 import domainapp.dom.division.DivisionServicio;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.modalidad.Modalidad;
 import domainapp.dom.torneo.Torneo;
 
 public class DivisionFixture extends FixtureScript {
@@ -17,11 +18,11 @@ public class DivisionFixture extends FixtureScript {
 
 //    	BorrarDBDivision(executionContext);
         
-    	crearDivision("PRIMERA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("7MA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("6TA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
-    	crearDivision("5TA DAMAS", Estado.ACTIVO, null, "Todos contra todos", 3, 1, 0, executionContext);
+    	crearDivision("PRIMERA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("7MA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("6TA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("5TA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
 
     }
 	
@@ -30,7 +31,7 @@ public class DivisionFixture extends FixtureScript {
                 final String nombre,
                 final Estado estado,
                 final Torneo torneo,
-                final String modalidad,
+                final Modalidad modalidad,
                 final int puntosGanar,
                 final int puntosEmpatar,
                 final int puntosPerder,

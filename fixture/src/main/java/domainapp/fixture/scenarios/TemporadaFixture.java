@@ -8,6 +8,7 @@ import domainapp.dom.division.Division;
 import domainapp.dom.division.DivisionServicio;
 import domainapp.dom.equipo.EquipoServicio;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.modalidad.Modalidad;
 import domainapp.dom.temporada.Temporada;
 import domainapp.dom.temporada.TemporadaServicio;
 import domainapp.dom.torneo.Torneo;
@@ -34,11 +35,11 @@ public class TemporadaFixture extends FixtureScript {
     	torneoServicio.crearTorneo("SEVEN", Estado.ACTIVO, tempo01, "Sin observaciones");
    	
     	
-    	Division divi01=divisionServicio.crearDivision("1ra DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
-    	Division divi02=divisionServicio.crearDivision("1ra CABALLEROS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("7ma DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("6ta DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
-    	divisionServicio.crearDivision("5ta DAMAS", Estado.ACTIVO, tor01, "Todos contra todos", 3, 1, 0);
+    	Division divi01=divisionServicio.crearDivision("1ra DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	Division divi02=divisionServicio.crearDivision("1ra CABALLEROS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	divisionServicio.crearDivision("7ma DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	divisionServicio.crearDivision("6ta DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	divisionServicio.crearDivision("5ta DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
 
     	Club club01=clubServicio.crearClub("CAI","Club Atletico Independiente", "1997", "ID01","Personeria CAI", "caihockeyneuquen@gmail.com",
         		"4488776", "Chocon", "3500", "", "");

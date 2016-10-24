@@ -26,6 +26,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.fecha.Fecha;
+import domainapp.dom.modalidad.Modalidad;
 import domainapp.dom.torneo.Torneo;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -90,9 +91,9 @@ public class Division implements Comparable<Division>{
     @MemberOrder(sequence = "5")
 	@Column(allowsNull = "true")
     @PropertyLayout(describedAs="TODOS CONTRA TODOS / DIVIDIR EN ZONAS")
-	private String modalidad;
-	public String getModalidad() {return modalidad;}
-	public void setModalidad(final String modalidad) {this.modalidad = modalidad;}
+	private Modalidad modalidad;
+	public Modalidad getModalidad() {return modalidad;}
+	public void setModalidad(Modalidad modalidad) {this.modalidad = modalidad;}
 
 	//PUNTOS POR GANAR
 	@MemberOrder(sequence = "6")

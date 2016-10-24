@@ -25,6 +25,7 @@ import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
+import domainapp.dom.modalidad.Modalidad;
 import domainapp.dom.partido.Partido;
 import domainapp.dom.torneo.Torneo;
 
@@ -77,7 +78,7 @@ public class DivisionServicio {
 		final @ParameterLayout(named="Nombre") String nombre,
 		final @ParameterLayout(named="Estado") Estado estado,
 		final @ParameterLayout(named="Torneo") Torneo torneo,
-		final @ParameterLayout(named="Modalidad") String modalidad,
+		final @ParameterLayout(named="Modalidad") Modalidad modalidad,
 		final @ParameterLayout(named="Puntos GANAR") int puntosGanar,
 		final @ParameterLayout(named="Puntos EMPATAR") int puntosEmpatar,
 		final @ParameterLayout(named="Puntos PERDER") int puntosPerder
@@ -123,7 +124,6 @@ public class DivisionServicio {
     		return division;
     	}
     	
-    	
     	int tope=division.getListaEquipos().size();
     	int comodin=tope;
     	
@@ -144,8 +144,8 @@ public class DivisionServicio {
 		int coef1=tope/2-1;
 		int coef2=tope-2;
 		
-		int[][] matrizFixture =new int[filas][columnas];
-		int[][] matrizAuxiliar =new int[filas][columnas];
+		int[][] matrizFixture =new int[filas*2][columnas];
+		int[][] matrizAuxiliar =new int[filas*2][columnas];
 		
 		//HAGO LA PRIMERA LINEA IGUAL A 1, 2, 3, ...tope
 		for (int j=0; j<columnas; j++){
@@ -221,15 +221,7 @@ public class DivisionServicio {
 			}
 		}
 		
-//		//METODO PARA MOSTRAR UN JPANEL CON LA MATRIZ
-//		String mensaje01="";
-//		for (int i=0; i<filas;i++){
-//			for (int j=0; j<columnas;j++){
-//				mensaje01+=Integer.toString(matrizFixture[i][j])+"  ";
-//			}
-//			mensaje01+="\n";
-//		}
-//		JOptionPane.showMessageDialog(null, mensaje01);
+		//CON ESTO, YA OBTENGO UNA MATRIZ FIXTURE QUE SIRVE PARA LA PRIMERA RONDA DE PARTIDOS
 		
 		//DUPLICO LA LISTA DE EQUIPOS DE LA DIVISION
 		List<Equipo>listaEquiposDuplicada=new ArrayList<Equipo>();
@@ -243,7 +235,46 @@ public class DivisionServicio {
 		//DESORDENO LA LISTA DE EQUIPOS DUPLICADA
 		java.util.Collections.shuffle(listaEquiposDuplicada);
 		
+		//AHORA EVALUO SI LA MODALIDAD ES IDA Y VUELTA
+		if(division.getModalidad()==Modalidad.IDA_Y_VUELTA){
+			
+			//DUPLICO LA MATRIZ PRINCIPAL
+			for (int i=0; i<filas; i++){
+				for (int j=0; j<columnas; j++){
+					matrizAuxiliar[i][j]=matrizFixture[i][j];
+				}
+			}
+			
+			//EXTIENDO LAS MATRICES FIXTURE Y AUXILIAR
+			for (int i=filas; i<filas*2; i++){
+				for (int j=0; j<columnas; j++){
+					matrizFixture[i][j]=matrizFixture[i-filas][j];
+					matrizAuxiliar[i][j]=matrizFixture[i-filas][j];
+				}
+			}
+			
+			//PERMUTO LAS COLUMNAS PERO DE LAS FILAS RECIEN AGREGADAS
+			for (int i=filas; i<filas*2; i++){
+				for (int j=0; j<columnas; j=j+2){
+					matrizFixture[i][j]=matrizAuxiliar[i][j+1];
+					matrizFixture[i][j+1]=matrizAuxiliar[i][j];
+				}
+			}
+		}
+		
+//		//METODO PARA MOSTRAR UN JPANEL CON LA MATRIZ FIXTURE
+//		String mensaje01="";
+//		for (int i=0; i<filas*2;i++){
+//			for (int j=0; j<columnas;j++){
+//				mensaje01+=Integer.toString(matrizFixture[i][j])+"  ";
+//			}
+//			mensaje01+="\n";
+//		}
+//		JOptionPane.showMessageDialog(null, mensaje01);
+
 		//RECORRO LA MATRIZ FIXTURE
+		if(division.getModalidad()==Modalidad.IDA_Y_VUELTA)filas=filas*2;
+		
 		for (int i=0; i<filas; i++){
 			
 			Fecha fecha=new Fecha();
@@ -271,7 +302,7 @@ public class DivisionServicio {
 					partido.setEstadoPartido(EstadoPartido.PENDIENTE);
 					partido.setFecha(fecha);
 					partido.setFechaHora(LocalDate.now());
-					partido.setNombre("F"+Integer.toString(i+1)+"|P"+Integer.toString((j+2)/2));
+					partido.setNombre("Fe"+Integer.toString(i+1)+"-Pa"+Integer.toString((j+2)/2));
 					
 					fecha.getListaPartidos().add(partido);
 				}

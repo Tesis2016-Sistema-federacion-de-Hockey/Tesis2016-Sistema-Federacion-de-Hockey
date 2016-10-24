@@ -75,9 +75,9 @@ public class Fecha implements Comparable<Fecha>{
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
-	private boolean isCompleta;
-	public boolean isCompleta() {return isCompleta;}
-	public void setCompleta(boolean isCompleta) {this.isCompleta = isCompleta;}
+	private boolean completa;
+	public boolean isCompleta() {return completa;}
+	public void setCompleta(boolean completa) {this.completa = completa;}
 
 	//DIVISION
 	@MemberOrder(sequence = "3")
