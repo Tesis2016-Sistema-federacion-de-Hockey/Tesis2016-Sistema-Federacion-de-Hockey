@@ -11,6 +11,8 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -31,41 +33,39 @@ import domainapp.dom.estado.Estado;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 
-	@javax.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE,
-        schema = "simple",
-        table = "Equipo")
-	@javax.jdo.annotations.DatastoreIdentity(
-        strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
-         column="equipo_id")
-	@javax.jdo.annotations.Version(
-	//  strategy=VersionStrategy.VERSION_NUMBER,
-        strategy= VersionStrategy.DATE_TIME,
-        column="version")
-	@javax.jdo.annotations.Queries({
-        @javax.jdo.annotations.Query(
-                name = "traerTodos", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.equipo.Equipo"),
-        @javax.jdo.annotations.Query(
-                name = "traerEquipo", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.equipo.Equipo "
-                		+ "WHERE club == :club"),
-        @javax.jdo.annotations.Query(
-                name = "listarTodosLosEquiposDelClub", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.equipo.Equipo "
-                		+ "WHERE (club == :club) && (estado == 'ACTIVO')")
-	})
+@javax.jdo.annotations.PersistenceCapable(
+    identityType=IdentityType.DATASTORE,
+    schema = "simple",
+    table = "Equipo")
+@javax.jdo.annotations.DatastoreIdentity(
+    strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
+     column="equipo_id")
+@javax.jdo.annotations.Version(
+    strategy= VersionStrategy.DATE_TIME,
+    column="version")
+@javax.jdo.annotations.Queries({
+    @javax.jdo.annotations.Query(
+            name = "traerTodos", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.equipo.Equipo"),
+    @javax.jdo.annotations.Query(
+            name = "traerEquipo", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.equipo.Equipo "
+            		+ "WHERE club == :club"),
+    @javax.jdo.annotations.Query(
+            name = "listarTodosLosEquiposDelClub", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.equipo.Equipo "
+            		+ "WHERE (club == :club) && (estado == 'ACTIVO')")
+})
 @javax.jdo.annotations.Unique(name="Equipo_nombre_UNQ", members = {"nombre","club","division"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class Equipo implements Comparable<Equipo>{
 	
     public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Equipo: " + this.getNombre()+" ("+this.getDivision().getNombre()+")");
+		return TranslatableString.tr("{nombre}", "nombre", this.getNombre());
 
     }
 	
@@ -77,10 +77,8 @@ public class Equipo implements Comparable<Equipo>{
 		 */
 		private static final long serialVersionUID = 1L;}
 	
-	
     //NOMBRE DEL EQUIPO
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
@@ -89,7 +87,6 @@ public class Equipo implements Comparable<Equipo>{
 	//ESTADO DEL EQUIPO
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private Estado estado;
 	public Estado getEstado() {return estado;}
 	public void setEstado(final Estado estado) {this.estado = estado;}
@@ -97,7 +94,6 @@ public class Equipo implements Comparable<Equipo>{
 	//CLUB
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private Club club;
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
@@ -105,7 +101,6 @@ public class Equipo implements Comparable<Equipo>{
 	//DIVISION
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private Division division;
 	public Division getDivision() {return division;}
 	public void setDivision(Division division) {this.division = division;}
@@ -121,12 +116,14 @@ public class Equipo implements Comparable<Equipo>{
 	//LISTA DE BUENA FE
 	@MemberOrder(sequence = "5")
 	@Persistent(mappedBy="equipo", dependentElement="true")
+	@CollectionLayout(named="Lista de Buena Fe")
 	private SortedSet<Jugador> listaBuenaFe=new TreeSet<Jugador>();
 	public SortedSet<Jugador> getListaBuenaFe() {return listaBuenaFe;}
 	public void setListaBuenaFe(SortedSet<Jugador> listaBuenaFe) {this.listaBuenaFe = listaBuenaFe;}
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE BUENA FE DEL EQUIPO
-	@MemberOrder(sequence = "6")
+	@MemberOrder(sequence = "10")
+	@ActionLayout(named="Agregar Jugador")
 	public Equipo agregarJugadorAListaBuenaFe(Jugador e) {
 		if(e == null || listaBuenaFe.contains(e)) return this;
 	    e.setEquipo(this);
@@ -146,7 +143,8 @@ public class Equipo implements Comparable<Equipo>{
 	}
 		
 	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
-	@MemberOrder(sequence = "7")
+	@MemberOrder(sequence = "11")
+	@ActionLayout(named="Quitar Jugador")
 	public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
 		if(e == null || !listaBuenaFe.contains(e)) return this;
 		
@@ -167,7 +165,6 @@ public class Equipo implements Comparable<Equipo>{
         obj.setClub(e.getClub());
         repositoryService.persist(obj);
         obj.setEquipo(null);
-		
 	    listaBuenaFe.remove(e);
 	    return this;
 	}
@@ -177,25 +174,24 @@ public class Equipo implements Comparable<Equipo>{
 		return Lists.newArrayList(getListaBuenaFe());
 	}
 		
-		public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
-
+	public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;}
 		
-		@Action(
-	            domainEvent = DeleteDomainEvent.class,
-	            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-	    )
-		public void delete() {
-				repositoryService.remove(this);
-	    }
-		
-		public String disableDelete(){
-			return !listaBuenaFe.isEmpty()?"La lista de buena fe debe estar vacia.":null;
-		}
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	@ActionLayout(named="Eliminar Equipo")
+	public void delete() {
+		repositoryService.remove(this);
+    }
 	
+	public String disableDelete(){
+		return !listaBuenaFe.isEmpty()?"La lista de Buena Fe debe estar vacia.":null;
+	}
 	
 	@javax.inject.Inject
     JugadorServicio jugadorServicio;

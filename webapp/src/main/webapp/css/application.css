@@ -16,4 +16,16 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+ 
+ .domainapp-dom-jugador-Jugador .activo{
+ 	/*color: green;*/
+}
+
+
+ .domainapp-dom-jugador-Jugador .inactivo{
+	color: red;
+ 	text-decoration: line-through;
+}
+ 
+ 
 

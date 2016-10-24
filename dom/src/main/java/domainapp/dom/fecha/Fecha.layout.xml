@@ -34,7 +34,7 @@
                                 <!--  <c:action id="delete"/> -->
                                 <c:property id="nroFecha" namedEscaped="true"/>
                                 <c:property id="isCompleta" namedEscaped="true"/>
-                                <c:property id="division" namedEscaped="true" hidden="ALL_EXCEPT_STANDALONE_TABLES" />
+                                <c:property id="division" namedEscaped="true" hidden="PARENTED_TABLES" />
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

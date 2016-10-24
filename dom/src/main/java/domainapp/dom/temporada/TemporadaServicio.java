@@ -37,7 +37,8 @@ public class TemporadaServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar todas las Temporadas"
     )
     @MemberOrder(name="Planificacion", sequence = "4.1")
     public List<Temporada> listarTodasLasTemporadas() {

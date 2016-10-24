@@ -36,6 +36,7 @@ import domainapp.dom.torneo.Torneo;
 		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="6"
 )
 public class DivisionServicio {
+	
 	public TranslatableString title() {
         return TranslatableString.tr("Divisiones");
     }
@@ -45,7 +46,8 @@ public class DivisionServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Todas las Divisiones"
     )
 	@MemberOrder(name="Planificacion", sequence = "6.5")
     public List<Division> listarTodasLasDivisiones() {
@@ -109,15 +111,24 @@ public class DivisionServicio {
     	return 0;
     }
 	
-  //METODO PARA CREAR UN FIXTURE
+    //METODO PARA CREAR UN FIXTURE
+    @ActionLayout(
+//    		hidden = Where.NOWHERE,
+    		named="Crear Fixture"
+    		)
     public Division crearFixture(@ParameterLayout(named="Ingrese Division") final Division division){
+    	
+    	if (!division.getListaFechas().isEmpty()){
+    		JOptionPane.showMessageDialog(null, "No se puede crear un fixture. Ya existe uno");
+    		return division;
+    	}
+    	
     	
     	int tope=division.getListaEquipos().size();
     	int comodin=tope;
-    	boolean bandera=false;
     	
     	if (tope<3){
-    		JOptionPane.showMessageDialog(null, "Cantidad de equipos insuficiente para realizar un fixture (minimo = 3)");
+    		JOptionPane.showMessageDialog(null, "Cantidad de equipos insuficiente para crear un fixture (minimo = 3)");
     		return division;
     	}
     	
@@ -210,16 +221,15 @@ public class DivisionServicio {
 			}
 		}
 		
-		//MUESTRO UN JPANEL CON LA MATRIZ
-		String mensaje01="";
-		for (int i=0; i<filas;i++){
-			for (int j=0; j<columnas;j++){
-				mensaje01+=Integer.toString(matrizFixture[i][j])+"  ";
-			}
-			mensaje01+="\n";
-		}
+//		//METODO PARA MOSTRAR UN JPANEL CON LA MATRIZ
+//		String mensaje01="";
+//		for (int i=0; i<filas;i++){
+//			for (int j=0; j<columnas;j++){
+//				mensaje01+=Integer.toString(matrizFixture[i][j])+"  ";
+//			}
+//			mensaje01+="\n";
+//		}
 //		JOptionPane.showMessageDialog(null, mensaje01);
-		
 		
 		//DUPLICO LA LISTA DE EQUIPOS DE LA DIVISION
 		List<Equipo>listaEquiposDuplicada=new ArrayList<Equipo>();
@@ -233,18 +243,9 @@ public class DivisionServicio {
 		//DESORDENO LA LISTA DE EQUIPOS DUPLICADA
 		java.util.Collections.shuffle(listaEquiposDuplicada);
 		
-		String mensaje02="";
-		for (int i=0; i<division.getListaEquipos().size();i++){
-			mensaje02+= listaEquiposDuplicada.get(i).getNombre()+" ";
-		}		
-//		JOptionPane.showMessageDialog(null, mensaje02);
-		
-
-		
 		//RECORRO LA MATRIZ FIXTURE
 		for (int i=0; i<filas; i++){
 			
-			bandera=false;
 			Fecha fecha=new Fecha();
 			fecha.setNroFecha(i+1);
 			fecha.setCompleta(false);
@@ -270,16 +271,20 @@ public class DivisionServicio {
 					partido.setEstadoPartido(EstadoPartido.PENDIENTE);
 					partido.setFecha(fecha);
 					partido.setFechaHora(LocalDate.now());
-					partido.setNombre("F"+Integer.toString(i+1)+"-P"+Integer.toString((j+2)/2));
+					partido.setNombre("F"+Integer.toString(i+1)+"|P"+Integer.toString((j+2)/2));
 					
 					fecha.getListaPartidos().add(partido);
 				}
 			}
 			division.getListaFechas().add(fecha);			
 		}
+		JOptionPane.showMessageDialog(null, "Fixture creado con exito");
 		return division;
     }
     
     @javax.inject.Inject
     RepositoryService repositoryService;
+    
+    @javax.inject.Inject
+    Division division;
 }

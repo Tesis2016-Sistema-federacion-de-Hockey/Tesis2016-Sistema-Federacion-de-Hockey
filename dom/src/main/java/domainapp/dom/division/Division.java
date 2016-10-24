@@ -9,6 +9,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -51,7 +53,7 @@ public class Division implements Comparable<Division>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Division: " + this.getNombre()+" ("+this.getTorneo().getNombre()
+				this.getNombre()+" ("+this.getTorneo().getNombre()
 				+", "+this.getTorneo().getTemporada().getNombre()+")");
 	}
 	
@@ -63,10 +65,8 @@ public class Division implements Comparable<Division>{
 		 */
 		private static final long serialVersionUID = 1L;}
 	
-	
     //NOMBRE DE LA DIVISION
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
@@ -75,7 +75,6 @@ public class Division implements Comparable<Division>{
 	//ESTADO DE LA DIVISION
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private Estado estado;
 	public Estado getEstado() {return estado;}
 	public void setEstado(final Estado estado) {this.estado = estado;}
@@ -83,7 +82,6 @@ public class Division implements Comparable<Division>{
 	//TORNEO
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private Torneo torneo;
 	public Torneo getTorneo() {return torneo;}
 	public void setTorneo(final Torneo torneo) {this.torneo = torneo;}
@@ -91,7 +89,6 @@ public class Division implements Comparable<Division>{
 	//MODALIDAD
     @MemberOrder(sequence = "5")
 	@Column(allowsNull = "true")
-    @Property(editing = Editing.ENABLED)
     @PropertyLayout(describedAs="TODOS CONTRA TODOS / DIVIDIR EN ZONAS")
 	private String modalidad;
 	public String getModalidad() {return modalidad;}
@@ -100,7 +97,6 @@ public class Division implements Comparable<Division>{
 	//PUNTOS POR GANAR
 	@MemberOrder(sequence = "6")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private int puntosGanar;
 	public int getPuntosGanar() {return puntosGanar;}
 	public void setPuntosGanar(final int puntosGanar) {this.puntosGanar = puntosGanar;}
@@ -108,7 +104,6 @@ public class Division implements Comparable<Division>{
 	//PUNTOS POR EMPATAR
 	@MemberOrder(sequence = "7")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private int puntosEmpatar;
 	public int getPuntosEmpatar() {return puntosEmpatar;}
 	public void setPuntosEmpatar(final int puntosEmpatar) {this.puntosEmpatar = puntosEmpatar;}
@@ -116,7 +111,6 @@ public class Division implements Comparable<Division>{
 	//PUNTOS POR PERDER
 	@MemberOrder(sequence = "8")
     @Column(allowsNull="false")
-	@Property(editing = Editing.ENABLED)
 	private int puntosPerder;
 	public int getPuntosPerder() {return puntosPerder;}
 	public void setPuntosPerder(final int puntosPerder) {this.puntosPerder = puntosPerder;}
@@ -124,6 +118,7 @@ public class Division implements Comparable<Division>{
 	//LISTA DE EQUIPOS DE UNA DIVISION
 	@MemberOrder(sequence = "9")
 	@Persistent(mappedBy="division", dependentElement="true")
+	@CollectionLayout(named="Equipos")
 	private SortedSet<Equipo> listaEquipos=new TreeSet<Equipo>();
 	public SortedSet<Equipo> getListaEquipos() {return listaEquipos;}
 	public void setListaEquipos(SortedSet<Equipo> listaEquipos) {this.listaEquipos = listaEquipos;}
@@ -131,10 +126,10 @@ public class Division implements Comparable<Division>{
 	//LISTA DE FECHAS
 	@MemberOrder(sequence = "9")
 	@Persistent(mappedBy="division", dependentElement="true")
+	@CollectionLayout(named="Fixture")
 	private SortedSet<Fecha> listaFechas=new TreeSet<Fecha>();
 	public SortedSet<Fecha> getListaFechas() {return listaFechas;}
 	public void setListaFechas(SortedSet<Fecha> listaFechas) {this.listaFechas = listaFechas;}
-	
 	
 	//VISIBLE
 	@MemberOrder(sequence = "10")
@@ -155,6 +150,7 @@ public class Division implements Comparable<Division>{
             domainEvent = DeleteDomainEvent.class,
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
+	@ActionLayout(named="Eliminar Division")
 	public void delete() {
         repositoryService.remove(this);
     }

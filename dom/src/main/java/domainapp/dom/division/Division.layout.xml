@@ -69,7 +69,7 @@
             	<bs3:tab name="Lista de todos los Equipos">
                     <bs3:row>
                         <bs3:col span="12" size="MD">
-                            <c:collection defaultView="table" id="listaEquipos"/>
+                            <c:collection defaultView="table" id="listaEquipos" />
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>

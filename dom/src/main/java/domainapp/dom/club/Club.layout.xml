@@ -32,19 +32,19 @@
                         <bs3:col span="12">
                             <c:fieldSet name="Nombre">
                                 <c:action id="delete"/>
-                                <c:property id="nombre" namedEscaped="true"/>
-                                <c:property id="nombreInstitucional" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="anioAfiliacion" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="idInterno" namedEscaped="true"/>
-                                <c:property id="personeriaJuridica" namedEscaped="true" hidden="ALL_TABLES"/>
-                                <c:property id="email" namedEscaped="true"/>
-                                <c:property id="telefono" namedEscaped="true"/>
-                                <c:property id="domicilio" namedEscaped="true"/>
+                                <c:property id="nombre" />
+                                <c:property id="nombreInstitucional" hidden="ALL_TABLES"/>
+                                <c:property id="anioAfiliacion" hidden="ALL_TABLES"/>
+                                <c:property id="idInterno" />
+                                <c:property id="personeriaJuridica" hidden="ALL_TABLES"/>
+                                <c:property id="email" />
+                                <c:property id="telefono" />
+                                <c:property id="domicilio" />
 <!--                                 
-                                <c:property id="calle" namedEscaped="true"/>
-                                <c:property id="numero" namedEscaped="true"/>
-                                <c:property id="piso" namedEscaped="true"/>
-                                <c:property id="departamento" namedEscaped="true"/>
+                                <c:property id="calle" />
+                                <c:property id="numero" />
+                                <c:property id="piso" />
+                                <c:property id="departamento" />
 -->                                
                             </c:fieldSet>
                         </bs3:col>
@@ -70,7 +70,7 @@
         </bs3:col>
         <bs3:col span="7">
             <bs3:tabGroup  unreferencedCollections="true">
-            	<bs3:tab name="Listar Todos Los Equipos Del Club">
+            	<bs3:tab name="Lista de Equipos">
                     <bs3:row>
                         <bs3:col span="12" size="MD">
                             <c:collection defaultView="table" id="listarTodosLosEquiposDelClub"/>
@@ -79,7 +79,7 @@
                 </bs3:tab>
             </bs3:tabGroup>
             <bs3:tabGroup  unreferencedCollections="true">
-                <bs3:tab name="Lista Jugadores">
+                <bs3:tab name="Lista de Jugadores">
                     <bs3:row>
                         <bs3:col span="12" size="MD">
                             <c:collection defaultView="table" id="listaJugadores"/>

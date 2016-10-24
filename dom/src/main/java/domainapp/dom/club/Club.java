@@ -12,12 +12,12 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
@@ -29,7 +29,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.cuotaclub.CuotaClub;
-import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
@@ -63,7 +62,7 @@ import domainapp.dom.jugador.JugadorServicio;
                         + "WHERE nombre == :nombre "
                         + "|| nombre.indexOf(:nombre) >= 0")
 })
-@javax.jdo.annotations.Unique(name="Club_nombre_UNQ", members = {"idInterno"})
+@javax.jdo.annotations.Unique(name="Club_idInterno_UNQ", members = {"idInterno"})
 @DomainObject(bounded=true)
 @DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
 public class Club implements Comparable<Club> {
@@ -71,8 +70,7 @@ public class Club implements Comparable<Club> {
 	public static final int NAME_LENGTH = 40;
     
     public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Club: " + this.getNombre());
+		return TranslatableString.tr("{nombre}", "nombre", this.getNombre());
 	}
 
     public String iconName(){return "Club";}
@@ -86,7 +84,6 @@ public class Club implements Comparable<Club> {
     
     //NOMBRE
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
@@ -94,7 +91,6 @@ public class Club implements Comparable<Club> {
 			
 	//NOMBRE INSTITUCIONAL
 	@MemberOrder(sequence = "2")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private String nombreInstitucional;
 	public String getNombreInstitucional() {return nombreInstitucional;}
@@ -102,15 +98,14 @@ public class Club implements Comparable<Club> {
 	
 	//ANIO AFILIACION
 	@MemberOrder(sequence = "3")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
+	@PropertyLayout(named="Año de Afiliacion")
 	private String anioAfiliacion;
 	public String getAnioAfiliacion() {return anioAfiliacion;}
 	public void setAnioAfiliacion(final String anioAfiliacion) {this.anioAfiliacion = anioAfiliacion;}
 	
 	//ID INTERNO
 	@MemberOrder(sequence = "4")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String idInterno;
 	public String getIdInterno() {return idInterno;}
@@ -118,7 +113,6 @@ public class Club implements Comparable<Club> {
 	
 	//PERSONERIA JURIDICA
 	@MemberOrder(sequence = "5")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private String personeriaJuridica;
 	public String getPersoneriaJuridica(){return personeriaJuridica;}
@@ -126,7 +120,6 @@ public class Club implements Comparable<Club> {
 	
 	//EMAIL
 	@MemberOrder(sequence = "5")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private String email;
 	public String getEmail() {return email;}
@@ -134,7 +127,6 @@ public class Club implements Comparable<Club> {
 	
 	//TELEFONO
 	@MemberOrder(sequence = "6")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private String telefono;
 	public String getTelefono() {return telefono;}
@@ -142,7 +134,7 @@ public class Club implements Comparable<Club> {
 	
 	//DOMICILIO
 	@MemberOrder(sequence = "7")
-	@Property(editing = Editing.ENABLED, hidden=Where.ALL_TABLES)	
+	@Property(hidden=Where.ALL_TABLES)	
 	@Column(name="domicilio_id")	
 	private Domicilio domicilio;	
 	public Domicilio getDomicilio() {return domicilio;}
@@ -151,6 +143,7 @@ public class Club implements Comparable<Club> {
 	//LISTADO DE JUGADORES DEL CLUB
 	@MemberOrder(sequence = "8")
 	@Persistent(mappedBy="club", dependentElement="true")
+	@CollectionLayout(named="Jugadores pertenecientes al Club")
 	private SortedSet<Jugador> listaJugadores=new TreeSet<Jugador>();
 	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
 	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
@@ -164,12 +157,10 @@ public class Club implements Comparable<Club> {
 	    return this;
 	}
 	
-	public List<Jugador> choices0AgregarJugador(){
-		
+	public List<Jugador> choices0AgregarJugador(){		
 		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
 			@Override
-			public boolean apply(Jugador jug) {
-				
+			public boolean apply(Jugador jug) {				
 				return jugadorServicio.listarJugadoresSinClub().contains(jug)?true:false;
 			}
 		});
@@ -214,6 +205,7 @@ public class Club implements Comparable<Club> {
 	//CUOTAS
 	@MemberOrder(sequence = "11")
 	@Persistent(mappedBy = "clubes", dependentElement = "true")
+	@CollectionLayout(named="Cuotas del Club")
 	private SortedSet<CuotaClub> cuotasClub = new TreeSet<CuotaClub>();
 	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
 	public void setCuotasClub(SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}

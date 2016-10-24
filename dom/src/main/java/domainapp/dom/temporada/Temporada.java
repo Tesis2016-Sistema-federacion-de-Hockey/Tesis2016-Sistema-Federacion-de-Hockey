@@ -10,10 +10,12 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Nature;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
@@ -49,8 +51,7 @@ import domainapp.dom.torneo.Torneo;
 public class Temporada implements Comparable<Temporada>{
 	
     public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Temporada: " + this.getNombre());
+		return TranslatableString.tr("{nombre}", "nombre", this.getNombre());
 	}
 	
 	public String iconName(){return "temporada";}
@@ -64,7 +65,6 @@ public class Temporada implements Comparable<Temporada>{
 	
     //NOMBRE DE LA TEMPORADA
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
@@ -88,6 +88,7 @@ public class Temporada implements Comparable<Temporada>{
 	//LISTA DE TORNEOS DE UNA TEMPORADA
 	@MemberOrder(sequence = "4")
 	@Persistent(mappedBy="temporada", dependentElement="true")
+	@CollectionLayout(named="Torneos")
 	private SortedSet<Torneo> listaTorneos=new TreeSet<Torneo>();
 	public SortedSet<Torneo> getListaTorneos() {return listaTorneos;}
 	public void setListaTorneos(SortedSet<Torneo> listaTorneos) {this.listaTorneos = listaTorneos;}

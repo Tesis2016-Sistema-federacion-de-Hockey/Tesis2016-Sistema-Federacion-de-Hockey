@@ -10,6 +10,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -17,12 +18,12 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.club.Club;
-import domainapp.dom.cuota.Cuota;
 import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
@@ -40,7 +41,6 @@ import domainapp.dom.sector.Sector;
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="jugador_id")
 @javax.jdo.annotations.Version(
-//        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
@@ -84,7 +84,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Jugador: " + this.getApellido() + ", " + this.getNombre());
+				"Jugador: " + this.getApellido() + ", " + this.getNombre()+" (DNI: "+this.getDocumento()+")");
 	}
     
     public String iconName(){
@@ -119,7 +119,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public void setFicha(final String ficha) {this.ficha = ficha;}
 	
 	//NUMERO DE CAMISETA
-    @MemberOrder(sequence = "12")
+    //@MemberOrder(sequence = "12")
 	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "true")
 	private String numeroCamiseta;
@@ -153,6 +153,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	//CUOTAS
 	@MemberOrder(sequence = "16")
 	@Persistent(mappedBy = "jugadores", dependentElement = "true")
+	@CollectionLayout(named="Cuotas")
 	private SortedSet<CuotaJugador> cuotas = new TreeSet<CuotaJugador>();	
 	public SortedSet<CuotaJugador> getCuotas() {return cuotas;}
 	public void setCuotas(SortedSet<CuotaJugador> cuotas) {this.cuotas = cuotas;}
@@ -160,6 +161,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	//PAGOS
 	@MemberOrder(sequence = "17")
 	@Persistent(mappedBy="jugador", dependentElement="true")
+	@CollectionLayout(named="Pagos")
 	private SortedSet<PagoJugador> pagosJugador=new TreeSet<PagoJugador>();
 	public SortedSet<PagoJugador> getPagosJugador() {return pagosJugador;}
 	public void setPagosJugador(SortedSet<PagoJugador> pagosJugador) {this.pagosJugador = pagosJugador;}
@@ -180,6 +182,9 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     public void delete() {
         repositoryService.remove(this);
     }
+	
+	@javax.inject.Inject
+	ActionInvocationContext actionInvocationContext;
 	
     @javax.inject.Inject
     RepositoryService repositoryService;

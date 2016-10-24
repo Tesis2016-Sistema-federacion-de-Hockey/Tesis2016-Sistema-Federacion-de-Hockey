@@ -5,13 +5,12 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -62,7 +61,6 @@ public class Partido implements Comparable<Partido>{
 	
     //NOMBRE DEL PARTIDO
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
@@ -72,6 +70,7 @@ public class Partido implements Comparable<Partido>{
     @MemberOrder(sequence = "1.1")
 	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
+    @PropertyLayout(named="Local")
 	private Equipo equipoLocal;
 	public Equipo getEquipoLocal() {return equipoLocal;}
 	public void setEquipoLocal(Equipo equipoLocal) {this.equipoLocal = equipoLocal;}
@@ -80,6 +79,7 @@ public class Partido implements Comparable<Partido>{
     @MemberOrder(sequence = "1.2")
 	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
+    @PropertyLayout(named="Visitante")
 	private Equipo equipoVisitante;
 	public Equipo getEquipoVisitante() {return equipoVisitante;}
 	public void setEquipoVisitante(Equipo equipoVisitante) {this.equipoVisitante = equipoVisitante;}
@@ -88,6 +88,7 @@ public class Partido implements Comparable<Partido>{
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Estado")
 	private EstadoPartido estadoPartido;
 	public EstadoPartido getEstadoPartido() {return estadoPartido;}
 	public void setEstadoPartido(EstadoPartido estadoPartido) {this.estadoPartido = estadoPartido;}
@@ -103,6 +104,7 @@ public class Partido implements Comparable<Partido>{
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Horario")
 	private LocalDate fechaHora;
 	public LocalDate getFechaHora() {return fechaHora;}
 	public void setFechaHora(LocalDate fechaHora) {this.fechaHora = fechaHora;}
@@ -111,6 +113,7 @@ public class Partido implements Comparable<Partido>{
 	@MemberOrder(sequence = "5")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Goles")
 	private int golesLocal;
 	public int getGolesLocal() {return golesLocal;}
 	public void setGolesLocal(int golesLocal) {this.golesLocal = golesLocal;}
@@ -119,6 +122,7 @@ public class Partido implements Comparable<Partido>{
 	@MemberOrder(sequence = "6")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Goles")
 	private int golesVisitante;
 	public int getGolesVisitante() {return golesVisitante;}
 	public void setGolesVisitante(int golesVisitante) {this.golesVisitante = golesVisitante;}
@@ -130,13 +134,13 @@ public class Partido implements Comparable<Partido>{
 		 */
 		private static final long serialVersionUID = 1L;}
 	
-	@Action(
-            domainEvent = DeleteDomainEvent.class,
-            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-    )
-	public void delete() {
-        repositoryService.remove(this);
-    }	
+//	@Action(
+//            domainEvent = DeleteDomainEvent.class,
+//            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+//    )
+//	public void delete() {
+//        repositoryService.remove(this);
+//    }	
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

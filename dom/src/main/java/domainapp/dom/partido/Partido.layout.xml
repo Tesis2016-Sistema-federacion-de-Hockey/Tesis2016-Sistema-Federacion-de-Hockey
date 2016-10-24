@@ -32,14 +32,14 @@
                         <bs3:col span="12">
                             <c:fieldSet name="Nombre">
                                 <!--  <c:action id="delete"/> -->
-                                <c:property id="nombre" namedEscaped="true"/>
-                                <c:property id="estadoPartido" namedEscaped="true"/>
-                                <c:property id="fecha" namedEscaped="true" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
-                                <c:property id="fechaHora" namedEscaped="true" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
-                                <c:property id="equipoLocal" namedEscaped="true"/>
-                                <c:property id="equipoVisitante" namedEscaped="true"/>
-                                <c:property id="golesLocal" namedEscaped="true"/>
-                                <c:property id="golesVisitante" namedEscaped="true"/>
+                                <c:property id="fechaHora" namedEscaped="true"/>
+                                <c:property id="nombre" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
+                                <c:property id="fecha" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
+                                <c:property id="equipoLocal"/>
+                                <c:property id="golesLocal"/>
+                                <c:property id="equipoVisitante"/>
+                                <c:property id="golesVisitante"/>
+                                <c:property id="estadoPartido"/>
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

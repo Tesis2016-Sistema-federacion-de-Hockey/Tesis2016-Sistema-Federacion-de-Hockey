@@ -8,7 +8,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.fixture.scenarios.ClubFixture;
 import domainapp.fixture.scenarios.JugadorFixture;
 import domainapp.fixture.scenarios.TemporadaFixture;
 
@@ -25,11 +24,11 @@ public class DomainAppFixturesService extends FixtureScripts {
         super("domainapp.fixture");
     }
        
-    @MemberOrder(sequence="20")
-    public Object instalarFixturesClub() {
-        final List<FixtureResult> Club = findFixtureScriptFor(ClubFixture.class).run(null);
-        return Club.get(0).getObject();
-    }
+//    @MemberOrder(sequence="20")
+//    public Object instalarFixturesClub() {
+//        final List<FixtureResult> Club = findFixtureScriptFor(ClubFixture.class).run(null);
+//        return Club.get(0).getObject();
+//    }
     
     @MemberOrder(sequence="30")
     public Object instalarFixturesJugador() {

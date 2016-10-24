@@ -10,6 +10,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -50,8 +51,7 @@ import domainapp.dom.temporada.Temporada;
 public class Torneo implements Comparable<Torneo>{
 	
     public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Torneo: " + this.getNombre()+" ("+this.getTemporada().getNombre()+
+		return TranslatableString.tr("{nombre}", "nombre", this.getNombre()+" ("+this.getTemporada().getNombre()+
 				")");
 	}
 	
@@ -66,7 +66,6 @@ public class Torneo implements Comparable<Torneo>{
 	
     //NOMBRE DEL TORNEO
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
@@ -91,6 +90,7 @@ public class Torneo implements Comparable<Torneo>{
 	//LISTA DE DIVISIONES DE UN TORNEO
 	@MemberOrder(sequence = "4")
 	@Persistent(mappedBy="torneo", dependentElement="true")
+	@CollectionLayout(named="Divisiones")
 	private SortedSet<Division> listaDivisiones=new TreeSet<Division>();
 	public SortedSet<Division> getListaDivisiones() {return listaDivisiones;}
 	public void setListaDivisiones(SortedSet<Division> listaDivisiones) {this.listaDivisiones = listaDivisiones;}

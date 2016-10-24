@@ -24,8 +24,8 @@ import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
 
 @DomainService(
-        nature = NatureOfService.VIEW,
-        repositoryFor = Equipo.class
+		nature = NatureOfService.VIEW,
+		repositoryFor = Equipo.class
 )
 @DomainServiceLayout(
         menuOrder = "5",
@@ -41,9 +41,10 @@ public class EquipoServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Equipos"
     )
-    @MemberOrder(sequence = "5.1")
+    @MemberOrder(sequence = "1")
     public List<Equipo> listarTodosLosEquipos() {
         return repositoryService.allInstances(Equipo.class);
     }
@@ -53,9 +54,10 @@ public class EquipoServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Equipos por Club"
     )
-    @MemberOrder(sequence = "5.2")
+    @MemberOrder(sequence = "2")
     public List<Equipo> listarTodosLosEquiposDelClub(Club club){
 		
     	return repositoryService.allMatches(new QueryDefault<Equipo>(Equipo.class, "listarTodosLosEquiposDelClub", "club", club));
@@ -80,7 +82,7 @@ public class EquipoServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "5.3")
+    @MemberOrder(sequence = "3")
     public Equipo crearEquipo(
 		final @ParameterLayout(named="Nombre") String nombre,
 		final @ParameterLayout(named="Estado") Estado estado,
@@ -119,7 +121,6 @@ public class EquipoServicio {
     public List<Club> buscarClub(String cl){
     	return repositoryService.allMatches(QueryDefault.create(Club.class, "traerClub", "nombre",cl));
     }
-    
 	
     @javax.inject.Inject
     RepositoryService repositoryService;

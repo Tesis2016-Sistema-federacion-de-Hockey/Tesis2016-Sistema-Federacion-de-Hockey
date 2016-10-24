@@ -50,7 +50,8 @@ public class JugadorServicio{
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Jugadores de la Base Datos"
     )
     @MemberOrder(sequence = "1")
     public List<Jugador> listarTodosLosJugadores() {
@@ -81,7 +82,8 @@ public class JugadorServicio{
 		});
 	}
     
-    @MemberOrder(sequence = "3.1")
+    @ActionLayout(named="Listar Jugadores Libres")
+    @MemberOrder(sequence = "4")
     public List<Jugador> listarJugadoresSinClub() {
 		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
 
@@ -93,15 +95,13 @@ public class JugadorServicio{
 		});
 	}
     
-    @MemberOrder(sequence = "3.2")
+    @ActionLayout(named="Listar Jugadores Activos por Club")
+    @MemberOrder(sequence = "5")
     public List<Jugador> listarJugadoresActivosSegunClub(Club club) {
     	
     	return repositoryService.allMatches(new QueryDefault<Jugador>(Jugador.class, "listarJugadoresActivosSegunClub", "club", club));
     	
-    	
     }
-    
-    
     
     public static class CreateDomainEvent extends ActionDomainEvent<JugadorServicio> {
         /**
@@ -120,7 +120,7 @@ public class JugadorServicio{
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "4")
+    @MemberOrder(sequence = "6")
     public Jugador crearJugador(
             final @ParameterLayout(named="Sector") @Parameter(optionality=Optionality.OPTIONAL) Sector sector,
             final @ParameterLayout(named="Ficha") String ficha,
@@ -191,15 +191,7 @@ public class JugadorServicio{
             final Club clubs
     		){    	
 		return repositoryService.allMatches(QueryDefault.create(Equipo.class, "traerEquipo", "club", clubs));
-		
     }
-    
-    
-    
-    
-    
-    
-    
     
     @ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Jugador> buscarJugador(String jugador) {

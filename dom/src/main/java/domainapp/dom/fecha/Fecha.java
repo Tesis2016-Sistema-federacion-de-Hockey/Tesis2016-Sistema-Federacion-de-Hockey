@@ -10,6 +10,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -22,7 +23,6 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.division.Division;
-import domainapp.dom.estado.Estado;
 import domainapp.dom.partido.Partido;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -65,13 +65,13 @@ public class Fecha implements Comparable<Fecha>{
 	
     //NUMERO DE FECHA
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
+	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
 	private int nroFecha;
 	public int getNroFecha() {return nroFecha;}
 	public void setNroFecha(int nroFecha) {this.nroFecha = nroFecha;}
 
-	//ESTADO DE LA FECHA, SI ESTA COMPLETA
+	//ESTADO DE LA FECHA, SI ESTA COMPLETA O INCOMPLETA
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
@@ -82,7 +82,7 @@ public class Fecha implements Comparable<Fecha>{
 	//DIVISION
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
+    @Property(domainEvent = NameDomainEvent.class, editing = Editing.DISABLED)
 	private Division division;
 	public Division getDivision() {return division;}
 	public void setDivision(Division division) {this.division = division;}
@@ -90,6 +90,7 @@ public class Fecha implements Comparable<Fecha>{
 	//LISTA DE PARTIDOS DE UNA FECHA
 	@MemberOrder(sequence = "4")
 	@Persistent(mappedBy="fecha", dependentElement="true")
+	@CollectionLayout(named="Partidos")
 	private SortedSet<Partido> listaPartidos=new TreeSet<Partido>();
 	public SortedSet<Partido> getListaPartidos() {return listaPartidos;}
 	public void setListaPartidos(SortedSet<Partido> listaPartidos) {this.listaPartidos = listaPartidos;}
