@@ -28,8 +28,6 @@ public class TemporadaFixture extends FixtureScript {
     	Temporada tempo01=creaTemporada("2016", Estado.ACTIVO, "Sin observaciones", executionContext);
     	
     	Torneo tor01=torneoServicio.crearTorneo("APERTURA", Estado.ACTIVO, tempo01, "Sin observaciones");
-    	
-    	
     	torneoServicio.crearTorneo("CLAUSURA", Estado.ACTIVO, tempo01, "Sin observaciones");
     	torneoServicio.crearTorneo("PISTA INVIERNO", Estado.ACTIVO, tempo01, "Sin observaciones");
     	torneoServicio.crearTorneo("SEVEN", Estado.ACTIVO, tempo01, "Sin observaciones");
@@ -71,9 +69,23 @@ public class TemporadaFixture extends FixtureScript {
     	equipoServicio.crearEquipo("Chos Malal", Estado.ACTIVO, club06, divi02);
     	equipoServicio.crearEquipo("Limay", Estado.ACTIVO, club07, divi02);
    	
-    	creaTemporada("2015", Estado.INACTIVO, "Sin observaciones", executionContext);
-    	creaTemporada("2014", Estado.INACTIVO, "Sin observaciones", executionContext);
-
+    	Temporada tempo02=creaTemporada("2015", Estado.INACTIVO, "Sin observaciones", executionContext);
+    	Temporada tempo03=creaTemporada("2014", Estado.INACTIVO, "Sin observaciones", executionContext);
+    	tempo02.setEstado(Estado.INACTIVO);
+    	tempo03.setEstado(Estado.INACTIVO);
+    	
+    	
+    	Torneo tor02=torneoServicio.crearTorneo("APERTURA", Estado.ACTIVO, tempo02, "Sin observaciones");
+    	Torneo tor03=torneoServicio.crearTorneo("CLAUSURA", Estado.ACTIVO, tempo02, "Sin observaciones");
+    	Torneo tor04=torneoServicio.crearTorneo("PISTA INVIERNO", Estado.ACTIVO, tempo02, "Sin observaciones");
+    	Torneo tor05=torneoServicio.crearTorneo("SEVEN", Estado.ACTIVO, tempo02, "Sin observaciones");
+    	
+    	tor02.setEstado(Estado.INACTIVO);
+    	tor03.setEstado(Estado.INACTIVO);
+    	tor04.setEstado(Estado.INACTIVO);
+    	tor05.setEstado(Estado.INACTIVO);
+    	
+    	
     }
 	
     @SuppressWarnings("deprecation")
