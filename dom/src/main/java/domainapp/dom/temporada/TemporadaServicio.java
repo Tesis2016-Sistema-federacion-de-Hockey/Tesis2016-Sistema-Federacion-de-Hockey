@@ -21,21 +21,20 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import com.google.common.base.Predicate;
 
 import domainapp.dom.estado.Estado;
-import domainapp.dom.jugador.Jugador;
 
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = Temporada.class
 )
 @DomainServiceLayout(
-        named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="4"
+        named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="6"
 )
 public class TemporadaServicio {
 	public TranslatableString title() {
         return TranslatableString.tr("Temporadas");
     }
 	
-	@MemberOrder(name="Planificacion", sequence = "4.1")
+	@MemberOrder(name="Planificacion", sequence = "1")
 	public List<Temporada> listarTemporadasActivas() {
 		return repositoryService.allMatches(Temporada.class, new Predicate<Temporada>() {
 
@@ -55,7 +54,7 @@ public class TemporadaServicio {
             bookmarking = BookmarkPolicy.AS_ROOT,
             named="Listar todas las Temporadas"
     )
-    @MemberOrder(name="Planificacion", sequence = "4.2")
+    @MemberOrder(name="Planificacion", sequence = "2")
     public List<Temporada> listarTodasLasTemporadas() {
         return repositoryService.allInstances(Temporada.class);
     }
@@ -78,7 +77,7 @@ public class TemporadaServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(name="Planificacion", sequence = "4.3")
+    @MemberOrder(name="Planificacion", sequence = "3")
     public Temporada crearTemporada(
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Estado") Estado estado,

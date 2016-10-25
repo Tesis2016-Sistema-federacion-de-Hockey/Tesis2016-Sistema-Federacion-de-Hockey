@@ -21,6 +21,8 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
+import com.google.common.base.Predicate;
+
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.estado.EstadoPartido;
@@ -34,13 +36,24 @@ import domainapp.dom.torneo.Torneo;
         repositoryFor = Division.class
 )
 @DomainServiceLayout(
-		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="6"
+		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="5"
 )
 public class DivisionServicio {
-	
 	public TranslatableString title() {
         return TranslatableString.tr("Divisiones");
     }
+	
+	@MemberOrder(name="Planificacion", sequence = "1")
+	public List<Division> listarDivisionesActivas() {
+		return repositoryService.allMatches(Division.class, new Predicate<Division>() {
+
+			@Override
+			public boolean apply(Division input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == Estado.ACTIVO ? true : false;
+			}
+		});
+	}
 	
 	@Action(
             semantics = SemanticsOf.SAFE
@@ -48,9 +61,9 @@ public class DivisionServicio {
     @ActionLayout(
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Listar Todas las Divisiones"
+            named="Listar todas las Divisiones"
     )
-	@MemberOrder(name="Planificacion", sequence = "6.5")
+	@MemberOrder(name="Planificacion", sequence = "2")
     public List<Division> listarTodasLasDivisiones() {
         return repositoryService.allInstances(Division.class);
     }
@@ -73,7 +86,7 @@ public class DivisionServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(name="Planificacion", sequence = "6.6")
+    @MemberOrder(name="Planificacion", sequence = "3")
     public Division crearDivision(
 		final @ParameterLayout(named="Nombre") String nombre,
 		final @ParameterLayout(named="Estado") Estado estado,
@@ -117,6 +130,7 @@ public class DivisionServicio {
 //    		hidden = Where.NOWHERE,
     		named="Crear Fixture"
     		)
+    @MemberOrder(name="Planificacion", sequence = "4")
     public Division crearFixture(@ParameterLayout(named="Ingrese Division") final Division division){
     	
     	if (!division.getListaFechas().isEmpty()){

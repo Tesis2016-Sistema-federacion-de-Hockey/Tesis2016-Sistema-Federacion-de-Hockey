@@ -2,15 +2,12 @@ package domainapp.dom.torneo;
 
 import java.util.List;
 
-import javax.jdo.annotations.Column;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
@@ -20,7 +17,6 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
@@ -33,7 +29,7 @@ import domainapp.dom.temporada.Temporada;
         repositoryFor = Torneo.class
 )
 @DomainServiceLayout(
-		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="5"
+		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="4"
 )
 public class TorneoServicio {
 	public TranslatableString title() {
@@ -47,8 +43,7 @@ public class TorneoServicio {
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT
     )
-    //@MemberOrder(sequence = "4.1")
-	@MemberOrder(name="Planificacion", sequence = "5.3")
+	@MemberOrder(name="Planificacion",     sequence = "2")
 	public List<Torneo> listarTodosLosTorneos() {
         return repositoryService.allInstances(Torneo.class);
     }
@@ -71,8 +66,7 @@ public class TorneoServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    //@MemberOrder(sequence = "4.2")
-    @MemberOrder(name="Planificacion", sequence = "5.4")
+    @MemberOrder(name="Planificacion", sequence = "3")
     public Torneo crearTorneo(
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Estado") Estado estado,
