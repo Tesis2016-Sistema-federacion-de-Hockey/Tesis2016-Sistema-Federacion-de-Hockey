@@ -20,6 +20,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.google.common.base.Predicate;
+
 import domainapp.dom.estado.Estado;
 import domainapp.dom.temporada.Temporada;
 
@@ -36,12 +38,26 @@ public class TorneoServicio {
         return TranslatableString.tr("Torneos");
     }
 	
+	@MemberOrder(name="Planificacion", sequence = "1")
+	public List<Torneo> listarTorneosActivos() {
+		return repositoryService.allMatches(Torneo.class, new Predicate<Torneo>() {
+
+			@Override
+			public boolean apply(Torneo input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == Estado.ACTIVO ? true : false;
+			}
+		});
+	}
+
+	
 	@Action(
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar todos los Torneos"
     )
 	@MemberOrder(name="Planificacion",     sequence = "2")
 	public List<Torneo> listarTodosLosTorneos() {
