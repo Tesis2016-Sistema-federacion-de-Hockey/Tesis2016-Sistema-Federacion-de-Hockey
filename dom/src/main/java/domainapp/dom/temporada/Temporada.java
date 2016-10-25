@@ -14,16 +14,19 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Nature;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.estado.Estado;
+import domainapp.dom.jugador.Jugador;
 import domainapp.dom.torneo.Torneo;
 
 
@@ -119,6 +122,23 @@ public class Temporada implements Comparable<Temporada>{
 	public String disableDelete(){
 		return !listaTorneos.isEmpty()?"La lista de torneos debe estar vacia.":null;
 	}
+	
+	@Action(
+			invokeOn=InvokeOn.COLLECTION_ONLY
+			)
+	@MemberOrder(name="estado", sequence="1")
+	public Temporada cambiarEstado(){		
+		if(this.getEstado()==Estado.ACTIVO){
+			setEstado(Estado.INACTIVO);
+		}
+		else if(this.getEstado()==Estado.INACTIVO){
+			setEstado(Estado.ACTIVO);
+		}
+		return actionInvocationContext.getInvokedOn().isObject()?this:null;
+	}
+	
+	@javax.inject.Inject
+	ActionInvocationContext actionInvocationContext;
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
