@@ -5,12 +5,17 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.ActionLayout.Position;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -134,17 +139,26 @@ public class Partido implements Comparable<Partido>{
 		 */
 		private static final long serialVersionUID = 1L;}
 	
-//	@Action(
-//            domainEvent = DeleteDomainEvent.class,
-//            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-//    )
-//	public void delete() {
-//        repositoryService.remove(this);
-//    }	
+	@Action(
+			invokeOn=InvokeOn.OBJECT_AND_COLLECTION
+			)
+	@ActionLayout(position=Position.RIGHT)
+	@MemberOrder(name="estadoPartido", sequence="1")
+	public Partido cambiarEstado(){		
+		if(this.getEstadoPartido()==EstadoPartido.PENDIENTE){
+			this.setEstadoPartido(EstadoPartido.FINALIZADO);
+		}
+		else if(this.getEstadoPartido()==EstadoPartido.FINALIZADO){
+			this.setEstadoPartido(EstadoPartido.PENDIENTE);
+		}
+		return actionInvocationContext.getInvokedOn().isObject()?this:null;
+	}
+	
+	@javax.inject.Inject
+	ActionInvocationContext actionInvocationContext;
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
-	
 	
 	@SuppressWarnings("deprecation")
 	@Override
