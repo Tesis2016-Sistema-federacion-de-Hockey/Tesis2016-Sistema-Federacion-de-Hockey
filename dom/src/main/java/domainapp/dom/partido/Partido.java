@@ -42,7 +42,12 @@ import domainapp.dom.fecha.Fecha;
         @javax.jdo.annotations.Query(
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.partido.Partido")
+                        + "FROM domainapp.dom.partido.Partido"),               
+        @javax.jdo.annotations.Query(
+        		name = "listarPartidosPorEquipo", language = "JDOQL",
+                value = "SELECT "
+                		+ "FROM domainapp.dom.partido.Partido "
+                        + "WHERE equipoLocal == :equipo || equipoVisitante == :equipo")
 })
 @javax.jdo.annotations.Unique(name="Partido_nombre_UNQ", members = {"nombre","fecha"})
 @DomainObject(bounded=true)
@@ -131,6 +136,8 @@ public class Partido implements Comparable<Partido>{
 	private int golesVisitante;
 	public int getGolesVisitante() {return golesVisitante;}
 	public void setGolesVisitante(int golesVisitante) {this.golesVisitante = golesVisitante;}
+	
+	
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Partido> {
 

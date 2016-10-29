@@ -25,6 +25,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.division.Division;
 import domainapp.dom.partido.Partido;
 
+
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
@@ -94,6 +95,8 @@ public class Fecha implements Comparable<Fecha>{
 	private SortedSet<Partido> listaPartidos=new TreeSet<Partido>();
 	public SortedSet<Partido> getListaPartidos() {return listaPartidos;}
 	public void setListaPartidos(SortedSet<Partido> listaPartidos) {this.listaPartidos = listaPartidos;}
+	
+	
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Fecha> {
 

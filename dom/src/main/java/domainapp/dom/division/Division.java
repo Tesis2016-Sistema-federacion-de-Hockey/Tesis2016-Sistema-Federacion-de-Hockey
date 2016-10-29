@@ -134,6 +134,8 @@ public class Division implements Comparable<Division>{
 	public SortedSet<Fecha> getListaFechas() {return listaFechas;}
 	public void setListaFechas(SortedSet<Fecha> listaFechas) {this.listaFechas = listaFechas;}
 	
+	
+	
 	//VISIBLE
 	@MemberOrder(sequence = "10")
     @Column(allowsNull="true")
