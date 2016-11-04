@@ -3,9 +3,7 @@ package domainapp.dom.division;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -19,10 +17,9 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 
 import com.google.common.base.Predicate;
-
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.estado.EstadoPartido;
@@ -127,14 +124,15 @@ public class DivisionServicio {
 	
     //METODO PARA CREAR UN FIXTURE
     @ActionLayout(
-//    		hidden = Where.NOWHERE,
     		named="Crear Fixture"
     		)
     @MemberOrder(name="Planificacion", sequence = "4")
     public Division crearFixture(@ParameterLayout(named="Ingrese Division") final Division division){
     	
+    	DateTime ahora =DateTime.now();
+    	
     	if (!division.getListaFechas().isEmpty()){
-    		JOptionPane.showMessageDialog(null, "No se puede crear un fixture. Ya existe uno");
+    		JOptionPane.showMessageDialog(null, "No se puede crear un fixture. Ya existe uno para esta Division.");
     		return division;
     	}
     	
@@ -176,7 +174,7 @@ public class DivisionServicio {
 			matrizFixture[i][1]=tope-i+1;
 		}
 		
-		//LOGICA DIFICIL DE EXPLICAR...ARMO EL RESTO DE LA MATRIZ
+		//...ARMO EL RESTO DE LA MATRIZ
 		for (int i=1; i<filas; i++){
 			for (int j=2; j<columnas; j++){
 				matrizFixture[i][j]=matrizFixture[i-1][j-1];
@@ -249,6 +247,14 @@ public class DivisionServicio {
 		//DESORDENO LA LISTA DE EQUIPOS DUPLICADA
 		java.util.Collections.shuffle(listaEquiposDuplicada);
 		
+//		//MUESTRO LA LISTA DE EQUIPOS
+//		String mensaje02="";
+//		for (int i=0; i<listaEquiposDuplicada.size();i++) {
+//			mensaje02+=listaEquiposDuplicada.get(i).getNombre()+"  ";
+//		}
+//		JOptionPane.showMessageDialog(null, mensaje02);
+
+		
 		//AHORA EVALUO SI LA MODALIDAD ES IDA Y VUELTA
 		if(division.getModalidad()==Modalidad.IDA_Y_VUELTA){
 			
@@ -276,7 +282,7 @@ public class DivisionServicio {
 			}
 		}
 		
-//		//METODO PARA MOSTRAR UN JPANEL CON LA MATRIZ FIXTURE
+//		//MUESTRO UN JPANEL CON LA MATRIZ FIXTURE
 //		String mensaje01="";
 //		for (int i=0; i<filas*2;i++){
 //			for (int j=0; j<columnas;j++){
@@ -288,6 +294,8 @@ public class DivisionServicio {
 
 		//RECORRO LA MATRIZ FIXTURE
 		if(division.getModalidad()==Modalidad.IDA_Y_VUELTA)filas=filas*2;
+		
+		
 		
 		for (int i=0; i<filas; i++){
 			
@@ -304,10 +312,10 @@ public class DivisionServicio {
 				Equipo eq1=new Equipo();
 				Equipo eq2=new Equipo();
 				
-				if(((matrizFixture[i][j]!=comodin)&&(matrizFixture[i][j+1]!=comodin))||(comodin==division.getListaEquipos().size())){
-				
-					eq1=listaEquiposDuplicada.get(matrizFixture[i][j]-1);
-					eq2=listaEquiposDuplicada.get(matrizFixture[i][j+1]-1);
+				if(((matrizFixture[i][j]!=1)&&(matrizFixture[i][j+1]!=1))||(comodin==division.getListaEquipos().size())){
+					
+					eq1=listaEquiposDuplicada.get(matrizFixture[i][j]-2);
+					eq2=listaEquiposDuplicada.get(matrizFixture[i][j+1]-2);
 					
 					partido.setEquipoLocal(eq1);
 					partido.setEquipoVisitante(eq2);
@@ -315,9 +323,8 @@ public class DivisionServicio {
 					partido.setGolesVisitante(0);
 					partido.setEstadoPartido(EstadoPartido.PENDIENTE);
 					partido.setFecha(fecha);
-					partido.setFechaHora(LocalDate.now());
+					partido.setFechaHora(ahora.plusDays(7*i));
 					partido.setNombre("Fe"+Integer.toString(i+1)+"-Pa"+Integer.toString((j+2)/2));
-					
 					fecha.getListaPartidos().add(partido);
 				}
 			}

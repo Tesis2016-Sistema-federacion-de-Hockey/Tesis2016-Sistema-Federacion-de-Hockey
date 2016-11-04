@@ -20,7 +20,7 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.EstadoPartido;
@@ -115,9 +115,9 @@ public class Partido implements Comparable<Partido>{
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
 	@PropertyLayout(named="Horario")
-	private LocalDate fechaHora;
-	public LocalDate getFechaHora() {return fechaHora;}
-	public void setFechaHora(LocalDate fechaHora) {this.fechaHora = fechaHora;}
+	private DateTime fechaHora;
+	public DateTime getFechaHora() {return fechaHora;}
+	public void setFechaHora(DateTime fechaHora) {this.fechaHora = fechaHora;}
 	
 	//GOLES DEL EQUIPO LOCAL
 	@MemberOrder(sequence = "5")
