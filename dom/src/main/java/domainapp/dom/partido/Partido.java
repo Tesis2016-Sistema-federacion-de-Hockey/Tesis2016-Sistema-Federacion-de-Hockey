@@ -1,5 +1,6 @@
 package domainapp.dom.partido;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -13,8 +14,8 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.ActionLayout.Position;
 import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.ActionLayout.Position;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -30,10 +31,12 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.joda.time.DateTime;
 
+import com.google.common.base.Predicate;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
 import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.JugadorServicio;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -44,7 +47,6 @@ import domainapp.dom.jugador.Jugador;
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="partido_id")
 @javax.jdo.annotations.Version(
-//        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
@@ -112,14 +114,15 @@ public class Partido implements Comparable<Partido>{
 	public EstadoPartido getEstadoPartido() {return estadoPartido;}
 	public void setEstadoPartido(EstadoPartido estadoPartido) {this.estadoPartido = estadoPartido;}
 
-	//FECHA
+	//FECHA DEL FIXTURE
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
+	@Property(editing = Editing.DISABLED)
 	private Fecha fecha;
 	public Fecha getFecha() {return fecha;}
 	public void setFecha(Fecha fecha) {this.fecha = fecha;}
 	
-	//CUANDO DE JUGO
+	//HORARIO DE CUANDO DE JUGO
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
     @Property(domainEvent = NameDomainEvent.class)
@@ -149,8 +152,8 @@ public class Partido implements Comparable<Partido>{
 	//LISTA DE JUGADORES DEL PARTIDO
 	@MemberOrder(sequence = "7")
 	@Persistent(table="partido_jugador")
-	@Join(column="jugador_id")
-	@Element(column="partido_id")
+	@Join(column="partido_id")
+	@Element(column="jugador_id")
 	@CollectionLayout(named="Lista de jugadores del Partido", hidden=Where.EVERYWHERE)
 	private SortedSet<Jugador> listaPartido=new TreeSet<Jugador>();
 	public SortedSet<Jugador> getListaPartido() {return listaPartido;}
@@ -170,6 +173,43 @@ public class Partido implements Comparable<Partido>{
 	public SortedSet<Jugador> getListaJugadoresVisitante() {return listaJugadoresVisitante;}
 	public void setListaJugadoresVisitante(SortedSet<Jugador> listaJugadoresVisitante) {this.listaJugadoresVisitante = listaJugadoresVisitante;}
 	
+	//METODO PARA AGREGAR UN JUGADOR AL EQUIPO LOCAL		
+	@MemberOrder(sequence = "9.1")
+	@ActionLayout(named="Agregar Jugador LOCAL")
+	public Partido agregarJugadorLocal(Jugador e) {
+		if(e == null || listaJugadoresLocal.contains(e)) return this;
+		listaJugadoresLocal.add(e);
+	    e.getPartidos().add(this);
+	    return this;
+	}
+	
+	//METODO PARA AGREGAR UN JUGADOR AL EQUIPO VISITANTE		
+	@MemberOrder(sequence = "9.2")
+	@ActionLayout(named="Agregar Jugador VISITANTE")
+	public Partido agregarJugadorVisitante(Jugador e) {
+		if(e == null || listaJugadoresVisitante.contains(e)) return this;
+		listaJugadoresVisitante.add(e);
+	    e.getPartidos().add(this);
+	    return this;
+	}
+	
+	public List<Jugador> choices0AgregarJugadorLocal(){
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+			@Override
+			public boolean apply(Jugador jug) {
+				return (jugadorServicio.listarJugadoresActivosSegunClub(equipoLocal.getClub()).contains(jug)&& !listaJugadoresLocal.contains(jug)&&equipoLocal.getListaBuenaFe().contains(jug))?true:false;
+			}
+		});
+	}
+	
+	public List<Jugador> choices0AgregarJugadorVisitante(){
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+			@Override
+			public boolean apply(Jugador jug) {
+				return (jugadorServicio.listarJugadoresActivosSegunClub(equipoVisitante.getClub()).contains(jug)&& !listaJugadoresVisitante.contains(jug)&&equipoVisitante.getListaBuenaFe().contains(jug))?true:false;
+			}
+		});
+	}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Partido> {
 
@@ -196,6 +236,9 @@ public class Partido implements Comparable<Partido>{
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;
 	
+	@javax.inject.Inject
+	JugadorServicio jugadorServicio;
+
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	
