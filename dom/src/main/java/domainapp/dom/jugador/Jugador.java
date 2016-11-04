@@ -30,6 +30,7 @@ import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.pagoJugador.PagoJugador;
+import domainapp.dom.partido.Partido;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
 
@@ -143,13 +144,19 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
 	
-	//EQUIPO	
-	@MemberOrder(sequence = "15")
-	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "true")
-	private Equipo equipo;
-	public Equipo getEquipo() {return equipo;}
-	public void setEquipo(final Equipo equipo) {this.equipo = equipo;}
+//	//EQUIPO	
+//	@MemberOrder(sequence = "15")
+//	@Property(editing = Editing.ENABLED)
+//	@Column(allowsNull = "true")
+//	private Equipo equipo;
+//	public Equipo getEquipo() {return equipo;}
+//	public void setEquipo(final Equipo equipo) {this.equipo = equipo;}
+	
+	//LISTA DE EQUIPOS
+	@Persistent(mappedBy = "listaBuenaFe")
+	private SortedSet<Equipo>equipos=new TreeSet<Equipo>();
+	public SortedSet<Equipo> getEquipos() {return equipos;}
+	public void setEquipos(SortedSet<Equipo> equipos) {this.equipos = equipos;}
 	
 	//CUOTAS
 	@MemberOrder(sequence = "16")

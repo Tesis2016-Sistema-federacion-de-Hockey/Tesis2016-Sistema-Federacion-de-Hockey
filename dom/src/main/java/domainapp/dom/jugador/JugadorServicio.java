@@ -160,7 +160,7 @@ public class JugadorServicio{
         obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
         obj.setClub(club);
-        obj.setEquipo(equipo);
+//        obj.setEquipo(equipo);
         return obj;
     }
     

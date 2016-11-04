@@ -177,23 +177,30 @@ public class Club implements Comparable<Club> {
 	    
 	    //Duplico el jugador e y luego lo elimino
 	    final Jugador obj = repositoryService.instantiate(Jugador.class);
-        obj.setSector(e.getSector());
-        obj.setFicha(e.getFicha());
-        obj.setNombre(e.getNombre());
-        obj.setApellido(e.getApellido());
-        obj.setTipo(e.getTipo());
-        obj.setDocumento(e.getDocumento());
-        obj.setFechaNacimiento(e.getFechaNacimiento());
-        obj.setEstado(e.getEstado());
-        obj.setEmail(e.getEmail());
-        obj.setTelefono(e.getTelefono());
-        obj.setCelular(e.getCelular());
-        obj.setDomicilio(e.getDomicilio());
+	    obj.setApellido(e.getApellido());
+	    obj.setCelular(e.getCelular());
+	    obj.setClub(null);
+	    obj.setCuotas(e.getCuotas());
+	    obj.setDocumento(e.getDocumento());
+	    obj.setDomicilio(e.getDomicilio());
+	    obj.setEmail(e.getEmail());
+	    obj.setEquipos(e.getEquipos());
+	    obj.setEstado(e.getEstado());
+	    obj.setFechaNacimiento(e.getFechaNacimiento());
+	    obj.setFicha(e.getFicha());
+	    obj.setNombre(e.getNombre());
+	    obj.setNumeroCamiseta(e.getNumeroCamiseta());
+	    obj.setPagosJugador(e.getPagosJugador());
+//	    obj.setPartidos(e.getPartidos());
+	    obj.setSector(e.getSector());
+	    obj.setTelefono(e.getTelefono());
+	    obj.setTipo(e.getTipo());
+        obj.setVisible(e.getVisible());
+        
         repositoryService.persist(obj);
-        obj.setClub(null);
-        obj.setEquipo(null);
 	    
 	    listaJugadores.remove(e);
+	    
 	    return this;
 	}
 	

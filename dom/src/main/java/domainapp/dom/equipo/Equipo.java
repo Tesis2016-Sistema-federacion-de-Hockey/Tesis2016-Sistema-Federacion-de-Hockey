@@ -5,7 +5,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -115,7 +117,9 @@ public class Equipo implements Comparable<Equipo>{
 	
 	//LISTA DE BUENA FE
 	@MemberOrder(sequence = "5")
-	@Persistent(mappedBy="equipo", dependentElement="true")
+	@Persistent(table="equipo_jugador")
+	@Join(column="equipo_id")
+	@Element(column="jugador_id")
 	@CollectionLayout(named="Lista de Buena Fe")
 	private SortedSet<Jugador> listaBuenaFe=new TreeSet<Jugador>();
 	public SortedSet<Jugador> getListaBuenaFe() {return listaBuenaFe;}
@@ -125,10 +129,9 @@ public class Equipo implements Comparable<Equipo>{
 	@MemberOrder(sequence = "10")
 	@ActionLayout(named="Agregar Jugador")
 	public Equipo agregarJugadorAListaBuenaFe(Jugador e) {
-		if(e == null || listaBuenaFe.contains(e)) return this;
-	    e.setEquipo(this);
-	    listaBuenaFe.add(e);
-	    return this;
+		listaBuenaFe.add(e);
+		e.getEquipos().add(this);
+		return this;
 	}
 		
 	public List<Jugador> choices0AgregarJugadorAListaBuenaFe(){
@@ -137,7 +140,9 @@ public class Equipo implements Comparable<Equipo>{
 			@Override
 			public boolean apply(Jugador jug) {
 				
-				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaBuenaFe.contains(jug)&&jug.getEquipo()==null)?true:false;
+				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaBuenaFe.contains(jug))?true:false;
+				
+//				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaBuenaFe.contains(jug)&&jug.getEquipo()==null)?true:false;
 			}
 		});
 	}
@@ -146,34 +151,53 @@ public class Equipo implements Comparable<Equipo>{
 	@MemberOrder(sequence = "11")
 	@ActionLayout(named="Quitar Jugador")
 	public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
-		if(e == null || !listaBuenaFe.contains(e)) return this;
-		
-		//Duplico el jugador e y luego lo elimino
-	    final Jugador obj = repositoryService.instantiate(Jugador.class);
-        obj.setSector(e.getSector());
-        obj.setFicha(e.getFicha());
-        obj.setNombre(e.getNombre());
-        obj.setApellido(e.getApellido());
-        obj.setTipo(e.getTipo());
-        obj.setDocumento(e.getDocumento());
-        obj.setFechaNacimiento(e.getFechaNacimiento());
-        obj.setEstado(e.getEstado());
-        obj.setEmail(e.getEmail());
-        obj.setTelefono(e.getTelefono());
-        obj.setCelular(e.getCelular());
-        obj.setDomicilio(e.getDomicilio());
-        obj.setClub(e.getClub());
-        repositoryService.persist(obj);
-        obj.setEquipo(null);
-	    listaBuenaFe.remove(e);
-	    return this;
+		listaBuenaFe.remove(e);
+		e.getEquipos().remove(this);
+		return this;
 	}
-	
+
+		
+
+		
 	public List<Jugador> choices0QuitarJugadorDeListaBuenaFe(){
 		
 		return Lists.newArrayList(getListaBuenaFe());
 	}
 		
+		
+			
+//		//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
+//		@MemberOrder(sequence = "11")
+//		@ActionLayout(named="Quitar Jugador")
+//		public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
+//			if(e == null || !listaBuenaFe.contains(e)) return this;
+//			
+//			//Duplico el jugador e y luego lo elimino
+//		    final Jugador obj = repositoryService.instantiate(Jugador.class);
+//	        obj.setSector(e.getSector());
+//	        obj.setFicha(e.getFicha());
+//	        obj.setNombre(e.getNombre());
+//	        obj.setApellido(e.getApellido());
+//	        obj.setTipo(e.getTipo());
+//	        obj.setDocumento(e.getDocumento());
+//	        obj.setFechaNacimiento(e.getFechaNacimiento());
+//	        obj.setEstado(e.getEstado());
+//	        obj.setEmail(e.getEmail());
+//	        obj.setTelefono(e.getTelefono());
+//	        obj.setCelular(e.getCelular());
+//	        obj.setDomicilio(e.getDomicilio());
+//	        obj.setClub(e.getClub());
+//	        repositoryService.persist(obj);
+//	        obj.setEquipo(null);
+//		    listaBuenaFe.remove(e);
+//		    return this;
+//		}
+		
+//		public List<Jugador> choices0QuitarJugadorDeListaBuenaFe(){
+//			
+//			return Lists.newArrayList(getListaBuenaFe());
+//		}
+			
 	public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
 			/**
 			 * 
@@ -188,11 +212,22 @@ public class Equipo implements Comparable<Equipo>{
 	public void delete() {
 		repositoryService.remove(this);
     }
-	
-	public String disableDelete(){
-		return !listaBuenaFe.isEmpty()?"La lista de Buena Fe debe estar vacia.":null;
-	}
-	
+		
+//		public String disableDelete(){
+//			
+//			String mje="";
+//			
+//			if (!division.getListaFechas().isEmpty()) mje= "El equipo esta participando en un torneo.";
+//			
+//			if (!listaBuenaFe.isEmpty()) mje= "La lista de Buena Fe debe estar vacia.";
+//			
+//			return mje;
+//			
+//			
+//			
+////			return !listaBuenaFe.isEmpty()?"La lista de Buena Fe debe estar vacia.":null;
+//		}
+		
 	@javax.inject.Inject
     JugadorServicio jugadorServicio;
 	
