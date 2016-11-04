@@ -1,13 +1,20 @@
 package domainapp.dom.partido;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.ActionLayout.Position;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -15,6 +22,7 @@ import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -25,6 +33,7 @@ import org.joda.time.DateTime;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
+import domainapp.dom.jugador.Jugador;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -137,6 +146,29 @@ public class Partido implements Comparable<Partido>{
 	public int getGolesVisitante() {return golesVisitante;}
 	public void setGolesVisitante(int golesVisitante) {this.golesVisitante = golesVisitante;}
 	
+	//LISTA DE JUGADORES DEL PARTIDO
+	@MemberOrder(sequence = "7")
+	@Persistent(table="partido_jugador")
+	@Join(column="jugador_id")
+	@Element(column="partido_id")
+	@CollectionLayout(named="Lista de jugadores del Partido", hidden=Where.EVERYWHERE)
+	private SortedSet<Jugador> listaPartido=new TreeSet<Jugador>();
+	public SortedSet<Jugador> getListaPartido() {return listaPartido;}
+	public void setListaPartido(SortedSet<Jugador> listaPartido) {this.listaPartido = listaPartido;}
+
+	//LISTA DE JUGADORES DEL EQUIPO LOCAL
+	@MemberOrder(sequence = "7.1")
+	@CollectionLayout(named="Lista de jugadores LOCAL")
+	private SortedSet<Jugador> listaJugadoresLocal=new TreeSet<Jugador>();
+	public SortedSet<Jugador> getListaJugadoresLocal() {return listaJugadoresLocal;}
+	public void setListaJugadoresLocal(SortedSet<Jugador> listaJugadoresLocal) {this.listaJugadoresLocal = listaJugadoresLocal;}
+
+	//LISTA DE JUGADORES DEL EQUIPO VISITANTE
+	@MemberOrder(sequence = "7.2")
+	@CollectionLayout(named="Lista de jugadores VISITANTE")
+	private SortedSet<Jugador> listaJugadoresVisitante=new TreeSet<Jugador>();
+	public SortedSet<Jugador> getListaJugadoresVisitante() {return listaJugadoresVisitante;}
+	public void setListaJugadoresVisitante(SortedSet<Jugador> listaJugadoresVisitante) {this.listaJugadoresVisitante = listaJugadoresVisitante;}
 	
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Partido> {

@@ -191,7 +191,7 @@ public class Club implements Comparable<Club> {
 	    obj.setNombre(e.getNombre());
 	    obj.setNumeroCamiseta(e.getNumeroCamiseta());
 	    obj.setPagosJugador(e.getPagosJugador());
-//	    obj.setPartidos(e.getPartidos());
+	    obj.setPartidos(e.getPartidos());
 	    obj.setSector(e.getSector());
 	    obj.setTelefono(e.getTelefono());
 	    obj.setTipo(e.getTipo());

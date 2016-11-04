@@ -158,6 +158,12 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public SortedSet<Equipo> getEquipos() {return equipos;}
 	public void setEquipos(SortedSet<Equipo> equipos) {this.equipos = equipos;}
 	
+	//LISTA DE PARTIDOS
+	@Persistent(mappedBy = "listaPartido")
+	private SortedSet<Partido>partidos=new TreeSet<Partido>();
+	public SortedSet<Partido> getPartidos() {return partidos;}
+	public void setPartidos(SortedSet<Partido> partidos) {this.partidos = partidos;}
+		
 	//CUOTAS
 	@MemberOrder(sequence = "16")
 	@Persistent(mappedBy = "jugadores", dependentElement = "true")
