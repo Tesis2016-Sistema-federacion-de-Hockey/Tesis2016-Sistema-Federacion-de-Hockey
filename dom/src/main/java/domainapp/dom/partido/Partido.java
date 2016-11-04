@@ -32,6 +32,8 @@ import org.apache.isis.applib.util.ObjectContracts;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
@@ -209,6 +211,33 @@ public class Partido implements Comparable<Partido>{
 				return (jugadorServicio.listarJugadoresActivosSegunClub(equipoVisitante.getClub()).contains(jug)&& !listaJugadoresVisitante.contains(jug)&&equipoVisitante.getListaBuenaFe().contains(jug))?true:false;
 			}
 		});
+	}
+	
+	//METODO PARA QUITAR UN JUGADOR DEL EQUIPO LOCAL
+	@MemberOrder(sequence = "9.3")
+	@ActionLayout(named="Quitar Jugador LOCAL")
+	public Partido quitarJugadorLocal(Jugador e) {
+//			e.getTarjetas().clear();  //FALTA
+		listaJugadoresLocal.remove(e);
+		e.getPartidos().remove(this);
+		return this;
+	}
+	
+	//METODO PARA QUITAR UN JUGADOR DEL EQUIPO VISITANTE
+	@MemberOrder(sequence = "9.4")
+	@ActionLayout(named="Quitar Jugador VISITANTE")
+	public Partido quitarJugadorVisitante(Jugador e) {
+		listaJugadoresVisitante.remove(e);
+		e.getPartidos().remove(this);
+		return this;
+	}
+	
+	public List<Jugador> choices0QuitarJugadorLocal(){
+		return Lists.newArrayList(getListaJugadoresLocal());
+	}
+	
+	public List<Jugador> choices0QuitarJugadorVisitante(){
+		return Lists.newArrayList(getListaJugadoresVisitante());
 	}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Partido> {
