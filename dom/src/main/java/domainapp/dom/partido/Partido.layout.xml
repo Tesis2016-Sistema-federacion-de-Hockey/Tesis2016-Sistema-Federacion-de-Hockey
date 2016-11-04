@@ -25,7 +25,7 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="6">
+        <bs3:col span="5">
             <bs3:tabGroup>
                 <bs3:tab name="Datos del Partido">
                     <bs3:row>
@@ -34,12 +34,13 @@
                                 <!--  <c:action id="delete"/> -->
                                 <c:property id="fechaHora" namedEscaped="true"/>
                                 <c:property id="nombre" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
-                                <c:property id="fecha" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
+                                <c:property id="fecha" hidden="PARENTED_TABLES" />
                                 <c:property id="equipoLocal"/>
                                 <c:property id="golesLocal"/>
                                 <c:property id="equipoVisitante"/>
                                 <c:property id="golesVisitante"/>
                                 <c:property id="estadoPartido"/>
+                                
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
@@ -64,8 +65,35 @@
             <bs3:tabGroup>
             </bs3:tabGroup>
         </bs3:col>
-        <bs3:col span="6">
+        <bs3:col span="7">
             <bs3:tabGroup  unreferencedCollections="true">
+            	<bs3:tab name="Formaciones">
+                    <bs3:row>
+                        <bs3:col span="12" size="MD">
+                            <c:collection defaultView="table" id="listaJugadoresLocal"/>
+                        </bs3:col>
+                    </bs3:row>
+                    <bs3:row>
+                        <bs3:col span="12" size="MD">
+                            <c:collection defaultView="table" id="listaJugadoresVisitante"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             </bs3:tabGroup>
         </bs3:col>
     </bs3:row>
