@@ -1,16 +1,22 @@
 package domainapp.fixture.scenarios;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.joda.time.LocalDate;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
 import domainapp.dom.division.Division;
 import domainapp.dom.division.DivisionServicio;
+import domainapp.dom.equipo.Equipo;
 import domainapp.dom.equipo.EquipoServicio;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.JugadorServicio;
 import domainapp.dom.modalidad.Modalidad;
+import domainapp.dom.sector.Sector;
 import domainapp.dom.temporada.Temporada;
 import domainapp.dom.temporada.TemporadaServicio;
+import domainapp.dom.tipodocumento.TipoDocumento;
 import domainapp.dom.torneo.Torneo;
 import domainapp.dom.torneo.TorneoServicio;
 
@@ -55,11 +61,11 @@ public class TemporadaFixture extends FixtureScript {
         		"0299 477 1993", "Matheu", "123", "", "");
     	
     	
-    	equipoServicio.crearEquipo("CAI", Estado.ACTIVO, club01, divi01);
-    	equipoServicio.crearEquipo("CAB", Estado.ACTIVO, club02, divi01);
-    	equipoServicio.crearEquipo("NRC", Estado.ACTIVO, club03, divi01);
-    	equipoServicio.crearEquipo("Huincul", Estado.ACTIVO, club04, divi01);
-    	equipoServicio.crearEquipo("San Jorge", Estado.ACTIVO, club05, divi01);
+    	Equipo equipo01=equipoServicio.crearEquipo("CAI", Estado.ACTIVO, club01, divi01);
+    	Equipo equipo02=equipoServicio.crearEquipo("CAB", Estado.ACTIVO, club02, divi01);
+    	Equipo equipo03=equipoServicio.crearEquipo("NRC", Estado.ACTIVO, club03, divi01);
+    	Equipo equipo04=equipoServicio.crearEquipo("Huincul", Estado.ACTIVO, club04, divi01);
+    	Equipo equipo05=equipoServicio.crearEquipo("San Jorge", Estado.ACTIVO, club05, divi01);
     	
     	equipoServicio.crearEquipo("CAI A", Estado.ACTIVO, club01, divi02);
     	equipoServicio.crearEquipo("CAI B", Estado.ACTIVO, club01, divi02);
@@ -84,6 +90,29 @@ public class TemporadaFixture extends FixtureScript {
     	tor03.setEstado(Estado.INACTIVO);
     	tor04.setEstado(Estado.INACTIVO);
     	tor05.setEstado(Estado.INACTIVO);
+    	
+    	Jugador jug01=jugadorServicio.crearJugador(Sector.DAMAS, "110", "Julia", "Blanco", TipoDocumento.DNI, "27883920",
+        		LocalDate.now(), Estado.ACTIVO, "julia.blanco@gmail.com", "Dr. Ramon", "15", "PB", "B",
+        		"4483131", "2994523497", club01, equipo01);
+    	Jugador jug02=jugadorServicio.crearJugador(Sector.DAMAS, "111", "Adriana", "Petazzi", TipoDocumento.DNI, "28996773",
+        		LocalDate.now(), Estado.ACTIVO, "adriana.petazzi@hotmail.com.ar", "Avenida Argentina", "1050", "PB", "D",
+        		"4471223", "2996013887", club01, equipo01);
+    	Jugador jug03=jugadorServicio.crearJugador(Sector.DAMAS, "112", "Maru", "Lopez", TipoDocumento.DNI, "27885990",
+        		LocalDate.now(), Estado.ACTIVO, "", "Ameghino", "615", "", "",
+        		"4482447", "2996031234", club01, equipo01);
+    	Jugador jug04=jugadorServicio.crearJugador(Sector.DAMAS, "113", "Victoria", "Falleti", TipoDocumento.DNI, "27434960",
+        		LocalDate.now(), Estado.ACTIVO, "", "Belgrano", "2250", "", "",
+        		"4439898", "2996388572", club01, equipo01);
+    	Jugador jug05=jugadorServicio.crearJugador(Sector.DAMAS, "114", "Majo", "Alonso", TipoDocumento.DNI, "21348873",
+        		LocalDate.now(), Estado.ACTIVO, "", "Esmeralda", "23", "", "",
+        		"4331778", "2995239385", club01, equipo01);
+    	
+    	equipo01.getListaBuenaFe().add(jug01);
+    	equipo01.getListaBuenaFe().add(jug02);
+    	equipo01.getListaBuenaFe().add(jug03);
+    	equipo01.getListaBuenaFe().add(jug04);
+    	equipo01.getListaBuenaFe().add(jug05);
+    	
     	
     	
     }
@@ -119,5 +148,8 @@ public class TemporadaFixture extends FixtureScript {
     
     @javax.inject.Inject
     private ClubServicio clubServicio;
+    
+    @javax.inject.Inject
+    private JugadorServicio jugadorServicio;
 
 }
