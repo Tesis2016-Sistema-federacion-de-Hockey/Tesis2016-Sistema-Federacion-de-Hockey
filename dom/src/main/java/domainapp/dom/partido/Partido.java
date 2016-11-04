@@ -1,5 +1,6 @@
 package domainapp.dom.partido;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -238,6 +239,31 @@ public class Partido implements Comparable<Partido>{
 	
 	public List<Jugador> choices0QuitarJugadorVisitante(){
 		return Lists.newArrayList(getListaJugadoresVisitante());
+	}
+	
+	//METODO PARA AGREGAR TODOS LOS JUGADORES AL EQUIPO LOCAL
+	@MemberOrder(sequence = "9.5")
+	@ActionLayout(named="Agregar todos LOCAL")
+	public Partido agregarTodosLocal() {
+		for (Iterator<?> it=equipoLocal.getListaBuenaFe().iterator();it.hasNext();){
+			Jugador jug=((Jugador)it.next());
+			listaJugadoresLocal.add(jug);
+			jug.getPartidos().add(this);
+		}
+	    return this;
+	}
+	
+	//METODO PARA AGREGAR TODOS LOS JUGADORES AL EQUIPO VISITANTE
+	@MemberOrder(sequence = "9.6")
+	@ActionLayout(named="Agregar todos VISITANTE")
+	public Partido agregarTodosVisitante() {
+		for (Iterator<?> it=equipoVisitante.getListaBuenaFe().iterator();it.hasNext();){
+			Jugador jug=((Jugador)it.next());
+			listaJugadoresVisitante.add(jug);
+			jug.getPartidos().add(this);
+		}
+		this.setListaJugadoresVisitante(listaJugadoresVisitante);
+	    return this;
 	}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Partido> {
