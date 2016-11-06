@@ -29,6 +29,7 @@ import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.gol.Gol;
 import domainapp.dom.pagoJugador.PagoJugador;
 import domainapp.dom.partido.Partido;
 import domainapp.dom.persona.Persona;
@@ -180,7 +181,17 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public SortedSet<PagoJugador> getPagosJugador() {return pagosJugador;}
 	public void setPagosJugador(SortedSet<PagoJugador> pagosJugador) {this.pagosJugador = pagosJugador;}
 	
-	
+	//LISTA DE GOL
+	@MemberOrder(sequence = "18")
+	@Persistent(mappedBy = "jugador", dependentElement = "true")
+	@CollectionLayout(named="Goles")
+	private SortedSet<Gol> goles = new TreeSet<Gol>();	
+	public SortedSet<Gol> getGoles() {
+		return goles;
+	}
+	public void setGoles(SortedSet<Gol> goles) {
+		this.goles = goles;
+	}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 

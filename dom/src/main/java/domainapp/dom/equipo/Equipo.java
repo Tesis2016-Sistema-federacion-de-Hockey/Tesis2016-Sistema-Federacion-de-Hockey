@@ -32,6 +32,7 @@ import com.google.common.collect.Lists;
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 
@@ -164,6 +165,17 @@ public class Equipo implements Comparable<Equipo>{
 		return Lists.newArrayList(getListaBuenaFe());
 	}
 		
+	//LISTA DE GOL
+	@MemberOrder(sequence = "18")
+	@Persistent(mappedBy = "equipo", dependentElement = "true")
+	@CollectionLayout(named="Goles")
+	private SortedSet<Gol> goles = new TreeSet<Gol>();	
+	public SortedSet<Gol> getGoles() {
+		return goles;
+	}
+	public void setGoles(SortedSet<Gol> goles) {
+		this.goles = goles;
+	}
 		
 			
 //		//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
