@@ -6,6 +6,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.jugador.Jugador;
@@ -70,14 +71,25 @@ public class Gol implements Comparable<Gol>{
 	public void setEquipoContrario(Equipo equipoContrario) {
 		this.equipoContrario = equipoContrario;
 	}
+	
+	//MINUTO
+	@MemberOrder(sequence = "5")
+	@Column(allowsNull = "false")
+	private int minuto;
+	public int getMinuto() {
+		return minuto;
+	}
+	public void setMinuto(int minuto) {
+		this.minuto = minuto;
+	}
 
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(Gol o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return ObjectContracts.compare(this, o, "minuto");
 	}
     
 	

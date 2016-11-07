@@ -50,11 +50,13 @@ public class GolServicio {
     
     public Gol crearGol(
             final @ParameterLayout(named="Jugador") Jugador jugador,
-            final @ParameterLayout(named="Partido") Partido partido
+            final @ParameterLayout(named="Partido") Partido partido,
+            final @ParameterLayout(named="minuto") int minuto
             ){
         final Gol obj = repositoryService.instantiate(Gol.class);
         obj.setJugador(jugador);
         obj.setPartido(partido);
+        obj.setMinuto(minuto);
         if(partido.getEquipoLocal().getListaBuenaFe().contains(jugador)){
         	obj.setEquipo(partido.getEquipoLocal());
         	obj.setEquipoContrario(partido.getEquipoVisitante());
