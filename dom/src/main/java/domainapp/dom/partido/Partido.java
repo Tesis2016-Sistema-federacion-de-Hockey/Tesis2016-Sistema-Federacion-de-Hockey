@@ -38,8 +38,10 @@ import com.google.common.collect.Lists;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
+import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.resultado.Resultado;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -266,6 +268,19 @@ public class Partido implements Comparable<Partido>{
 	    return this;
 	}
 
+	//LISTA DE GOL
+	@MemberOrder(sequence = "10")
+	@Persistent(mappedBy = "partido", dependentElement = "true")
+	@CollectionLayout(named="Goles")
+	private SortedSet<Gol> goles = new TreeSet<Gol>();	
+	public SortedSet<Gol> getGoles() {
+		return goles;
+	}
+	public void setGoles(SortedSet<Gol> goles) {
+		this.goles = goles;
+	}
+	
+	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Partido> {
 
 		/**

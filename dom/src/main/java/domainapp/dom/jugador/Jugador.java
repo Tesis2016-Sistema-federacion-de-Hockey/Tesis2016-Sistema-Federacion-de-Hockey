@@ -192,7 +192,8 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public void setGoles(SortedSet<Gol> goles) {
 		this.goles = goles;
 	}
-
+	
+	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 
 		/**
