@@ -5,6 +5,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
@@ -25,6 +26,14 @@ import domainapp.dom.partido.Partido;
         column="version")
 
 public class Gol implements Comparable<Gol>{
+	
+	public TranslatableString title() {
+		return TranslatableString.tr("{minuto}", "minuto",
+				"Minuto: " + this.getMinuto()
+				);
+	}
+	
+	public String iconName(){return "gol";}
 
 	//JUGADOR
     @MemberOrder(sequence = "1")

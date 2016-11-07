@@ -19,19 +19,6 @@ public class JugadorFixture extends FixtureScript {
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-    	crearJugador(Sector.DAMAS, "220", "Luciana", "Aimar", TipoDocumento.DNI, "31334488",
-        		LocalDate.now(), Estado.ACTIVO, "luciana.aimar@gmail.com", "Elordi", "307", "", "",
-        		"4489292", "2995183662", null, null, executionContext);
-        crearJugador(Sector.DAMAS, "221", "Carla", "Rebequi", TipoDocumento.DNI, "21998362",
-        		LocalDate.now(), Estado.ACTIVO, "carla.rebequi@yahoo.com", "Rio Diamante", "667", "", "",
-        		"", "2994773722", null, null, executionContext);
-        crearJugador(Sector.DAMAS, "222", "Magui", "Aicega", TipoDocumento.DNI, "35772957",
-        		LocalDate.now(), Estado.ACTIVO, "magui.aicega@hotmal.com", "Tucuman", "867", "", "",
-        		"", "299699330", null, null, executionContext);
-
-        
-        
-        
         crearJugador(Sector.CABALLEROS, "300", "Diego", "Roger", TipoDocumento.DNI, "32338746",
         		LocalDate.now(), Estado.ACTIVO, "diego.roger@gmail.com", "Formosa", "1671", "", "",
         		"4431786", "2995141516", null, null, executionContext);
