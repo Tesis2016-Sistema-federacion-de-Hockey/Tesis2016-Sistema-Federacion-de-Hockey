@@ -47,6 +47,8 @@ public class Gol implements Comparable<Gol>{
 		this.equipo = equipo;
 	}
 	
+	
+	
 	//PARTIDO
     @MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
@@ -58,6 +60,17 @@ public class Gol implements Comparable<Gol>{
 		this.partido = partido;
 	}
 	
+	//EQUIPO CONTRARIO
+    @MemberOrder(sequence = "4")
+	@Column(allowsNull = "false")
+	private Equipo equipoContrario;
+	public Equipo getEquipoContrario() {
+		return equipoContrario;
+	}
+	public void setEquipoContrario(Equipo equipoContrario) {
+		this.equipoContrario = equipoContrario;
+	}
+
 	@javax.inject.Inject
     RepositoryService repositoryService;
 	

@@ -57,8 +57,10 @@ public class GolServicio {
         obj.setPartido(partido);
         if(partido.getEquipoLocal().getListaBuenaFe().contains(jugador)){
         	obj.setEquipo(partido.getEquipoLocal());
+        	obj.setEquipoContrario(partido.getEquipoVisitante());
         }else{
         	obj.setEquipo(partido.getEquipoVisitante());
+        	obj.setEquipoContrario(partido.getEquipoLocal());
         }        
         repositoryService.persist(obj);
         

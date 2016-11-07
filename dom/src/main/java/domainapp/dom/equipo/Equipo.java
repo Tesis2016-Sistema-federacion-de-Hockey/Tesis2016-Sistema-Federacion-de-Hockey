@@ -177,6 +177,17 @@ public class Equipo implements Comparable<Equipo>{
 		this.goles = goles;
 	}
 		
+	//LISTA DE GOLES EN CONTRA
+	@MemberOrder(sequence = "19")
+	@Persistent(mappedBy = "equipoContrario", dependentElement = "true")
+	@CollectionLayout(named="Goles en contra")
+	private SortedSet<Gol> golesEnContra = new TreeSet<Gol>();	
+	public SortedSet<Gol> getGolesEnContra() {
+		return golesEnContra;
+	}
+	public void setGolesEnContra(SortedSet<Gol> golesEnContra) {
+		this.golesEnContra = golesEnContra;
+	}
 			
 //		//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
 //		@MemberOrder(sequence = "11")
@@ -210,6 +221,8 @@ public class Equipo implements Comparable<Equipo>{
 //			return Lists.newArrayList(getListaBuenaFe());
 //		}
 			
+	
+
 	public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
 			/**
 			 * 
