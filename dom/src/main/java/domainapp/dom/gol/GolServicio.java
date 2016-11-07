@@ -1,5 +1,7 @@
 package domainapp.dom.gol;
 
+import java.util.List;
+
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -10,6 +12,8 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+
+import com.google.common.collect.Lists;
 
 import domainapp.dom.jugador.Jugador;
 
@@ -48,7 +52,7 @@ public class GolServicio {
     		cssClassFa="fa fa-plus-square"
     )
     
-    public Gol crearGol(
+    public Partido crearGol(
             final @ParameterLayout(named="Jugador") Jugador jugador,
             final @ParameterLayout(named="Partido") Partido partido,
             final @ParameterLayout(named="minuto") int minuto
@@ -66,8 +70,20 @@ public class GolServicio {
         }        
         repositoryService.persist(obj);
         
-        return obj;
+        return partido;
     }
+    
+	public List<Jugador> choices0CrearGol(
+			final @ParameterLayout(named="Jugador") Jugador jugador,
+            final @ParameterLayout(named="Partido") Partido partid,
+            final @ParameterLayout(named="minuto") int minuto
+			){
+		
+		return Lists.newArrayList(partid.getListaPartido());
+	}
+
+    
+    
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

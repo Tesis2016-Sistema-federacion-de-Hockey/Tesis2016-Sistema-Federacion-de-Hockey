@@ -33,7 +33,7 @@
                             <c:fieldSet name="Gol">
                                 <c:property id="jugador"/>
                                 <c:property id="equipo" />
-                                <c:property id="partido" />
+                                <c:property id="partido" hidden="PARENTED_TABLES"/>
                                 <c:property id="minuto"/>
                                 <c:property id="equipoContrario" hidden="EVERYWHERE"/>
                             </c:fieldSet>
