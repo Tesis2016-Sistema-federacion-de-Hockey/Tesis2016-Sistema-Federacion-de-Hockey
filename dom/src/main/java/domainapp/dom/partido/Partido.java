@@ -42,6 +42,7 @@ import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 import domainapp.dom.resultado.Resultado;
+import domainapp.dom.tarjeta.Tarjeta;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -302,6 +303,16 @@ public class Partido implements Comparable<Partido>{
 		}
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
+	
+	
+	
+	//LISTA DE TARJETAS
+	@MemberOrder(sequence = "7.3")
+	@CollectionLayout(named="Tarjetas")
+	private SortedSet<Tarjeta> tarjetas = new TreeSet<Tarjeta>();	
+	public SortedSet<Tarjeta> getTarjetas() {return tarjetas;}
+	public void setTarjetas(SortedSet<Tarjeta> tarjetas) {this.tarjetas = tarjetas;}
+	
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

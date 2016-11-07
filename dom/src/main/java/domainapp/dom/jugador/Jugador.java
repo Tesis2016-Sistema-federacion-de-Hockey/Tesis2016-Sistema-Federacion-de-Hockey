@@ -34,6 +34,7 @@ import domainapp.dom.pagoJugador.PagoJugador;
 import domainapp.dom.partido.Partido;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
+import domainapp.dom.tarjeta.Tarjeta;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -164,6 +165,14 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	private SortedSet<Partido>partidos=new TreeSet<Partido>();
 	public SortedSet<Partido> getPartidos() {return partidos;}
 	public void setPartidos(SortedSet<Partido> partidos) {this.partidos = partidos;}
+	
+	//LISTA DE TARJETAS
+	@MemberOrder(sequence = "15")
+	@Persistent(mappedBy = "jugador", dependentElement = "true")
+	@CollectionLayout(named="Tarjetas")
+	private SortedSet<Tarjeta> tarjetas = new TreeSet<Tarjeta>();	
+	public SortedSet<Tarjeta> getTarjetas() {return tarjetas;}
+	public void setTarjetas(SortedSet<Tarjeta> tarjetas) {this.tarjetas = tarjetas;}
 		
 	//CUOTAS
 	@MemberOrder(sequence = "16")

@@ -16,6 +16,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.google.common.collect.Lists;
+
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.partido.Partido;
 
@@ -56,28 +58,33 @@ public class TarjetaServicio {
         }
     }
 	
-//    @Action(
-//            domainEvent = CreateDomainEvent.class
-//    )
-//    @ActionLayout(
-//    		cssClassFa="fa fa-plus-square"
-//    )
-//    @MemberOrder(sequence = "3")
-//    public Tarjeta crearTarjeta(
-//    		final @ParameterLayout(named="Tipo") TipoTarjeta tipoTarjeta,
-//    		final @ParameterLayout(named="Minuto") int minutoTarjeta,
-//    		final @ParameterLayout(named="Partido") Partido partido,
-//    		final @ParameterLayout(named="Jugador") Jugador jugador
-//    		){
-//        final Tarjeta obj = repositoryService.instantiate(Tarjeta.class);
-//        obj.setMinutoTarjeta(minutoTarjeta);
-//        obj.setTipoTarjeta(tipoTarjeta);
-//        obj.setPartido(partido);
-//        obj.setJugador(jugador);
-//        repositoryService.persist(obj);
-//        partido.getTarjetas().add(obj);
-//        return obj;
-//    }
+    public Partido crearTarjeta(
+    		final @ParameterLayout(named="Tipo") TipoTarjeta tipoTarjeta,
+    		final @ParameterLayout(named="Minuto") int minutoTarjeta,
+    		final @ParameterLayout(named="Partido") Partido partido,
+    		final @ParameterLayout(named="Jugador") Jugador jugador
+    		){
+        final Tarjeta obj = repositoryService.instantiate(Tarjeta.class);
+        obj.setMinutoTarjeta(minutoTarjeta);
+        obj.setTipoTarjeta(tipoTarjeta);
+        obj.setPartido(partido);
+        obj.setJugador(jugador);
+        repositoryService.persist(obj);
+        partido.getTarjetas().add(obj);
+        jugador.getTarjetas().add(obj);
+        return partido;
+    }
+    
+    public List<Jugador> choices3CrearTarjeta(
+    		final @ParameterLayout(named="Tipo") TipoTarjeta tipoTarjeta,
+    		final @ParameterLayout(named="Minuto") int minutoTarjeta,
+    		final @ParameterLayout(named="Partido") Partido partido,
+    		final @ParameterLayout(named="Jugador") Jugador jugador
+			){
+		return Lists.newArrayList(partido.getListaPartido());
+	}
+    
+    
 
     @javax.inject.Inject
     RepositoryService repositoryService;
