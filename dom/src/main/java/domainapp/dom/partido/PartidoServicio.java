@@ -19,7 +19,7 @@ import domainapp.dom.jugador.Jugador;
 
 @SuppressWarnings("deprecation")
 @DomainService(
-        nature = NatureOfService.VIEW,
+        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY,
         repositoryFor = Partido.class
 )
 @DomainServiceLayout(

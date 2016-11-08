@@ -18,11 +18,12 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 import com.google.common.collect.Lists;
 
+import domainapp.dom.gol.GolServicio.CreateDomainEvent;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.partido.Partido;
 
 @DomainService(
-        nature = NatureOfService.VIEW,
+        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY,
         repositoryFor = Tarjeta.class
 )
 @DomainServiceLayout(
@@ -58,11 +59,17 @@ public class TarjetaServicio {
         }
     }
 	
+    @Action(
+            domainEvent = CreateDomainEvent.class
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-plus-square"
+    		)
     public Partido crearTarjeta(
+    		final @ParameterLayout(named="Jugador") Jugador jugador,
     		final @ParameterLayout(named="Tipo") TipoTarjeta tipoTarjeta,
     		final @ParameterLayout(named="Minuto") int minutoTarjeta,
-    		final @ParameterLayout(named="Partido") Partido partido,
-    		final @ParameterLayout(named="Jugador") Jugador jugador
+    		final @ParameterLayout(named="Partido") Partido partido
     		){
         final Tarjeta obj = repositoryService.instantiate(Tarjeta.class);
         obj.setMinutoTarjeta(minutoTarjeta);
@@ -75,11 +82,11 @@ public class TarjetaServicio {
         return partido;
     }
     
-    public List<Jugador> choices3CrearTarjeta(
+    public List<Jugador> choices0CrearTarjeta(
+    		final @ParameterLayout(named="Jugador") Jugador jugador,
     		final @ParameterLayout(named="Tipo") TipoTarjeta tipoTarjeta,
     		final @ParameterLayout(named="Minuto") int minutoTarjeta,
-    		final @ParameterLayout(named="Partido") Partido partido,
-    		final @ParameterLayout(named="Jugador") Jugador jugador
+    		final @ParameterLayout(named="Partido") Partido partido    		
 			){
 		return Lists.newArrayList(partido.getListaPartido());
 	}

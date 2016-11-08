@@ -88,7 +88,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Jugador: " + this.getApellido() + ", " + this.getNombre()+" (DNI: "+this.getDocumento()+")");
+				this.getApellido() + ", " + this.getNombre()+" (DNI: "+this.getDocumento()+")");
 	}
     
     public String iconName(){

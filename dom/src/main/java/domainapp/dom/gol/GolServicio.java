@@ -49,9 +49,8 @@ public class GolServicio {
             domainEvent = CreateDomainEvent.class
     )
     @ActionLayout(
-    		cssClassFa="fa fa-plus-square"
+    		cssClassFa="fa fa-futbol-o fa-lg fa-fw"
     )
-    
     public Partido crearGol(
             final @ParameterLayout(named="Jugador") Jugador jugador,
             final @ParameterLayout(named="Partido") Partido partido,

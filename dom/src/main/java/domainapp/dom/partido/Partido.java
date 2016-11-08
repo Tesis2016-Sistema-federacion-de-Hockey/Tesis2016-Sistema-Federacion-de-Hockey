@@ -73,7 +73,7 @@ public class Partido implements Comparable<Partido>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Partido: " + this.getNombre()
+				this.getNombre()
 				);
 	}
 	

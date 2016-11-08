@@ -34,8 +34,8 @@
                                 <!--  <c:action id="delete"/> -->
                                 <c:property id="tipoTarjeta" />
                                 <c:property id="minutoTarjeta"/>
-                                <c:property id="partido" hidden="PARENTED_TABLES" />
-                                <c:property id="jugador" hidden="PARENTED_TABLES" />
+                                <c:property id="partido" hidden="REFERENCES_PARENT" />
+                                <c:property id="jugador" hidden="REFERENCES_PARENT" />
                                 <c:property id="fechaHora" hidden="PARENTED_TABLES" />
                                 
                             </c:fieldSet>

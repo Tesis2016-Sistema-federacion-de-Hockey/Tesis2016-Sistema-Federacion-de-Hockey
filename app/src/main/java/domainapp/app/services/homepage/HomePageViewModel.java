@@ -20,31 +20,90 @@ package domainapp.app.services.homepage;
 
 import java.util.List;
 
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.HomePage;
 import org.apache.isis.applib.annotation.ViewModel;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
+import domainapp.dom.division.Division;
+import domainapp.dom.division.DivisionServicio;
+import domainapp.dom.equipo.Equipo;
+import domainapp.dom.equipo.EquipoServicio;
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.temporada.Temporada;
+import domainapp.dom.temporada.TemporadaServicio;
+import domainapp.dom.torneo.Torneo;
+import domainapp.dom.torneo.TorneoServicio;
 
 @ViewModel
 public class HomePageViewModel {
 
     //region > title
     public String title() {
-        return getClubes().size() + " clubes";
+        return "Federacion de Hockey de Neuquen";
     }
     //endregion
 
     //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
+    //@org.apache.isis.applib.annotation.HomePage
+//    @HomePage
+//    public List<Club> getClubes() {
+//        return clubServicio.listarTodosLosClubes();
+//    }
+    
+    @HomePage()
+    @CollectionLayout(named="Temporadas Activas")
+    public List<Temporada> getTemporadas() {
+        return temporadaServicio.listarTemporadasActivas();
+    }
+
+    @HomePage
+    @CollectionLayout(named="Torneos Activos")
+    public List<Torneo> getTorneos() {
+        return torneoServicio.listarTorneosActivos();
+    }
+    
+    @HomePage
+    @CollectionLayout(named="Divisiones Activas")
+    public List<Division> getDivisiones() {
+        return divisionServicio.listarDivisionesActivas();
+    }
+    
+    @HomePage
+    @CollectionLayout(named="Equipos Activos")
+    public List<Equipo> getEquipos() {
+        return equipoServicio.listarTodosLosEquipos();
+    }
+    
+    @HomePage
+    @CollectionLayout(named="Clubes")
     public List<Club> getClubes() {
         return clubServicio.listarTodosLosClubes();
     }
-    //endregion
-
-    //region > injected services
+    
+    @HomePage
+    @CollectionLayout(named="Jugadores")
+    public List<Jugador> getJugadores() {
+        return jugadorServicio.listarJugadoresActivos();
+    }
 
     @javax.inject.Inject
+    EquipoServicio equipoServicio;
+    
+    @javax.inject.Inject
+    JugadorServicio jugadorServicio;
+    
+    @javax.inject.Inject
     ClubServicio clubServicio;
-
-    //endregion
+    
+    @javax.inject.Inject
+    DivisionServicio divisionServicio;
+    
+    @javax.inject.Inject
+    TemporadaServicio temporadaServicio;
+    
+    @javax.inject.Inject
+    TorneoServicio torneoServicio;
 }
