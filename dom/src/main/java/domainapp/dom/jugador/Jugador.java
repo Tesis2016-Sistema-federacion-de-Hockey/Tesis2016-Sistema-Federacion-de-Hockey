@@ -76,8 +76,12 @@ import domainapp.dom.tarjeta.Tarjeta;
         		name = "listarJugadoresActivosSegunClub", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "
-                        + "WHERE (club == :club) && (estado == 'ACTIVO')")
-        		
+                        + "WHERE (club == :club) && (estado == 'ACTIVO')"),
+        @javax.jdo.annotations.Query(
+        		name = "buscarDocumentoDuplicado", language = "JDOQL",
+        		value = "SELECT "
+				+ "FROM dom.jugador.Jugador "
+				+ "WHERE documento ==:documento")
 })
 @javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
 @DomainObject(bounded=true)
@@ -145,14 +149,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	private Club club;
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
-	
-//	//EQUIPO	
-//	@MemberOrder(sequence = "15")
-//	@Property(editing = Editing.ENABLED)
-//	@Column(allowsNull = "true")
-//	private Equipo equipo;
-//	public Equipo getEquipo() {return equipo;}
-//	public void setEquipo(final Equipo equipo) {this.equipo = equipo;}
 	
 	//LISTA DE EQUIPOS
 	@Persistent(mappedBy = "listaBuenaFe")
@@ -232,10 +228,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
 	
-//	public String cssClass(){
-//    	return getEstado()==Estado.ACTIVO?"on":"off";
-//    }	
-	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;
 	
@@ -245,7 +237,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Jugador o) {
-		// TODO Auto-generated method stub
 		return org.apache.isis.applib.util.ObjectContracts.compare(this, o, "apellido", "nombre");
 	}
 }

@@ -50,8 +50,7 @@ public class JugadorFixture extends FixtureScript {
                 final String celular,
                 final Club club,
                 final Equipo equipo
-        		,
-                ExecutionContext executionContext) {
+        		,ExecutionContext executionContext) {
     	return executionContext.add(this, jugadorServicio.crearJugador(
         		 sector, ficha, nombre, apellido, tipo, documento, fechaNacimiento, estado, email,
         		 calle, numero, piso, departamento, telefono, celular, club, equipo));

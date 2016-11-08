@@ -1,9 +1,9 @@
 package domainapp.dom.jugador;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import java.util.List;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -42,6 +42,8 @@ import domainapp.dom.tipodocumento.TipoDocumento;
         named="Jugadores"
 )
 public class JugadorServicio{
+	
+	final LocalDate fecha_actual = LocalDate.now();
 
     public TranslatableString title() {return TranslatableString.tr("Jugadores");}
 
@@ -64,7 +66,6 @@ public class JugadorServicio{
 
 			@Override
 			public boolean apply(Jugador input) {
-				// TODO Auto-generated method stub
 				return input.getEstado() == Estado.ACTIVO ? true : false;
 			}
 		});
@@ -76,7 +77,6 @@ public class JugadorServicio{
 
 			@Override
 			public boolean apply(Jugador input) {
-				// TODO Auto-generated method stub
 				return input.getEstado() == Estado.INACTIVO ? true : false;
 			}
 		});
@@ -89,7 +89,6 @@ public class JugadorServicio{
 
 			@Override
 			public boolean apply(Jugador input) {
-				// TODO Auto-generated method stub
 				return input.getClub()==null?true:false;
 			}
 		});
@@ -138,7 +137,7 @@ public class JugadorServicio{
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
             final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular,
             final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club,
-            final @ParameterLayout(named="Equipo") @Parameter(optionality=Optionality.OPTIONAL) Equipo equipo
+            final @ParameterLayout(named="Equipo") @Parameter(optionality=Optionality.OPTIONAL) Equipo equipo //Pido el equipo, para usarlo en los fixtures. Sin embargo no guarda la referencia
     		){
         final Jugador obj = repositoryService.instantiate(Jugador.class);
         final Domicilio domicilio=new Domicilio();
@@ -160,7 +159,6 @@ public class JugadorServicio{
         obj.setDomicilio(domicilio);
         repositoryService.persist(obj);
         obj.setClub(club);
-//        obj.setEquipo(equipo);
         return obj;
     }
     
@@ -188,10 +186,63 @@ public class JugadorServicio{
             final String departamento,
             final String telefono,
             final String celular,
-            final Club clubs
+            final Club clubs,
+            final Equipo equipo
     		){    	
 		return repositoryService.allMatches(QueryDefault.create(Equipo.class, "traerEquipo", "club", clubs));
     }
+    
+    public String validateCrearJugador(
+    		final Sector sector,
+            final String ficha,
+            final String nombre,
+            final String apellido,
+            final TipoDocumento tipo,
+            final String documento,
+            final LocalDate fechaNacimiento,
+            final Estado estado,
+            final String email,
+            final String calle,
+            final String numero,
+            final String piso,
+            final String departamento,
+            final String telefono,
+            final String celular,
+            final Club club,
+            final Equipo equipo
+    		){
+    	final Jugador jug = repositoryService.firstMatch(QueryDefault
+				.create(Jugador.class, "buscarDocumentoDuplicado",
+						"documento", documento));
+		if (jug != null) {
+			if (jug.getDocumento().equals(documento)) {
+				return "Ya existe un Jugador con este numero de documento: "
+						+ documento;
+			}
+		}
+    	if (fechaNacimiento.isAfter(fecha_actual))
+			return "Fecha de Nacimiento mayor a la fecha actual";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "Jugador mayor a 100 años";
+    	return "";
+    }
+
+	//VALIDO LA EDAD MAXIMA DEL JUGADOR INGRESADO.
+	//DEBE TENER MENOS DE 100 AÑOS, ES DECIR, MENOS DE 36525 DIAS
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36525) {
+			return true;
+		}
+		return false;
+	}
+	
+	//CALCULO LA CANTIDAD DE DIAS ENTRE HOY Y CUANDO NACIO.
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
+		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
+		return meses.getDays();
+	}
     
     @ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Jugador> buscarJugador(String jugador) {
