@@ -11,16 +11,19 @@ import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.annotation.ActionLayout.Position;
+import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -90,6 +93,7 @@ public class Equipo implements Comparable<Equipo>{
 	//ESTADO DEL EQUIPO
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
+	@Property(domainEvent = NameDomainEvent.class, editing=Editing.DISABLED)
 	private Estado estado;
 	public Estado getEstado() {return estado;}
 	public void setEstado(final Estado estado) {this.estado = estado;}
@@ -104,6 +108,7 @@ public class Equipo implements Comparable<Equipo>{
 	//DIVISION
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
+	@Property(editing = Editing.DISABLED)
 	private Division division;
 	public Division getDivision() {return division;}
 	public void setDivision(Division division) {this.division = division;}
@@ -111,7 +116,7 @@ public class Equipo implements Comparable<Equipo>{
 	//VISIBLE
 	@MemberOrder(sequence = "10")
     @Column(allowsNull="true")
-	@Property(editing = Editing.DISABLED)
+	@Property(editing = Editing.DISABLED, hidden=Where.EVERYWHERE)
     private Boolean visible=true;
 	public Boolean getVisible() {return visible;}
 	public void setVisible(final Boolean visible) {this.visible = visible;}
@@ -128,7 +133,7 @@ public class Equipo implements Comparable<Equipo>{
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE BUENA FE DEL EQUIPO
 	@MemberOrder(sequence = "10")
-	@ActionLayout(named="Agregar Jugador")
+	@ActionLayout(named="Agregar Jugador", cssClassFa="fa fa-thumbs-o-up")
 	public Equipo agregarJugadorAListaBuenaFe(Jugador e) {
 		listaBuenaFe.add(e);
 		e.getEquipos().add(this);
@@ -150,7 +155,7 @@ public class Equipo implements Comparable<Equipo>{
 		
 	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
 	@MemberOrder(sequence = "11")
-	@ActionLayout(named="Quitar Jugador")
+	@ActionLayout(named="Quitar Jugador", cssClassFa="fa fa-thumbs-o-down")
 	public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
 		listaBuenaFe.remove(e);
 		e.getEquipos().remove(this);
@@ -188,46 +193,13 @@ public class Equipo implements Comparable<Equipo>{
 	public void setGolesEnContra(SortedSet<Gol> golesEnContra) {
 		this.golesEnContra = golesEnContra;
 	}
-			
-//		//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
-//		@MemberOrder(sequence = "11")
-//		@ActionLayout(named="Quitar Jugador")
-//		public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
-//			if(e == null || !listaBuenaFe.contains(e)) return this;
-//			
-//			//Duplico el jugador e y luego lo elimino
-//		    final Jugador obj = repositoryService.instantiate(Jugador.class);
-//	        obj.setSector(e.getSector());
-//	        obj.setFicha(e.getFicha());
-//	        obj.setNombre(e.getNombre());
-//	        obj.setApellido(e.getApellido());
-//	        obj.setTipo(e.getTipo());
-//	        obj.setDocumento(e.getDocumento());
-//	        obj.setFechaNacimiento(e.getFechaNacimiento());
-//	        obj.setEstado(e.getEstado());
-//	        obj.setEmail(e.getEmail());
-//	        obj.setTelefono(e.getTelefono());
-//	        obj.setCelular(e.getCelular());
-//	        obj.setDomicilio(e.getDomicilio());
-//	        obj.setClub(e.getClub());
-//	        repositoryService.persist(obj);
-//	        obj.setEquipo(null);
-//		    listaBuenaFe.remove(e);
-//		    return this;
-//		}
-		
-//		public List<Jugador> choices0QuitarJugadorDeListaBuenaFe(){
-//			
-//			return Lists.newArrayList(getListaBuenaFe());
-//		}
-			
-	
 
-	public static class DeleteDomainEvent extends ActionDomainEvent<Equipo> {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;}
+	public static class DeleteDomainEvent extends Equipo.ActionDomainEvent {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
 		
 	@Action(
             domainEvent = DeleteDomainEvent.class,
@@ -235,23 +207,67 @@ public class Equipo implements Comparable<Equipo>{
     )
 	@ActionLayout(named="Eliminar Equipo")
 	public void delete() {
+		division.getListaEquipos().remove(this);
 		repositoryService.remove(this);
     }
 		
-//		public String disableDelete(){
-//			
-//			String mje="";
-//			
-//			if (!division.getListaFechas().isEmpty()) mje= "El equipo esta participando en un torneo.";
-//			
-//			if (!listaBuenaFe.isEmpty()) mje= "La lista de Buena Fe debe estar vacia.";
-//			
-//			return mje;
-//			
-//			
-//			
-////			return !listaBuenaFe.isEmpty()?"La lista de Buena Fe debe estar vacia.":null;
-//		}
+	//REVISAR
+	public String disableDelete(){
+		
+		if (!division.getListaFechas().isEmpty()) return "El equipo esta participando en un torneo.";
+		
+		else if (!listaBuenaFe.isEmpty()) return "La lista de Buena Fe debe estar vacia.";
+		
+		return "";
+			
+		}
+	
+	
+	public static class ActivoDomainEvent extends Equipo.ActionDomainEvent {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
+	
+	public static abstract class ActionDomainEvent extends domainapp.dom.DomainAppDomainModule.ActionDomainEvent<Equipo> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
+
+    @Action(
+            domainEvent =ActivoDomainEvent.class,
+            invokeOn = InvokeOn.OBJECT_AND_COLLECTION
+    )
+    @ActionLayout(position=Position.BELOW, named="Poner Activo")
+	@MemberOrder(name="estado", sequence="1")
+    public Equipo activo() {		
+			setEstado(Estado.ACTIVO);
+			return actionInvocationContext.getInvokedOn().isObject()?this:null;
+	}
+    
+    public static class InactivoDomainEvent extends Equipo.ActionDomainEvent {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
+
+    @Action(
+            domainEvent =InactivoDomainEvent.class,
+            invokeOn = InvokeOn.OBJECT_AND_COLLECTION
+    )
+    @ActionLayout(position=Position.BELOW, named="Poner Inactivo")
+	@MemberOrder(name="estado", sequence="2")
+    public Equipo inactivo() {		
+			setEstado(Estado.INACTIVO);
+			return actionInvocationContext.getInvokedOn().isObject()?this:null;
+	}
+    
+    @javax.inject.Inject
+	ActionInvocationContext actionInvocationContext;
 		
 	@javax.inject.Inject
     JugadorServicio jugadorServicio;

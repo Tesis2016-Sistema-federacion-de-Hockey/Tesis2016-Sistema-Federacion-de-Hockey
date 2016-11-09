@@ -104,6 +104,18 @@ public class EquipoServicio {
     	return Estado.ACTIVO;
     }
     
+    public String validateCrearEquipo(
+    		final String nombre,
+    		final Estado estado,
+    		final Club club,
+    		final Division division    		  		
+    		){
+      if (!division.getListaFechas().isEmpty()){
+    	return "No se puede crear un equipo en esta division. Ya existe un fixture iniciado.";
+      }
+      return "";  
+    }
+    
     @ActionLayout(hidden=Where.EVERYWHERE)
     public String buscarEquipo(final Club club, Equipo equipo){
     	return "";

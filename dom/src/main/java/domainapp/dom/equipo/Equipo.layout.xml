@@ -33,7 +33,7 @@
                             <c:fieldSet name="Equipo">
                             	<c:action id="delete"/>
                                 <c:property id="nombre" namedEscaped="true"/>
-                                <c:property id="estado" namedEscaped="true" hidden="ALL_TABLES"/>
+                                <c:property id="estado" namedEscaped="true"/>
                                 <c:property id="club"/>
                                 <c:property id="division"/>
                                 <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>

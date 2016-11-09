@@ -19,6 +19,31 @@
 package domainapp.dom;
 
 public final class DomainAppDomainModule {
+	
+	private DomainAppDomainModule(){}
+	
+	public abstract static class ActionDomainEvent<S> extends org.apache.isis.applib.services.eventbus.ActionDomainEvent<S> {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+    }
+
+    public abstract static class CollectionDomainEvent<S,T> extends org.apache.isis.applib.services.eventbus.CollectionDomainEvent<S,T> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+    }
+
+    public abstract static class PropertyDomainEvent<S,T> extends org.apache.isis.applib.services.eventbus.PropertyDomainEvent<S,T> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+    }
 
 }
