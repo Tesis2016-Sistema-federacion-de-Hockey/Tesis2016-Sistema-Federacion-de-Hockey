@@ -19,6 +19,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -75,6 +76,13 @@ public class Division implements Comparable<Division>{
 	public String getNombre() {return nombre;}
 	public void setNombre(final String nombre) {this.nombre = nombre;}
 	
+	//CATEGORIA (MAXIMO DE AÑOS QUE UN JUGADOR PUEDE TENER PARA PARTICIPAR EN ESTA DIVISION)
+	@MemberOrder(sequence = "1.1")
+    @Column(allowsNull="true")
+	private String categoria;
+	public String getCategoria() {return categoria;}
+	public void setCategoria(String categoria) {this.categoria = categoria;}
+
 	//ESTADO DE LA DIVISION
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")
@@ -84,6 +92,7 @@ public class Division implements Comparable<Division>{
 	
 	//TORNEO
 	@MemberOrder(sequence = "4")
+	@Property(editing = Editing.DISABLED)
     @Column(allowsNull="false")
 	private Torneo torneo;
 	public Torneo getTorneo() {return torneo;}
@@ -92,7 +101,7 @@ public class Division implements Comparable<Division>{
 	//MODALIDAD
     @MemberOrder(sequence = "5")
 	@Column(allowsNull = "true")
-    @PropertyLayout(describedAs="TODOS CONTRA TODOS / DIVIDIR EN ZONAS")
+    @PropertyLayout(describedAs="IDA Y VUELTA / IDA")
 	private Modalidad modalidad;
 	public Modalidad getModalidad() {return modalidad;}
 	public void setModalidad(Modalidad modalidad) {this.modalidad = modalidad;}
@@ -139,7 +148,7 @@ public class Division implements Comparable<Division>{
 	//VISIBLE
 	@MemberOrder(sequence = "10")
     @Column(allowsNull="true")
-	@Property(editing = Editing.DISABLED)
+	@Property(editing = Editing.DISABLED, hidden=Where.EVERYWHERE)
     private Boolean visible;
 	public Boolean getVisible() {return visible;}
 	public void setVisible(final Boolean visible) {this.visible = visible;}

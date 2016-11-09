@@ -39,11 +39,11 @@ public class TemporadaFixture extends FixtureScript {
     	torneoServicio.crearTorneo("SEVEN", Estado.ACTIVO, tempo01, "Sin observaciones");
    	
     	
-    	Division divi01=divisionServicio.crearDivision("1ra DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
-    	Division divi02=divisionServicio.crearDivision("1ra CABALLEROS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
-    	divisionServicio.crearDivision("7ma DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
-    	divisionServicio.crearDivision("6ta DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
-    	divisionServicio.crearDivision("5ta DAMAS", Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	Division divi01=divisionServicio.crearDivision("1ra DAMAS", null, Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	Division divi02=divisionServicio.crearDivision("1ra CABALLEROS", null, Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	divisionServicio.crearDivision("7ma DAMAS", null, Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	divisionServicio.crearDivision("6ta DAMAS", null, Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
+    	divisionServicio.crearDivision("5ta DAMAS", null, Estado.ACTIVO, tor01, Modalidad.IDA_Y_VUELTA, 3, 1, 0);
 
     	Club club01=clubServicio.crearClub("CAI","Club Atletico Independiente", "1997", "ID01","Personeria CAI", "caihockeyneuquen@gmail.com",
         		"4488776", "Chocon", "3500", "", "");

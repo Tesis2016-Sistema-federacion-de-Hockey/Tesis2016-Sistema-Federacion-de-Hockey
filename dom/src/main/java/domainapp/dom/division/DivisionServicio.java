@@ -86,6 +86,7 @@ public class DivisionServicio {
     @MemberOrder(name="Planificacion", sequence = "3")
     public Division crearDivision(
 		final @ParameterLayout(named="Nombre") String nombre,
+		final @ParameterLayout(named="Categoria") String categoria,
 		final @ParameterLayout(named="Estado") Estado estado,
 		final @ParameterLayout(named="Torneo") Torneo torneo,
 		final @ParameterLayout(named="Modalidad") Modalidad modalidad,
@@ -95,6 +96,7 @@ public class DivisionServicio {
 		){
     final Division obj = repositoryService.instantiate(Division.class);
         obj.setNombre(nombre);
+        obj.setCategoria(categoria);
         obj.setEstado(estado);
         obj.setTorneo(torneo);
         obj.setModalidad(modalidad);
@@ -106,19 +108,19 @@ public class DivisionServicio {
     }
 	
     //POR DEFECTO, AL CREAR LA DIVISION ES ACTIVA
-    public Estado default1CrearDivision(){    	
+    public Estado default2CrearDivision(){    	
     	return Estado.ACTIVO;
     }    
     //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
-    public int default4CrearDivision(){    	
+    public int default5CrearDivision(){    	
     	return 3;
     }
     //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
-    public int default5CrearDivision(){    	
+    public int default6CrearDivision(){    	
     	return 1;
     }
     //POR DEFECTO, SE SETEA EL VALOR DE PUNTOS
-    public int default6CrearDivision(){    	
+    public int default7CrearDivision(){    	
     	return 0;
     }
 	

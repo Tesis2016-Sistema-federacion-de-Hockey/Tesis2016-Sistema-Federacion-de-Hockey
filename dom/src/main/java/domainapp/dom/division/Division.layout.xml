@@ -33,8 +33,9 @@
                             <c:fieldSet name="Division">
                             	<c:action id="delete"/>
                                 <c:property id="nombre" namedEscaped="true"/>
+                                <c:property id="categoria" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="estado" namedEscaped="true"/>
-                                <c:property id="torneo" namedEscaped="true"/>
+                                <c:property id="torneo" namedEscaped="true" />
                                 <c:property id="modalidad" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="puntosGanar" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="puntosEmpatar" namedEscaped="true" hidden="ALL_TABLES"/>

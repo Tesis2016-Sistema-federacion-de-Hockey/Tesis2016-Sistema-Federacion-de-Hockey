@@ -18,17 +18,18 @@ public class DivisionFixture extends FixtureScript {
 
 //    	BorrarDBDivision(executionContext);
         
-    	crearDivision("PRIMERA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("PRIMERA CABALLEROS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("7MA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("6TA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("5TA DAMAS", Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("PRIMERA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("PRIMERA CABALLEROS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("7MA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("6TA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+    	crearDivision("5TA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
 
     }
 	
     @SuppressWarnings("deprecation")
     	private Division crearDivision(
                 final String nombre,
+                final String categoria,
                 final Estado estado,
                 final Torneo torneo,
                 final Modalidad modalidad,
@@ -36,7 +37,7 @@ public class DivisionFixture extends FixtureScript {
                 final int puntosEmpatar,
                 final int puntosPerder,
                 ExecutionContext executionContext) {
-    	return executionContext.add(this, divisionServicio.crearDivision(nombre, Estado.ACTIVO, null, modalidad,
+    	return executionContext.add(this, divisionServicio.crearDivision(nombre, categoria, Estado.ACTIVO, null, modalidad,
     			puntosGanar, puntosEmpatar, puntosPerder));
     }
    
