@@ -119,16 +119,16 @@ public class JugadorServicio{
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(sequence = "6")
+    @MemberOrder(sequence = "7")
     public Jugador crearJugador(
-            final @ParameterLayout(named="Sector") @Parameter(optionality=Optionality.OPTIONAL) Sector sector,
+            final @ParameterLayout(named="Sector") Sector sector,
             final @ParameterLayout(named="Ficha") String ficha,
             final @ParameterLayout(named="Nombre") String nombre,
             final @ParameterLayout(named="Apellido") String apellido,
-            final @ParameterLayout(named="Tipo de Documento") @Parameter(optionality=Optionality.OPTIONAL) TipoDocumento tipo,
-            final @ParameterLayout(named="Documento") @Parameter(optionality=Optionality.OPTIONAL) String documento,
-            final @ParameterLayout(named="Fecha de Nacimiento") @Parameter(optionality=Optionality.OPTIONAL) LocalDate fechaNacimiento,
-            final @ParameterLayout(named="Estado") @Parameter(optionality=Optionality.OPTIONAL) Estado estado,
+            final @ParameterLayout(named="Tipo de Documento") TipoDocumento tipo,
+            final @ParameterLayout(named="Documento") String documento,
+            final @ParameterLayout(named="Fecha de Nacimiento") LocalDate fechaNacimiento,
+            final @ParameterLayout(named="Estado") Estado estado,
             final @ParameterLayout(named="Email") @Parameter(optionality=Optionality.OPTIONAL) String email,
             final @ParameterLayout(named="Calle") @Parameter(optionality=Optionality.OPTIONAL) String calle,
             final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,

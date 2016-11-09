@@ -112,8 +112,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
     
 	//SECTOR
     @MemberOrder(sequence = "1")
-	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	private Sector sector;
 	public Sector getSector() {return sector;}
 	public void setSector(final Sector sector) {this.sector = sector;}
@@ -126,16 +125,8 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public String getFicha() {return ficha;}
 	public void setFicha(final String ficha) {this.ficha = ficha;}
 	
-	//NUMERO DE CAMISETA
-    //@MemberOrder(sequence = "12")
-	@Property(editing = Editing.ENABLED)
-	@Column(allowsNull = "true")
-	private String numeroCamiseta;
-	public String getNumeroCamiseta() {return numeroCamiseta;}
-	public void setNumeroCamiseta(final String numeroCamiseta) {this.numeroCamiseta = numeroCamiseta;}
-	
 	//DOMICILIO
-	@MemberOrder(sequence = "13")
+	@MemberOrder(sequence = "10")
 	@Property(editing = Editing.ENABLED, hidden=Where.ALL_TABLES)	
 	@Column(name="domicilio_id")	
 	private Domicilio domicilio;	
@@ -143,8 +134,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public void setDomicilio(final Domicilio domicilio) {this.domicilio = domicilio;}
 	
 	//CLUB	
-	@MemberOrder(sequence = "14")
-	@Property(editing = Editing.ENABLED)
+	@MemberOrder(sequence = "16")
 	@Column(allowsNull = "true")
 	private Club club;
 	public Club getClub() {return club;}
