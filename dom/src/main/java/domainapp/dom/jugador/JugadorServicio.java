@@ -112,6 +112,26 @@ public class JugadorServicio{
             super(source, identifier, arguments);
         }
     }
+    
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-search",
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Buscar por Documento"
+    )
+    @MemberOrder(sequence = "6")
+    public List<Jugador> buscarPorDocumento(
+            @ParameterLayout(named="Ingrese el documento")
+            final String documento
+    ) {
+    	return repositoryService.allMatches(
+                new QueryDefault<Jugador>(
+                        Jugador.class,
+                        "buscarPorDocumento",
+                        "documento", documento));
+    }
 
     @Action(
             domainEvent = CreateDomainEvent.class
