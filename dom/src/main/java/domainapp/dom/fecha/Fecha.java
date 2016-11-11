@@ -8,15 +8,12 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -98,20 +95,20 @@ public class Fecha implements Comparable<Fecha>{
 	
 	
 
-	public static class DeleteDomainEvent extends ActionDomainEvent<Fecha> {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;}
-	
-	@Action(
-            domainEvent = DeleteDomainEvent.class,
-            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-    )
-	public void delete() {
-        repositoryService.remove(this);
-    }
+//	public static class DeleteDomainEvent extends ActionDomainEvent<Fecha> {
+//
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;}
+//	
+//	@Action(
+//            domainEvent = DeleteDomainEvent.class,
+//            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+//    )
+//	public void delete() {
+//        repositoryService.remove(this);
+//    }
 	
 //	public String disableDelete(){
 //		return !listaPartidos.isEmpty()?"La lista de partidos debe estar vacia.":null;
