@@ -129,9 +129,16 @@ public class DivisionServicio {
     		named="Crear Fixture"
     		)
     @MemberOrder(name="Planificacion", sequence = "4")
-    public Division crearFixture(@ParameterLayout(named="Ingrese Division") final Division division){
+    public Division crearFixture(
+    		@ParameterLayout(named="Ingrese Division") final Division division,
+    		@ParameterLayout(named="Dia de Inicio") final DateTime diaInicio
+    		){
+    	DateTime ahora;
     	
-    	DateTime ahora =DateTime.now();
+    	if (diaInicio==null)ahora = DateTime.now();
+    	else ahora=diaInicio;
+
+    	String mensaje01;
     	
     	if (!division.getListaFechas().isEmpty()){
     		JOptionPane.showMessageDialog(null, "No se puede crear un fixture. Ya existe uno para esta Division.");
@@ -139,7 +146,6 @@ public class DivisionServicio {
     	}
     	
     	int tope=division.getListaEquipos().size();
-    	int comodin=tope;
     	
     	if (tope<3){
     		JOptionPane.showMessageDialog(null, "Cantidad de equipos insuficiente para crear un fixture (minimo = 3)");
@@ -149,14 +155,11 @@ public class DivisionServicio {
     	//SI EL NUMERO DE EQUIPOS ES IMPAR, EL TOPE SE INCREMENTA EN 1 UNIDAD
     	if (tope%2!=0){
     		tope=tope+1;
-    		comodin=tope;
     	}
     	
 		int filas=tope-1;
 		int columnas=tope;
 		int aux=1;
-		int coef1=tope/2-1;
-		int coef2=tope-2;
 		
 		int[][] matrizFixture =new int[filas*2][columnas];
 		int[][] matrizAuxiliar =new int[filas*2][columnas];
@@ -167,22 +170,32 @@ public class DivisionServicio {
 		}
 		
 		//HAGO LA PRIMERA COLUMNA IGUAL A 1, 1, 1, ...1
-		for (int i=0; i<filas; i++){
+		for (int i=1; i<filas; i++){
 			matrizFixture[i][0]=1;
 		}
 		
-		//HAGO LA SEGUNDA COLUMNA IGUAL TOPE, TOPE-1, TOPE-2, ....  
-		for (int i=1; i<filas; i++){
-			matrizFixture[i][1]=tope-i+1;
-		}
+		int c1=tope/2-1;
+		int c2=tope/2;
 		
-		//...ARMO EL RESTO DE LA MATRIZ
-		for (int i=1; i<filas; i++){
-			for (int j=2; j<columnas; j++){
-				matrizFixture[i][j]=matrizFixture[i-1][j-1];
+		//ARMO SEGUNDA COLUMNA
+		for (int i=1;i<filas;i++){
+			if (i%2!=0){ //SI LA FILA ES IMPAR
+				matrizFixture[i][1]=matrizFixture[i-1][1]+c2;
+			}else{
+				matrizFixture[i][1]=matrizFixture[i-1][1]-c1;
 			}
 		}
 		
+		//ARMO EL RESTO DE LA MATRIZ
+		for (int i=1; i<filas; i++){
+			for (int j=2; j<columnas; j++){
+				matrizFixture[i][j]=matrizFixture[i][j-1]+1;
+				if (matrizFixture[i][j]>columnas){
+					matrizFixture[i][j]=2;
+				}
+			}
+		}
+
 		//DUPLICO LA MATRIZ PRINCIPAL, CREANDO UNA MATRIZ AUXILIAR
 		for (int i=0; i<filas; i++){
 			for (int j=0; j<columnas; j++){
@@ -202,31 +215,8 @@ public class DivisionServicio {
 			}
 		}
 		
-		//DUPLICO OTRA VEZ LA MATRIZ PRINCIPAL
-		for (int i=0; i<filas; i++){
-			for (int j=0; j<columnas; j++){
-				matrizAuxiliar[i][j]=matrizFixture[i][j];
-			}
-		}
-		
-		//PERMUTO FILAS
-		for (int i=1; i<filas;i++){
-			if (i%2!=0){
-				for (int j=1; j<columnas;j++){
-					matrizFixture[i][j]=matrizAuxiliar[coef1][j];
-				}
-				coef1=coef1-1;
-			}
-			if (i%2==0){
-				for (int j=1; j<columnas;j++){
-					matrizFixture[i][j]=matrizAuxiliar[coef2][j];
-				}
-				coef2=coef2-1;
-			}
-		}
-		
 		//ALTERNO LAS COLUMNAS 1 Y 2 PARA MODIFICAR LA LOCALIA DEL PRIMER EQUIPO
-		for (int i=1; i<filas; i++){
+		for (int i=0; i<filas; i++){
 			
 			if (i%2!=0){
 				aux=matrizFixture[i][1];
@@ -237,6 +227,7 @@ public class DivisionServicio {
 		
 		//CON ESTO, YA OBTENGO UNA MATRIZ FIXTURE QUE SIRVE PARA LA PRIMERA RONDA DE PARTIDOS
 		
+				
 		//DUPLICO LA LISTA DE EQUIPOS DE LA DIVISION
 		List<Equipo>listaEquiposDuplicada=new ArrayList<Equipo>();
 		
@@ -255,9 +246,8 @@ public class DivisionServicio {
 //			mensaje02+=listaEquiposDuplicada.get(i).getNombre()+"  ";
 //		}
 //		JOptionPane.showMessageDialog(null, mensaje02);
-
 		
-		//AHORA EVALUO SI LA MODALIDAD ES IDA Y VUELTA
+		//EVALUO SI LA MODALIDAD ES IDA Y VUELTA
 		if(division.getModalidad()==Modalidad.IDA_Y_VUELTA){
 			
 			//DUPLICO LA MATRIZ PRINCIPAL
@@ -285,7 +275,7 @@ public class DivisionServicio {
 		}
 		
 //		//MUESTRO UN JPANEL CON LA MATRIZ FIXTURE
-//		String mensaje01="";
+//		mensaje01="";
 //		for (int i=0; i<filas*2;i++){
 //			for (int j=0; j<columnas;j++){
 //				mensaje01+=Integer.toString(matrizFixture[i][j])+"  ";
@@ -296,8 +286,6 @@ public class DivisionServicio {
 
 		//RECORRO LA MATRIZ FIXTURE
 		if(division.getModalidad()==Modalidad.IDA_Y_VUELTA)filas=filas*2;
-		
-		
 		
 		for (int i=0; i<filas; i++){
 			
@@ -310,14 +298,17 @@ public class DivisionServicio {
 			for (int j=0; j<columnas; j=j+2){
 				
 				Partido partido=new Partido();
-				
 				Equipo eq1=new Equipo();
 				Equipo eq2=new Equipo();
 				
-				if(((matrizFixture[i][j]!=1)&&(matrizFixture[i][j+1]!=1))||(comodin==division.getListaEquipos().size())){
-					
-					eq1=listaEquiposDuplicada.get(matrizFixture[i][j]-2);
-					eq2=listaEquiposDuplicada.get(matrizFixture[i][j+1]-2);
+				if(((matrizFixture[i][j]!=1)&&(matrizFixture[i][j+1]!=1))||(division.getListaEquipos().size()%2==0)){
+					if(division.getListaEquipos().size()%2==0){
+						eq1=listaEquiposDuplicada.get(matrizFixture[i][j]-1);
+						eq2=listaEquiposDuplicada.get(matrizFixture[i][j+1]-1);
+					} else{
+						eq1=listaEquiposDuplicada.get(matrizFixture[i][j]-2);
+						eq2=listaEquiposDuplicada.get(matrizFixture[i][j+1]-2);
+					}
 					
 					partido.setEquipoLocal(eq1);
 					partido.setEquipoVisitante(eq2);
