@@ -146,9 +146,9 @@ public class Equipo implements Comparable<Equipo>{
 			@Override
 			public boolean apply(Jugador jug) {
 				
-				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaBuenaFe.contains(jug))?true:false;
-				
-//				return (jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&& !listaBuenaFe.contains(jug)&&jug.getEquipo()==null)?true:false;
+				return (jugadorServicio.listarJugadoresPorCategoria(division.getCategoria()).contains(jug)&&
+						jugadorServicio.listarJugadoresActivosSegunClub(club).contains(jug)&&
+						!listaBuenaFe.contains(jug))?true:false;
 			}
 		});
 	}
