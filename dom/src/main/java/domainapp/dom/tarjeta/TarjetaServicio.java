@@ -18,7 +18,6 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 import com.google.common.collect.Lists;
 
-import domainapp.dom.gol.GolServicio.CreateDomainEvent;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.partido.Partido;
 
@@ -91,7 +90,15 @@ public class TarjetaServicio {
 		return Lists.newArrayList(partido.getListaPartido());
 	}
     
-    
+    public String validateCrearTarjeta(
+    		final @ParameterLayout(named="Jugador") Jugador jugador,
+    		final @ParameterLayout(named="Tipo") TipoTarjeta tipoTarjeta,
+    		final @ParameterLayout(named="Minuto") int minutoTarjeta,
+    		final @ParameterLayout(named="Partido") Partido partido
+    		){    	
+    	if (minutoTarjeta<0||minutoTarjeta>70) return "Ingrese un valor desde 0 hasta 70";
+    	return "";
+    }
 
     @javax.inject.Inject
     RepositoryService repositoryService;
