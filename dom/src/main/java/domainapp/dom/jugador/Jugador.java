@@ -10,6 +10,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
@@ -178,7 +179,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	//CUOTAS
 	@MemberOrder(sequence = "16")
 	@Persistent(mappedBy = "jugadores", dependentElement = "true")
-	@CollectionLayout(named="Cuotas")
+	@CollectionLayout(named="Cuotas a pagar")
 	private SortedSet<CuotaJugador> cuotas = new TreeSet<CuotaJugador>();	
 	public SortedSet<CuotaJugador> getCuotas() {return cuotas;}
 	public void setCuotas(SortedSet<CuotaJugador> cuotas) {this.cuotas = cuotas;}
@@ -186,7 +187,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	//PAGOS
 	@MemberOrder(sequence = "17")
 	@Persistent(mappedBy="jugador", dependentElement="true")
-	@CollectionLayout(named="Pagos")
+	@CollectionLayout(named="Pagos realizados")
 	private SortedSet<PagoJugador> pagosJugador=new TreeSet<PagoJugador>();
 	public SortedSet<PagoJugador> getPagosJugador() {return pagosJugador;}
 	public void setPagosJugador(SortedSet<PagoJugador> pagosJugador) {this.pagosJugador = pagosJugador;}
@@ -215,6 +216,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
             domainEvent = DeleteDomainEvent.class,
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
+	@ActionLayout(named="Eliminar Jugador")
     public void delete() {
         repositoryService.remove(this);
     }

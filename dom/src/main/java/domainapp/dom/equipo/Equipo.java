@@ -72,7 +72,6 @@ public class Equipo implements Comparable<Equipo>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre", this.getNombre());
-
     }
 	
 	public String iconName(){return "equipo";}
@@ -81,7 +80,8 @@ public class Equipo implements Comparable<Equipo>{
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;}
+		private static final long serialVersionUID = 1L;
+	}
 	
     //NOMBRE DEL EQUIPO
     @MemberOrder(sequence = "1")
@@ -133,7 +133,7 @@ public class Equipo implements Comparable<Equipo>{
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE BUENA FE DEL EQUIPO
 	@MemberOrder(sequence = "10")
-	@ActionLayout(named="Agregar Jugador", cssClassFa="fa fa-thumbs-o-up")
+	@ActionLayout(named="Agregar Jugador al Equipo", cssClassFa="fa fa-thumbs-o-up")
 	public Equipo agregarJugadorAListaBuenaFe(Jugador e) {
 		listaBuenaFe.add(e);
 		e.getEquipos().add(this);
@@ -155,18 +155,14 @@ public class Equipo implements Comparable<Equipo>{
 		
 	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE BUENA FE DEL EQUIPO
 	@MemberOrder(sequence = "11")
-	@ActionLayout(named="Quitar Jugador", cssClassFa="fa fa-thumbs-o-down")
+	@ActionLayout(named="Quitar Jugador del Equipo", cssClassFa="fa fa-thumbs-o-down")
 	public Equipo quitarJugadorDeListaBuenaFe(Jugador e) {
 		listaBuenaFe.remove(e);
 		e.getEquipos().remove(this);
 		return this;
 	}
-
-		
-
 		
 	public List<Jugador> choices0QuitarJugadorDeListaBuenaFe(){
-		
 		return Lists.newArrayList(getListaBuenaFe());
 	}
 		
@@ -175,27 +171,18 @@ public class Equipo implements Comparable<Equipo>{
 	@Persistent(mappedBy = "equipo", dependentElement = "true")
 	@CollectionLayout(named="Goles")
 	private SortedSet<Gol> goles = new TreeSet<Gol>();	
-	public SortedSet<Gol> getGoles() {
-		return goles;
-	}
-	public void setGoles(SortedSet<Gol> goles) {
-		this.goles = goles;
-	}
+	public SortedSet<Gol> getGoles() {return goles;}
+	public void setGoles(SortedSet<Gol> goles) {this.goles = goles;}
 		
 	//LISTA DE GOLES EN CONTRA
 	@MemberOrder(sequence = "19")
 	@Persistent(mappedBy = "equipoContrario", dependentElement = "true")
 	@CollectionLayout(named="Goles en contra")
 	private SortedSet<Gol> golesEnContra = new TreeSet<Gol>();	
-	public SortedSet<Gol> getGolesEnContra() {
-		return golesEnContra;
-	}
-	public void setGolesEnContra(SortedSet<Gol> golesEnContra) {
-		this.golesEnContra = golesEnContra;
-	}
+	public SortedSet<Gol> getGolesEnContra() {return golesEnContra;}
+	public void setGolesEnContra(SortedSet<Gol> golesEnContra) {this.golesEnContra = golesEnContra;}
 
 	public static class DeleteDomainEvent extends Equipo.ActionDomainEvent {
-
 		/**
 		 * 
 		 */
@@ -219,19 +206,16 @@ public class Equipo implements Comparable<Equipo>{
 		else if (!listaBuenaFe.isEmpty()) return "La lista de Buena Fe debe estar vacia.";
 		
 		return "";
-			
-		}
-	
+	}	
 	
 	public static class ActivoDomainEvent extends Equipo.ActionDomainEvent {
-
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L; }
+		private static final long serialVersionUID = 1L;
+	}
 	
 	public static abstract class ActionDomainEvent extends domainapp.dom.DomainAppDomainModule.ActionDomainEvent<Equipo> {
-
 		/**
 		 * 
 		 */
@@ -249,11 +233,11 @@ public class Equipo implements Comparable<Equipo>{
 	}
     
     public static class InactivoDomainEvent extends Equipo.ActionDomainEvent {
-
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L; }
+		private static final long serialVersionUID = 1L;
+    }
 
     @Action(
             domainEvent =InactivoDomainEvent.class,

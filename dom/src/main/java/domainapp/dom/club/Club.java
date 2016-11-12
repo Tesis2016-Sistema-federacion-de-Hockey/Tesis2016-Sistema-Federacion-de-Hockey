@@ -237,6 +237,7 @@ public class Club implements Comparable<Club> {
             domainEvent = DeleteDomainEvent.class,
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
+	@ActionLayout(named="Eliminar Club")
 	public void delete() {
 			repositoryService.remove(this);
     }
