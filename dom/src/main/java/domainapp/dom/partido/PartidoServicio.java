@@ -10,16 +10,15 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.equipo.Equipo;
-import domainapp.dom.jugador.Jugador;
 
-@SuppressWarnings("deprecation")
 @DomainService(
-        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY,
+        nature = NatureOfService.VIEW,
         repositoryFor = Partido.class
 )
 @DomainServiceLayout(
@@ -37,7 +36,8 @@ public class PartidoServicio {
     @ActionLayout(
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="PartidosPorEquipo"
+            named="Partidos Disputados",
+            hidden=Where.PARENTED_TABLES
     )
     @MemberOrder(sequence = "1")
     public List<Partido> listarPartidosPorEquipo(Equipo equipo) {

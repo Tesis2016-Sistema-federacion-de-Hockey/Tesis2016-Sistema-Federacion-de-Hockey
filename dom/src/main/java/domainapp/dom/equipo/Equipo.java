@@ -38,6 +38,7 @@ import domainapp.dom.estado.Estado;
 import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.partido.Partido;
 
 @javax.jdo.annotations.PersistenceCapable(
     identityType=IdentityType.DATASTORE,
@@ -165,11 +166,27 @@ public class Equipo implements Comparable<Equipo>{
 	public List<Jugador> choices0QuitarJugadorDeListaBuenaFe(){
 		return Lists.newArrayList(getListaBuenaFe());
 	}
-		
+	
+	//LISTA DE PARTIDOS DE LOCAL
+	@MemberOrder(sequence = "17")
+	@Persistent(mappedBy = "equipoLocal", dependentElement = "true")
+	@CollectionLayout(named="Partidos de LOCAL")
+	private SortedSet<Partido> partidosLocal=new TreeSet<Partido>();
+	public SortedSet<Partido> getPartidosLocal() {return partidosLocal;}
+	public void setPartidosLocal(SortedSet<Partido> partidosLocal) {this.partidosLocal = partidosLocal;}
+
+	//LISTA DE PARTIDOS DE VISITANTE
+	@MemberOrder(sequence = "17.1")
+	@Persistent(mappedBy = "equipoVisitante", dependentElement = "true")
+	@CollectionLayout(named="Partidos de VISITANTE")
+	private SortedSet<Partido> partidosVisitante=new TreeSet<Partido>();
+	public SortedSet<Partido> getPartidosVisitante() {return partidosVisitante;}
+	public void setPartidosVisitante(SortedSet<Partido> partidosVisitante) {this.partidosVisitante = partidosVisitante;}
+
 	//LISTA DE GOL
 	@MemberOrder(sequence = "18")
 	@Persistent(mappedBy = "equipo", dependentElement = "true")
-	@CollectionLayout(named="Goles")
+	@CollectionLayout(named="Goles a favor")
 	private SortedSet<Gol> goles = new TreeSet<Gol>();	
 	public SortedSet<Gol> getGoles() {return goles;}
 	public void setGoles(SortedSet<Gol> goles) {this.goles = goles;}
