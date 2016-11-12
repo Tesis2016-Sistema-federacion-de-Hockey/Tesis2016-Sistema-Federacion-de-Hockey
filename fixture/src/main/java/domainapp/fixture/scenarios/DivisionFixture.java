@@ -18,18 +18,18 @@ public class DivisionFixture extends FixtureScript {
 
 //    	BorrarDBDivision(executionContext);
         
-    	crearDivision("PRIMERA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("PRIMERA CABALLEROS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("7MA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("6TA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
-    	crearDivision("5TA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+//    	crearDivision("PRIMERA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+//    	crearDivision("PRIMERA CABALLEROS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+//    	crearDivision("7MA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+//    	crearDivision("6TA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
+//    	crearDivision("5TA DAMAS", null, Estado.ACTIVO, null, Modalidad.IDA_Y_VUELTA, 3, 1, 0, executionContext);
 
     }
 	
     @SuppressWarnings("deprecation")
     	private Division crearDivision(
                 final String nombre,
-                final String categoria,
+                final int categoria,
                 final Estado estado,
                 final Torneo torneo,
                 final Modalidad modalidad,

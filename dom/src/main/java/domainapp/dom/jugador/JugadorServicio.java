@@ -94,6 +94,19 @@ public class JugadorServicio{
 		});
 	}
     
+    @ActionLayout(named="Listar Jugadores por Categoria")
+    @MemberOrder(sequence = "4.1")
+    public List<Jugador> listarJugadoresPorCategoria(
+    		@ParameterLayout(named="Ingrese Categoria") final int categoria) {
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+
+			@Override
+			public boolean apply(Jugador input) {
+				return input.getFechaNacimiento().year().get()>=categoria?true:false;
+			}
+		});
+	}
+    
     @ActionLayout(named="Listar Jugadores Activos por Club")
     @MemberOrder(sequence = "5")
     public List<Jugador> listarJugadoresActivosSegunClub(Club club) {

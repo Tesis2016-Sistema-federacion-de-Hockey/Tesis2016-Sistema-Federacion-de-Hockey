@@ -78,10 +78,10 @@ public class Division implements Comparable<Division>{
 	
 	//CATEGORIA (MAXIMO DE AÑOS QUE UN JUGADOR PUEDE TENER PARA PARTICIPAR EN ESTA DIVISION)
 	@MemberOrder(sequence = "1.1")
-    @Column(allowsNull="true")
-	private String categoria;
-	public String getCategoria() {return categoria;}
-	public void setCategoria(String categoria) {this.categoria = categoria;}
+    @Column(allowsNull="false")
+	private int categoria;
+	public int getCategoria() {return categoria;}
+	public void setCategoria(int categoria) {this.categoria = categoria;}
 
 	//ESTADO DE LA DIVISION
 	@MemberOrder(sequence = "2")

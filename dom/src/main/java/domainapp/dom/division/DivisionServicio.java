@@ -86,7 +86,7 @@ public class DivisionServicio {
     @MemberOrder(name="Planificacion", sequence = "3")
     public Division crearDivision(
 		final @ParameterLayout(named="Nombre") String nombre,
-		final @ParameterLayout(named="Categoria") String categoria,
+		final @ParameterLayout(named="Categoria") int categoria,
 		final @ParameterLayout(named="Estado") Estado estado,
 		final @ParameterLayout(named="Torneo") Torneo torneo,
 		final @ParameterLayout(named="Modalidad") Modalidad modalidad,
@@ -107,6 +107,11 @@ public class DivisionServicio {
         return obj;
     }
 	
+    //POR DEFECTO, AL CREAR LA DIVISION ES CATEGORIA 1970
+    public int default1CrearDivision(){    	
+    	return 1970;
+    }    
+
     //POR DEFECTO, AL CREAR LA DIVISION ES ACTIVA
     public Estado default2CrearDivision(){    	
     	return Estado.ACTIVO;
