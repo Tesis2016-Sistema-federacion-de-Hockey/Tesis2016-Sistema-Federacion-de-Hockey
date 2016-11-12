@@ -81,7 +81,14 @@ public class GolServicio {
 		return Lists.newArrayList(partid.getListaPartido());
 	}
 
-    
+    public String validateCrearGol(
+    		final @ParameterLayout(named="Jugador") Jugador jugador,
+            final @ParameterLayout(named="Partido") Partido partid,
+            final @ParameterLayout(named="minuto") int minuto
+			){    	
+    	if (minuto<0||minuto>70) return "Ingrese un valor desde 0 hasta 70";
+    	return "";
+    }
     
 	
 	@javax.inject.Inject
