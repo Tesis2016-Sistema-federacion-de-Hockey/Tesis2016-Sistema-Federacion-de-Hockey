@@ -47,30 +47,30 @@ public class TemporadaFixture extends FixtureScript {
 
     	
     	Club club01=clubServicio.crearClub("CAI","Club Atletico Independiente", "1997", "ID01","Personeria CAI", "caihockeyneuquen@gmail.com",
-        		"299 4061216", "Jose Rosa", "246", "", "");
+        		"299 4061216", "Jose Rosa", "246", "", "", null);
     	Club club02=clubServicio.crearClub("NRC","Neuquen Rugby Club", "1983", "ID02","Personeria NRC", "hockey@neuquenrc.com.ar",
-        		"444 1188", "San Martin", "8000", "", "");
+        		"444 1188", "San Martin", "8000", "", "", null);
     	Club club03=clubServicio.crearClub("CAB","Club Alta Barda", "1970", "ID03","Personeria CAB", "cab@gmail.com",
-        		"443 3222", "Ruta 7", "km 3", "","");
+        		"443 3222", "Ruta 7", "km 3", "","", null);
     	Club club04=clubServicio.crearClub("Ribera","Asociacion La Ribera", "2008", "ID04","Personeria La Ribera", "laribera@hotmail.com",
-        		"473 699", "Ramon Castro", "31", "", "");
+        		"473 699", "Ramon Castro", "31", "", "", null);
     	Club club05=clubServicio.crearClub("San Jorge","Club San Jorge", "2011", "ID05","Personeria San Jorge", "sanjorge@gmail.com",
-        		"0299 493 544", "Ruta 7", "Km 18", "", "");
+        		"0299 493 544", "Ruta 7", "Km 18", "", "", null);
     	Club club06=clubServicio.crearClub("CAN","Club Atletico Neuquen", "2003", "ID06","Personeria Neuquen", "atleticoneuquenhockey@yahoo.com.ar",
-        		"0299 443 8800", "Saavedra", "250", "", "");
+        		"0299 443 8800", "Saavedra", "250", "", "", null);
     	Club club07=clubServicio.crearClub("LIMAY","Club Limay de Plottier", "1994", "ID07","Personeria Plottier", "plottier@gmail.com",
-        		"0299 477 1993", "Matheu", "123", "", "");
+        		"0299 477 1993", "Matheu", "123", "", "", null);
     	Club club08=clubServicio.crearClub("Tiro F","Tiro Federal Zapala", "2009", "ID08","Personeria Zapala", "zapala@gmail.com",
-        		"02948 438888", "Bolivia", "4025", "", "");
+        		"02948 438888", "Bolivia", "4025", "", "", null);
 
     	
     	
     	Equipo equipo01=equipoServicio.crearEquipo("CAI", Estado.ACTIVO, club01, divi01);
     	Equipo equipo02=equipoServicio.crearEquipo("NRC", Estado.ACTIVO, club02, divi01);
-    	Equipo equipo03=equipoServicio.crearEquipo("CAB", Estado.ACTIVO, club03, divi01);
-    	Equipo equipo04=equipoServicio.crearEquipo("Ribera", Estado.ACTIVO, club04, divi01);
-    	Equipo equipo05=equipoServicio.crearEquipo("San Jorge", Estado.ACTIVO, club05, divi01);
-    	Equipo equipo06=equipoServicio.crearEquipo("Tiro F", Estado.ACTIVO, club08, divi01);
+    	equipoServicio.crearEquipo("CAB", Estado.ACTIVO, club03, divi01);
+    	equipoServicio.crearEquipo("Ribera", Estado.ACTIVO, club04, divi01);
+    	equipoServicio.crearEquipo("San Jorge", Estado.ACTIVO, club05, divi01);
+    	equipoServicio.crearEquipo("Tiro F", Estado.ACTIVO, club08, divi01);
     	
     	equipoServicio.crearEquipo("CAI A", Estado.ACTIVO, club01, divi02);
     	equipoServicio.crearEquipo("CAI B", Estado.ACTIVO, club01, divi02);
@@ -98,37 +98,37 @@ public class TemporadaFixture extends FixtureScript {
     	    	
     	Jugador jug01=jugadorServicio.crearJugador(Sector.DAMAS, "111", "Julia", "Blanco", TipoDocumento.DNI, "27883920",
     			new LocalDate(1996, 12, 1), Estado.ACTIVO, "julia.blanco@gmail.com", "Dr. Ramon", "15", "PB", "B",
-        		"4483131", "2994523497", club01, equipo01);
+    			null, "4483131", "2994523497", club01, equipo01);
     	Jugador jug02=jugadorServicio.crearJugador(Sector.DAMAS, "112", "Adriana", "Petazzi", TipoDocumento.DNI, "28996773",
     			new LocalDate(1997, 6, 4), Estado.ACTIVO, "adriana.petazzi@hotmail.com.ar", "Avenida Argentina", "1050", "PB", "D",
-        		"4471223", "2996013887", club01, equipo01);
+    			null, "4471223", "2996013887", club01, equipo01);
     	Jugador jug03=jugadorServicio.crearJugador(Sector.DAMAS, "113", "Maru", "Lopez", TipoDocumento.DNI, "27885990",
     			new LocalDate(1995, 2, 4), Estado.ACTIVO, "", "Ameghino", "615", "", "",
-        		"4482447", "2996031234", club01, equipo01);
+    			null, "4482447", "2996031234", club01, equipo01);
     	Jugador jug04=jugadorServicio.crearJugador(Sector.DAMAS, "114", "Victoria", "Falleti", TipoDocumento.DNI, "27434960",
     			new LocalDate(1994, 11, 17), Estado.ACTIVO, "", "Belgrano", "2250", "", "",
-        		"4439898", "2996388572", club01, equipo01);
+    			null, "4439898", "2996388572", club01, equipo01);
     	Jugador jug05=jugadorServicio.crearJugador(Sector.DAMAS, "115", "Majo", "Alonso", TipoDocumento.DNI, "21348873",
     			new LocalDate(1996, 9, 21), Estado.ACTIVO, "", "Esmeralda", "23", "", "",
-        		"4331778", "2995239385", club01, equipo01);
+    			null, "4331778", "2995239385", club01, equipo01);
     	Jugador jug06=jugadorServicio.crearJugador(Sector.DAMAS, "116", "Silvina", "Armengol", TipoDocumento.DNI, "31004827",
     			new LocalDate(2001, 8, 7), Estado.ACTIVO, "", "Garcia", "123", "", "",
-        		"4457338", "299638776", club01, equipo01);
+    			null, "4457338", "299638776", club01, equipo01);
     	Jugador jug07=jugadorServicio.crearJugador(Sector.DAMAS, "117", "Valeria", "Bahurlet", TipoDocumento.DNI, "32676335",
     			new LocalDate(1999, 6, 5), Estado.ACTIVO, "", "Echeverry", "432", "", "",
-        		"4455882", "2996178229", club01, equipo01);
+    			null, "4455882", "2996178229", club01, equipo01);
     	Jugador jug08=jugadorServicio.crearJugador(Sector.DAMAS, "118", "Moreto", "Pamela", TipoDocumento.DNI, "33881720",
     			new LocalDate(1996, 11, 23), Estado.ACTIVO, "", "Lainez", "15", "", "",
-        		"4452771", "", club01, equipo01);
+    			null, "4452771", "", club01, equipo01);
     	Jugador jug09=jugadorServicio.crearJugador(Sector.DAMAS, "119", "Moreto", "Paola", TipoDocumento.DNI, "33881721",
     			new LocalDate(1997, 10, 19), Estado.ACTIVO, "", "Lainez", "15", "", "",
-        		"4452771", "", club01, equipo01);
+    			null, "4452771", "", club01, equipo01);
     	Jugador jug10=jugadorServicio.crearJugador(Sector.DAMAS, "120", "Ana", "Servidio", TipoDocumento.DNI, "20887293",
     			new LocalDate(1998, 12, 2), Estado.ACTIVO, "", "Rio Negro", "3221", "", "",
-        		"", "", club01, equipo01);
+    			null, "", "", club01, equipo01);
     	Jugador jug11=jugadorServicio.crearJugador(Sector.DAMAS, "121", "Susana", "Horia", TipoDocumento.DNI, "21377334",
     			new LocalDate(1996, 1, 3), Estado.ACTIVO, "", "San Martin", "1030", "", "",
-        		"", "", club01, equipo01);
+    			null, "", "", club01, equipo01);
     	
     	
     	equipo01.getListaBuenaFe().add(jug01);
@@ -148,37 +148,37 @@ public class TemporadaFixture extends FixtureScript {
     	
     	Jugador jug21=jugadorServicio.crearJugador(Sector.DAMAS, "221", "Luciana", "Aimar", TipoDocumento.DNI, "31334488",
     			new LocalDate(2005, 3, 8), Estado.ACTIVO, "luciana.aimar@gmail.com", "Elordi", "307", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug22=jugadorServicio.crearJugador(Sector.DAMAS, "222", "Carla", "Rebequi", TipoDocumento.DNI, "21998362",
     			new LocalDate(2004, 4, 26), Estado.ACTIVO, "carla.rebequi@yahoo.com", "Rio Diamante", "667", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug23=jugadorServicio.crearJugador(Sector.DAMAS, "223", "Magdalena", "Aicega", TipoDocumento.DNI, "35772957",
     			new LocalDate(2005, 3, 13), Estado.ACTIVO, "magui.aicega@hotmal.com", "Tucuman", "867", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug24=jugadorServicio.crearJugador(Sector.DAMAS, "224", "Zulema", "Garcia", TipoDocumento.DNI, "34662738",
     			new LocalDate(2004, 4, 4), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug25=jugadorServicio.crearJugador(Sector.DAMAS, "225", "Teresa", "Pareto", TipoDocumento.DNI, "34982840",
     			new LocalDate(2005, 5, 5), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug26=jugadorServicio.crearJugador(Sector.DAMAS, "226", "Valeria", "Martinez", TipoDocumento.DNI, "34277399",
     			new LocalDate(2005, 6, 6), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug27=jugadorServicio.crearJugador(Sector.DAMAS, "227", "Fernanda", "Gimenez", TipoDocumento.DNI, "34678876",
     			new LocalDate(2003, 8, 1), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug28=jugadorServicio.crearJugador(Sector.DAMAS, "228", "Graciela", "Borges", TipoDocumento.DNI, "34288400",
     			new LocalDate(2005, 6, 29), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug29=jugadorServicio.crearJugador(Sector.DAMAS, "229", "Helena", "Trapo", TipoDocumento.DNI, "34822044",
     			new LocalDate(2005, 2, 20), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug30=jugadorServicio.crearJugador(Sector.DAMAS, "230", "Maria Azucena", "Techaba", TipoDocumento.DNI, "31316677",
     			new LocalDate(2004, 2, 7), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
     	Jugador jug31=jugadorServicio.crearJugador(Sector.DAMAS, "231", "Maria Luisa", "Srevernick", TipoDocumento.DNI, "32324433",
     			new LocalDate(2005, 4, 14), Estado.ACTIVO, "", "", "", "", "",
-        		"", "", club02, equipo02);
+    			null, "", "", club02, equipo02);
 
     	
     	

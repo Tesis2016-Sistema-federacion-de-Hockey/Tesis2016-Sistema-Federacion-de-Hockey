@@ -10,6 +10,8 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 
+import domainapp.dom.localidad.Localidad;
+
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple"        
@@ -58,4 +60,11 @@ public class Domicilio {
 	private String departamento;
 	public String getDepartamento() {return departamento;}
 	public void setDepartamento(String departamento) {this.departamento = departamento;}
+	
+	@MemberOrder(sequence = "5")
+	@Property(editing = Editing.ENABLED)
+	@Column(allowsNull = "true")
+	private Localidad localidad;
+	public Localidad getLocalidad() {return localidad;}
+	public void setLocalidad(Localidad localidad) {this.localidad = localidad;}	
 }

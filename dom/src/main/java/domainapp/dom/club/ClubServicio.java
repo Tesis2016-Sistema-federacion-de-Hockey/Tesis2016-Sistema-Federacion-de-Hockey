@@ -21,6 +21,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.domicilio.Domicilio;
+import domainapp.dom.localidad.Localidad;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -95,7 +96,8 @@ public class ClubServicio {
             final @ParameterLayout(named="Calle") @Parameter(optionality=Optionality.OPTIONAL) String calle,
             final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,
             final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
-            final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento            
+            final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
+            final @ParameterLayout(named="Localidad") @Parameter(optionality=Optionality.OPTIONAL) Localidad localidad
     		){
         final Club obj = repositoryService.instantiate(Club.class);
         final Domicilio domicilio=new Domicilio();
@@ -103,6 +105,7 @@ public class ClubServicio {
         domicilio.setNumero(numero);
         domicilio.setPiso(piso);
         domicilio.setDepartamento(departamento);
+        domicilio.setLocalidad(localidad);
         obj.setNombre(nombre);
         obj.setNombreInstitucional(nombreInstitucional);
         obj.setAnioAfiliacion(anioAfiliacion);  

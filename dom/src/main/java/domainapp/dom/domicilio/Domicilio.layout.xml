@@ -36,6 +36,7 @@
                                 <c:property id="numero" namedEscaped="true"/>
                                 <c:property id="piso" namedEscaped="true"/>
                                 <c:property id="departamento" namedEscaped="true"/>
+                                <c:property id="localidad" namedEscaped="true"/>
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

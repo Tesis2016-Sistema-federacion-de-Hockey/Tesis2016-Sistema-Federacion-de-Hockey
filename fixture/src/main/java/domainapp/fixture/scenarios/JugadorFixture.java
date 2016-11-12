@@ -8,6 +8,7 @@ import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.localidad.Localidad;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
 
@@ -21,13 +22,13 @@ public class JugadorFixture extends FixtureScript {
 
         crearJugador(Sector.CABALLEROS, "300", "Diego", "Roger", TipoDocumento.DNI, "32338746",
         		LocalDate.now(), Estado.ACTIVO, "diego.roger@gmail.com", "Formosa", "1671", "", "",
-        		"4431786", "2995141516", null, null, executionContext);
+        		Localidad.NEUQUEN, "4431786", "2995141516", null, null, executionContext);
         crearJugador(Sector.CABALLEROS, "301", "Joaquin", "Martinez", TipoDocumento.DNI, "33276930",
         		LocalDate.now(), Estado.ACTIVO, "j.m@gmail.com", "Formosa", "1671", "", "",
-        		"4477382", "299673992", null, null, executionContext);
+        		Localidad.NEUQUEN, "4477382", "299673992", null, null, executionContext);
         crearJugador(Sector.CABALLEROS, "302", "Alejandro", "McCormack", TipoDocumento.DNI, "26773933",
         		LocalDate.now(), Estado.ACTIVO, "m.m@gmail.com", "Leloir", "995", "", "",
-        		"4483002", "2995907683", null, null, executionContext);
+        		Localidad.NEUQUEN, "4483002", "2995907683", null, null, executionContext);
         
     }
 	
@@ -46,6 +47,7 @@ public class JugadorFixture extends FixtureScript {
                 final String numero,
                 final String piso,
                 final String departamento,
+                final Localidad localidad,
                 final String telefono,
                 final String celular,
                 final Club club,
@@ -53,7 +55,7 @@ public class JugadorFixture extends FixtureScript {
         		,ExecutionContext executionContext) {
     	return executionContext.add(this, jugadorServicio.crearJugador(
         		 sector, ficha, nombre, apellido, tipo, documento, fechaNacimiento, estado, email,
-        		 calle, numero, piso, departamento, telefono, celular, club, equipo));
+        		 calle, numero, piso, departamento, localidad, telefono, celular, club, equipo));
     }
        
     @javax.inject.Inject

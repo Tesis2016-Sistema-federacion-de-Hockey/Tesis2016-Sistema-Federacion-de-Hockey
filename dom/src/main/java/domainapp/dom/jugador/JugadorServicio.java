@@ -29,6 +29,7 @@ import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.equipo.EquipoServicio;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.localidad.Localidad;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tipodocumento.TipoDocumento;
 
@@ -167,6 +168,7 @@ public class JugadorServicio{
             final @ParameterLayout(named="Numero") @Parameter(optionality=Optionality.OPTIONAL) String numero,
             final @ParameterLayout(named="Piso") @Parameter(optionality=Optionality.OPTIONAL) String piso,
             final @ParameterLayout(named="Departamento") @Parameter(optionality=Optionality.OPTIONAL) String departamento,
+            final @ParameterLayout(named="Localidad") @Parameter(optionality=Optionality.OPTIONAL) Localidad localidad,
             final @ParameterLayout(named="Telefono") @Parameter(optionality=Optionality.OPTIONAL) String telefono,
             final @ParameterLayout(named="Celular") @Parameter(optionality=Optionality.OPTIONAL) String celular,
             final @ParameterLayout(named="Club") @Parameter(optionality=Optionality.OPTIONAL) Club club,
@@ -178,6 +180,7 @@ public class JugadorServicio{
         domicilio.setNumero(numero);
         domicilio.setPiso(piso);
         domicilio.setDepartamento(departamento);
+        domicilio.setLocalidad(localidad);
         obj.setSector(sector);
         obj.setFicha(ficha);
         obj.setNombre(nombre);
@@ -203,7 +206,7 @@ public class JugadorServicio{
     	return TipoDocumento.DNI;
     }
     
-    public List<Equipo> choices16CrearJugador(
+    public List<Equipo> choices17CrearJugador(
     		final Sector sector,
             final String ficha,
             final String nombre,
@@ -217,6 +220,7 @@ public class JugadorServicio{
             final String numero,
             final String piso,
             final String departamento,
+            final Localidad localidad,
             final String telefono,
             final String celular,
             final Club clubs,
@@ -239,6 +243,7 @@ public class JugadorServicio{
             final String numero,
             final String piso,
             final String departamento,
+            final Localidad localidad,
             final String telefono,
             final String celular,
             final Club club,

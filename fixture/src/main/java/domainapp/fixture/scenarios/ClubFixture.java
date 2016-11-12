@@ -2,9 +2,6 @@ package domainapp.fixture.scenarios;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import domainapp.dom.club.Club;
-import domainapp.dom.club.ClubServicio;
-
 public class ClubFixture extends FixtureScript {
 
     public ClubFixture() {
@@ -27,24 +24,23 @@ public class ClubFixture extends FixtureScript {
     
 	
 	
-    @SuppressWarnings("deprecation")
-    	private Club crearClub(final String nombre,
-                final String nombreInstitucional,
-                final String anioAfiliacion,
-                final String idInterno,
-                final String personeriaJuridica,
-                final String email,
-                final String telefono,
-                final String calle,
-                final String numero,
-                final String piso,
-                final String departamento,
-                ExecutionContext executionContext) {
-         return executionContext.add(this, clubServicio.crearClub(
-        		 nombre, nombreInstitucional, anioAfiliacion, idInterno, personeriaJuridica, email, telefono, calle, numero, piso, departamento));    
+//    @SuppressWarnings("deprecation")
+//    	private Club crearClub(final String nombre,
+//                final String nombreInstitucional,
+//                final String anioAfiliacion,
+//                final String idInterno,
+//                final String personeriaJuridica,
+//                final String email,
+//                final String telefono,
+//                final String calle,
+//                final String numero,
+//                final String piso,
+//                final String departamento,
+//                final Localidad localidad,
+//                ExecutionContext executionContext) {
+//         return executionContext.add(this, clubServicio.crearClub(
+//        		 nombre, nombreInstitucional, anioAfiliacion, idInterno, personeriaJuridica, email, telefono, calle, numero, piso, departamento, localidad));    
+//       
+//    }
        
-    }
-       
-    @javax.inject.Inject
-    private ClubServicio clubServicio;
 }
