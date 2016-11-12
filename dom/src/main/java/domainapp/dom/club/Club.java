@@ -221,7 +221,7 @@ public class Club implements Comparable<Club> {
 	//CUOTAS
 	@MemberOrder(sequence = "11")
 	@Persistent(mappedBy = "clubes", dependentElement = "true")
-	@CollectionLayout(named="Cuotas del Club")
+	@CollectionLayout(named="Cuotas a pagar")
 	private SortedSet<CuotaClub> cuotasClub = new TreeSet<CuotaClub>();
 	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
 	public void setCuotasClub(SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
