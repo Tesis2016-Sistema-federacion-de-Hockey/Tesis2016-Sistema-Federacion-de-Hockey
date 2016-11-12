@@ -20,6 +20,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.joda.time.DateTime;
 
+import domainapp.dom.club.Club;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.partido.Partido;
 import domainapp.dom.partido.Partido.NameDomainEvent;
@@ -95,7 +96,6 @@ public class Tarjeta implements Comparable<Tarjeta>{
 	private Jugador jugador;
 	public Jugador getJugador() {return jugador;}
 	public void setJugador(Jugador jugador) {this.jugador = jugador;}
-
 	
 	//HORARIO DE CUANDO SE SACO LA TARJETA
 	private DateTime fechaHora;
@@ -104,16 +104,6 @@ public class Tarjeta implements Comparable<Tarjeta>{
 		return fechaHora;
 		}
  
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Tarjeta> {
 
 		/**
@@ -126,9 +116,10 @@ public class Tarjeta implements Comparable<Tarjeta>{
             semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
     )
 	public void delete() {
+		partido.getTarjetas().remove(this);
+		jugador.getTarjetas().remove(this);
         repositoryService.remove(this);
     }
-	
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

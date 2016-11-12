@@ -140,6 +140,21 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
 	
+	
+//	//DEL FORO
+//	public void modifyClub(Club p){		
+//		if (p==null || club==p) return;
+//		if(club!=null){
+//			club.quitarJugador(this);
+//		}
+//		p.agregarJugador(this);
+//	}	
+//	public void clearClub(){
+//		if(club==null)return;
+//		club.quitarJugador(this);
+//	}
+	
+	
 	//LISTA DE EQUIPOS
 	@Persistent(mappedBy = "listaBuenaFe")
 	private SortedSet<Equipo>equipos=new TreeSet<Equipo>();

@@ -41,7 +41,6 @@ import domainapp.dom.fecha.Fecha;
 import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
-import domainapp.dom.resultado.Resultado;
 import domainapp.dom.tarjeta.Tarjeta;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -83,8 +82,8 @@ public class Partido implements Comparable<Partido>{
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;}
-	
+		private static final long serialVersionUID = 1L;
+	}
 	
     //NOMBRE DEL PARTIDO
     @MemberOrder(sequence = "1")
@@ -181,7 +180,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//METODO PARA AGREGAR UN JUGADOR AL EQUIPO LOCAL		
 	@MemberOrder(sequence = "9.1")
-	@ActionLayout(named="Agregar Jugador LOCAL")
+	@ActionLayout(named="Agregar Jugador LOCAL", cssClassFa="fa fa-thumbs-o-up")
 	public Partido agregarJugadorLocal(Jugador e) {
 		if(e == null || listaJugadoresLocal.contains(e)) return this;
 		listaJugadoresLocal.add(e);
@@ -191,7 +190,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//METODO PARA AGREGAR UN JUGADOR AL EQUIPO VISITANTE		
 	@MemberOrder(sequence = "9.2")
-	@ActionLayout(named="Agregar Jugador VISITANTE")
+	@ActionLayout(named="Agregar Jugador VISITANTE", cssClassFa="fa fa-thumbs-o-up")
 	public Partido agregarJugadorVisitante(Jugador e) {
 		if(e == null || listaJugadoresVisitante.contains(e)) return this;
 		listaJugadoresVisitante.add(e);
@@ -219,7 +218,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//METODO PARA QUITAR UN JUGADOR DEL EQUIPO LOCAL
 	@MemberOrder(sequence = "9.3")
-	@ActionLayout(named="Quitar Jugador LOCAL")
+	@ActionLayout(named="Quitar Jugador LOCAL", cssClassFa="fa fa-thumbs-o-down")
 	public Partido quitarJugadorLocal(Jugador e) {
 //			e.getTarjetas().clear();  //FALTA
 		listaJugadoresLocal.remove(e);
@@ -229,7 +228,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//METODO PARA QUITAR UN JUGADOR DEL EQUIPO VISITANTE
 	@MemberOrder(sequence = "9.4")
-	@ActionLayout(named="Quitar Jugador VISITANTE")
+	@ActionLayout(named="Quitar Jugador VISITANTE", cssClassFa="fa fa-thumbs-o-down")
 	public Partido quitarJugadorVisitante(Jugador e) {
 		listaJugadoresVisitante.remove(e);
 		e.getPartidos().remove(this);
@@ -246,7 +245,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//METODO PARA AGREGAR TODOS LOS JUGADORES AL EQUIPO LOCAL
 	@MemberOrder(sequence = "9.5")
-	@ActionLayout(named="Agregar todos LOCAL")
+	@ActionLayout(named="Agregar todos LOCAL", cssClassFa="fa fa-thumbs-o-up")
 	public Partido agregarTodosLocal() {
 		for (Iterator<?> it=equipoLocal.getListaBuenaFe().iterator();it.hasNext();){
 			Jugador jug=((Jugador)it.next());
@@ -258,7 +257,7 @@ public class Partido implements Comparable<Partido>{
 	
 	//METODO PARA AGREGAR TODOS LOS JUGADORES AL EQUIPO VISITANTE
 	@MemberOrder(sequence = "9.6")
-	@ActionLayout(named="Agregar todos VISITANTE")
+	@ActionLayout(named="Agregar todos VISITANTE", cssClassFa="fa fa-thumbs-o-up")
 	public Partido agregarTodosVisitante() {
 		for (Iterator<?> it=equipoVisitante.getListaBuenaFe().iterator();it.hasNext();){
 			Jugador jug=((Jugador)it.next());

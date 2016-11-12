@@ -8,9 +8,11 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
+import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -150,6 +152,7 @@ public class Club implements Comparable<Club> {
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE JUGADORES DEL CLUB		
 	@MemberOrder(sequence = "9")
+	@ActionLayout(named="Agregar Jugador al Club", cssClassFa="fa fa-thumbs-o-up")
 	public Club agregarJugador(Jugador e) {
 		if(e == null || listaJugadores.contains(e)) return this;
 	    e.setClub(this);
@@ -172,14 +175,19 @@ public class Club implements Comparable<Club> {
 	
 	//METODO PARA QUITAR UN JUGADOR DE LA LISTA DE JUGADORES DEL CLUB
 	@MemberOrder(sequence = "10")
+	@ActionLayout(named="Quitar Jugador del Club", cssClassFa="fa fa-thumbs-o-down")
 	public Club quitarJugador(Jugador e) {
 	    if(e == null || !listaJugadores.contains(e)) return this;
+	    
+	    if (!e.getPartidos().isEmpty()){
+	    	JOptionPane.showMessageDialog(null, "No se puede quitar este Jugador. Tiene partidos jugados.");
+	    	return this;
+	    }
 	    
 	    //Duplico el jugador e y luego lo elimino
 	    final Jugador obj = repositoryService.instantiate(Jugador.class);
 	    obj.setApellido(e.getApellido());
 	    obj.setCelular(e.getCelular());
-	    obj.setClub(null);
 	    obj.setCuotas(e.getCuotas());
 	    obj.setDocumento(e.getDocumento());
 	    obj.setDomicilio(e.getDomicilio());
@@ -188,14 +196,17 @@ public class Club implements Comparable<Club> {
 	    obj.setEstado(e.getEstado());
 	    obj.setFechaNacimiento(e.getFechaNacimiento());
 	    obj.setFicha(e.getFicha());
+	    obj.setGoles(e.getGoles());
 	    obj.setNombre(e.getNombre());
 	    obj.setPagosJugador(e.getPagosJugador());
+	    obj.setPartidos(e.getPartidos());
 	    obj.setPartidos(e.getPartidos());
 	    obj.setSector(e.getSector());
 	    obj.setTelefono(e.getTelefono());
 	    obj.setTipo(e.getTipo());
+	    obj.setClub(null);
         
-        repositoryService.persist(obj);
+	    repositoryService.persist(obj);
 	    
 	    listaJugadores.remove(e);
 	    
