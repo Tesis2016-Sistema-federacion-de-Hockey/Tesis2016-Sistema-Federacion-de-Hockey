@@ -5,7 +5,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 import javax.swing.JOptionPane;
@@ -31,6 +33,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.cuotaclub.CuotaClub;
+import domainapp.dom.cuotaclub.CuotaClubServicio;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
@@ -152,7 +155,7 @@ public class Club implements Comparable<Club> {
 
 	//METODO PARA AGREGAR UN JUGADOR A LA LISTA DE JUGADORES DEL CLUB		
 	@MemberOrder(sequence = "9")
-	@ActionLayout(named="Agregar Jugador al Club", cssClassFa="fa fa-thumbs-o-up")
+	@ActionLayout(named="Agregar Jugador al Club", cssClassFa="fa fa-thumbs-o-up fa-lg")
 	public Club agregarJugador(Jugador e) {
 		if(e == null || listaJugadores.contains(e)) return this;
 	    e.setClub(this);
@@ -218,14 +221,60 @@ public class Club implements Comparable<Club> {
 		return Lists.newArrayList(getListaJugadores());
 	}
 	
-	//CUOTAS
+	//LISTA DE CUOTAS
 	@MemberOrder(sequence = "11")
-	@Persistent(mappedBy = "clubes", dependentElement = "true")
-	@CollectionLayout(named="Cuotas a pagar")
+	@Persistent(table="club_cuotaclub")
+	@Join(column="club_id")
+	@Element(column="cuotaClub_id")
+	@CollectionLayout(named="Lista de Cuotas a Pagar")
 	private SortedSet<CuotaClub> cuotasClub = new TreeSet<CuotaClub>();
 	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
 	public void setCuotasClub(SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
 
+	//METODO PARA AGREGAR CUOTA		
+	@MemberOrder(sequence = "12")
+	@ActionLayout(named="Agregar Cuota", cssClassFa="fa fa-plus")
+	public Club agregarCuota(CuotaClub e) {
+		if(e == null || cuotasClub.contains(e)) return this;
+		cuotasClub.add(e);
+		e.getListaClubes().add(this);
+		return this;
+	}
+
+	//METODO PARA QUITAR CUOTA		
+		@MemberOrder(sequence = "13")
+		@ActionLayout(named="Quitar Cuota", cssClassFa="fa fa-trash-o")
+		public Club quitarCuota(CuotaClub e) {
+			if(e == null || cuotasClub.contains(e)) return this;
+			cuotasClub.remove(e);
+			e.getListaClubes().remove(this);
+			return this;
+		}	
+	
+	public List<CuotaClub> choices0AgregarCuota(){
+		
+		return repositoryService.allMatches(CuotaClub.class, new Predicate<CuotaClub>() {
+			@Override
+			public boolean apply(CuotaClub c) {
+				
+				return (cuotaClubServicio.listarCuotasClub().contains(c))?true:false;
+			}
+		});
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
 
 		/**
@@ -257,6 +306,9 @@ public class Club implements Comparable<Club> {
     
     @javax.inject.Inject
     ClubServicio clubServicio;
+    
+    @javax.inject.Inject
+    CuotaClubServicio cuotaClubServicio;
     
     @javax.inject.Inject
     JugadorServicio jugadorServicio;

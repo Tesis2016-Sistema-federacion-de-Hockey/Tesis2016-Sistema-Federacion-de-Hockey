@@ -1,11 +1,7 @@
 package domainapp.dom.cuotajugador;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.jdo.annotations.Persistent;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -18,28 +14,17 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
-
-import domainapp.dom.club.Club;
-import domainapp.dom.club.ClubServicio;
-import domainapp.dom.club.ClubServicio.CreateDomainEvent;
-import domainapp.dom.domicilio.Domicilio;
-import domainapp.dom.jugador.Jugador;
 
 @SuppressWarnings("deprecation")
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = CuotaJugador.class
 )
-@DomainServiceLayout(
-        //menuOrder = "2",
-        //named="CuotasFederativas"
-)
+@DomainServiceLayout()
 public class CuotaJugadorServicio {
 	public TranslatableString title() {return TranslatableString.tr("CuotasFederativas");}
 
@@ -74,7 +59,7 @@ public class CuotaJugadorServicio {
     )
     @MemberOrder(name="Cuotas", sequence = "3.3")
     public CuotaJugador crearCuotaFederativa(
-    		final @ParameterLayout(named="Valor") Double valor,
+    		final @ParameterLayout(named="Valor") BigDecimal valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
             final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
     		){
@@ -86,9 +71,6 @@ public class CuotaJugadorServicio {
         repositoryService.persist(obj);
         return obj;
     }
-    
-  
-
     
     @javax.inject.Inject
     RepositoryService repositoryService;

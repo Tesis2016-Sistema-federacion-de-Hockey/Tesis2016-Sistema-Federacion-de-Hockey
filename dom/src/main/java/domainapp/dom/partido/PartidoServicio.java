@@ -22,8 +22,7 @@ import domainapp.dom.equipo.Equipo;
         repositoryFor = Partido.class
 )
 @DomainServiceLayout(
-        menuOrder = "1",
-        named="Partidos"
+		named="Planificacion", menuBar=DomainServiceLayout.MenuBar.PRIMARY, menuOrder="15"
 )
 
 public class PartidoServicio {
@@ -34,9 +33,9 @@ public class PartidoServicio {
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
-    		cssClassFa="fa fa-list",
+    		cssClassFa="fa fa-list fa-lg",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Partidos Disputados",
+            named="Partidos Disputados por Equipo",
             hidden=Where.PARENTED_TABLES
     )
     @MemberOrder(sequence = "1")

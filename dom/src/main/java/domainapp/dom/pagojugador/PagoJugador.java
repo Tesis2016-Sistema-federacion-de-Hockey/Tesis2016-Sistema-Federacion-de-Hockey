@@ -1,4 +1,4 @@
-package domainapp.dom.pagoJugador;
+package domainapp.dom.pagojugador;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
@@ -10,7 +10,6 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import domainapp.dom.club.Club;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.pago.Pago;
 

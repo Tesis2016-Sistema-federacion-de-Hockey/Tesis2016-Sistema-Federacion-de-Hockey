@@ -25,16 +25,15 @@ import domainapp.dom.jugador.Jugador;
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="cuotaJugador_id")
 @javax.jdo.annotations.Version(
-//        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
     @javax.jdo.annotations.Query(
             name = "traerTodos", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.cuotajugador.CuotaJugador ")
+                    + "FROM domainapp.dom.cuotajugador.CuotaJugador")
 })
-public class CuotaJugador extends Cuota implements Comparable<CuotaJugador>{
+public class CuotaJugador extends Cuota{
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
@@ -43,9 +42,9 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador>{
 	
 	//LISTADO DE JUGADORES
   	@MemberOrder(sequence = "5")
-  	@Persistent(table="CUOTAJUGADORES_JUGADORES")
-  	@Join(column="CUOTAJUGADOR_ID")
-  	@Element(column="JUGADOR_ID")
+  	@Persistent(table="cuotajugadores_jugadores")
+  	@Join(column="cuotaJugador_id")
+  	@Element(column="jugador_id")
   	private SortedSet<Jugador> jugadores=new TreeSet<Jugador>();
   	public SortedSet<Jugador> getJugadores() {return jugadores;}
   	public void setJugadores(final SortedSet<Jugador> jugadores) {this.jugadores = jugadores;}
@@ -53,13 +52,4 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador>{
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
-	
-		
-	@SuppressWarnings("deprecation")
-	@Override
-	public int compareTo(final CuotaJugador o) {
-		// TODO Auto-generated method stub
-		return org.apache.isis.applib.util.ObjectContracts.compare(this, o, "vencimiento");
-	}
-
 }

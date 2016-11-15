@@ -31,7 +31,7 @@ import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.gol.Gol;
-import domainapp.dom.pagoJugador.PagoJugador;
+import domainapp.dom.pagojugador.PagoJugador;
 import domainapp.dom.partido.Partido;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;

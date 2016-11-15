@@ -1,5 +1,8 @@
 package domainapp.dom.cuotaclub;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -17,10 +20,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
-import domainapp.dom.cuotajugador.CuotaJugador;
-import domainapp.dom.cuotajugador.CuotaJugadorServicio;
-import domainapp.dom.cuotajugador.CuotaJugadorServicio.CreateDomainEvent;
-
 @SuppressWarnings("deprecation")
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -30,7 +29,6 @@ import domainapp.dom.cuotajugador.CuotaJugadorServicio.CreateDomainEvent;
         menuOrder = "3",
         named="Cuotas"
 )
-
 public class CuotaClubServicio {
 	public TranslatableString title() {return TranslatableString.tr("CuotasClub");}
 	
@@ -46,18 +44,39 @@ public class CuotaClubServicio {
     }
 	
 	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Cuotas del Club"
+    )
+	@MemberOrder(name="Cuotas", sequence = "3.1")
+    public List<CuotaClub> listarCuotasClub() {
+        return repositoryService.allInstances(CuotaClub.class);
+    }
+	
+	
+	
+	
+	
+	
+	
+	@Action(
             domainEvent = CreateDomainEvent.class
     )
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(name="Cuotas", sequence = "3.1")
+    @MemberOrder(name="Cuotas", sequence = "3.2")
     public CuotaClub crearCuotaClub(
-    		final @ParameterLayout(named="Valor") Double valor,
+    		final @ParameterLayout(named="Nombre") String nombre,
+    		final @ParameterLayout(named="Valor") BigDecimal valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
             final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
     		){
         final CuotaClub obj = repositoryService.instantiate(CuotaClub.class);
+        obj.setNombre(nombre);
         obj.setValor(valor);
         obj.setVencimiento(vencimiento);
         obj.setDetalle(detalle);
