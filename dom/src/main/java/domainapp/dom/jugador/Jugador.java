@@ -1,10 +1,13 @@
 package domainapp.dom.jugador;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -25,8 +28,11 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.google.common.base.Predicate;
+
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotajugador.CuotaJugador;
+import domainapp.dom.cuotajugador.CuotaJugadorServicio;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
@@ -141,21 +147,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public Club getClub() {return club;}
 	public void setClub(final Club club) {this.club = club;}
 	
-	
-//	//DEL FORO
-//	public void modifyClub(Club p){		
-//		if (p==null || club==p) return;
-//		if(club!=null){
-//			club.quitarJugador(this);
-//		}
-//		p.agregarJugador(this);
-//	}	
-//	public void clearClub(){
-//		if(club==null)return;
-//		club.quitarJugador(this);
-//	}
-	
-	
 	//LISTA DE EQUIPOS
 	@Persistent(mappedBy = "listaBuenaFe")
 	private SortedSet<Equipo>equipos=new TreeSet<Equipo>();
@@ -176,13 +167,49 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public SortedSet<Tarjeta> getTarjetas() {return tarjetas;}
 	public void setTarjetas(SortedSet<Tarjeta> tarjetas) {this.tarjetas = tarjetas;}
 		
-	//CUOTAS
+	//LISTA DE CUOTAS
 	@MemberOrder(sequence = "16")
-	@Persistent(mappedBy = "jugadores", dependentElement = "true")
-	@CollectionLayout(named="Cuotas a pagar")
-	private SortedSet<CuotaJugador> cuotas = new TreeSet<CuotaJugador>();	
-	public SortedSet<CuotaJugador> getCuotas() {return cuotas;}
-	public void setCuotas(SortedSet<CuotaJugador> cuotas) {this.cuotas = cuotas;}
+	@Persistent(table="jugador_cuotajugador")
+	@Join(column="jugador_id")
+	@Element(column="cuotaJugador_id")
+	@CollectionLayout(named="Lista de Cuotas a Pagar")
+	private SortedSet<CuotaJugador> cuotasJugador = new TreeSet<CuotaJugador>();	
+	public SortedSet<CuotaJugador> getCuotasJugador() {return cuotasJugador;}
+	public void setCuotasJugador(SortedSet<CuotaJugador> cuotasJugador) {this.cuotasJugador = cuotasJugador;}
+
+	//METODO PARA AGREGAR CUOTA		
+	@MemberOrder(sequence = "21")
+	@ActionLayout(named="Agregar Cuota", cssClassFa="fa fa-plus")
+	public Jugador agregarCuota(CuotaJugador e) {
+		if(e == null || cuotasJugador.contains(e)) return this;
+		cuotasJugador.add(e);
+		e.getListaJugadores().add(this);
+		return this;
+	}
+
+	//METODO PARA QUITAR CUOTA		
+	@MemberOrder(sequence = "22")
+	@ActionLayout(named="Quitar Cuota", cssClassFa="fa fa-trash-o")
+	public Jugador quitarCuota(CuotaJugador e) {
+		if(e == null || cuotasJugador.contains(e)) return this;
+		cuotasJugador.remove(e);
+		e.getListaJugadores().remove(this);
+		return this;
+	}	
+	
+	public List<CuotaJugador> choices0AgregarCuota(){
+		
+		return repositoryService.allMatches(CuotaJugador.class, new Predicate<CuotaJugador>() {
+			@Override
+			public boolean apply(CuotaJugador c) {
+				
+				return (cuotaJugadorServicio.listarCuotasJugador().contains(c))?true:false;
+			}
+		});
+	}	
+	
+	
+	
 	
 	//PAGOS
 	@MemberOrder(sequence = "17")
@@ -240,6 +267,9 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	
     @javax.inject.Inject
     RepositoryService repositoryService;
+    
+    @javax.inject.Inject
+    CuotaJugadorServicio cuotaJugadorServicio;
     
 	@SuppressWarnings("deprecation")
 	@Override

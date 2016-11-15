@@ -30,7 +30,7 @@ import org.joda.time.LocalDate;
         named="Cuotas"
 )
 public class CuotaClubServicio {
-	public TranslatableString title() {return TranslatableString.tr("CuotasClub");}
+	public TranslatableString title() {return TranslatableString.tr("Cuotas del Club");}
 	
 	public static class CreateDomainEvent extends ActionDomainEvent<CuotaClubServicio> {
         /**

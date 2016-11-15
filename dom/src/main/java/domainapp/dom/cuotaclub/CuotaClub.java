@@ -36,7 +36,7 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Cuota: " + this.getDetalle());
+				"Cuota: " + this.getNombre());
 	}
 	
 	public String iconName(){return "CuotaClub";}

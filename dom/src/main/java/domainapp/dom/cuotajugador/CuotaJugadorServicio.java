@@ -26,7 +26,7 @@ import org.joda.time.LocalDate;
 )
 @DomainServiceLayout()
 public class CuotaJugadorServicio {
-	public TranslatableString title() {return TranslatableString.tr("CuotasFederativas");}
+	public TranslatableString title() {return TranslatableString.tr("Cuotas del Jugador");}
 
     @Action(
             semantics = SemanticsOf.SAFE
@@ -36,7 +36,7 @@ public class CuotaJugadorServicio {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(name="Cuotas", sequence = "3.2")
-    public List<CuotaJugador> listarCuotasJugadores() {
+    public List<CuotaJugador> listarCuotasJugador() {
         return repositoryService.allInstances(CuotaJugador.class);
     }
     
@@ -58,12 +58,14 @@ public class CuotaJugadorServicio {
     		cssClassFa="fa fa-plus-square"
     )
     @MemberOrder(name="Cuotas", sequence = "3.3")
-    public CuotaJugador crearCuotaFederativa(
+    public CuotaJugador crearCuotaJugador(
+    		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Valor") BigDecimal valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
             final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
     		){
         final CuotaJugador obj = repositoryService.instantiate(CuotaJugador.class);
+        obj.setNombre(nombre);
         obj.setValor(valor);
         obj.setVencimiento(vencimiento);
         obj.setDetalle(detalle);

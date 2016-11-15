@@ -191,7 +191,6 @@ public class Club implements Comparable<Club> {
 	    final Jugador obj = repositoryService.instantiate(Jugador.class);
 	    obj.setApellido(e.getApellido());
 	    obj.setCelular(e.getCelular());
-	    obj.setCuotas(e.getCuotas());
 	    obj.setDocumento(e.getDocumento());
 	    obj.setDomicilio(e.getDomicilio());
 	    obj.setEmail(e.getEmail());
