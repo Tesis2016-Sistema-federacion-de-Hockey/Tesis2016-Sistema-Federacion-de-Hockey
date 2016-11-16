@@ -15,8 +15,10 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.cuota.Cuota;
@@ -79,6 +81,15 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 		return this;
 	}
 	
+	public List<Jugador> choices0AgregarJugadorACuota(){		
+		return repositoryService.allMatches(Jugador.class, new Predicate<Jugador>() {
+			@Override
+			public boolean apply(Jugador jug) {				
+				return (jugadorServicio.listarJugadoresActivos().contains(jug)&&!listaJugadores.contains(jug))?true:false;
+			}
+		});
+	}
+	
 	public List<Jugador> choices0QuitarJugadorACuota(){
 		
 			return Lists.newArrayList(getListaJugadores());
@@ -120,6 +131,9 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 		return ObjectContracts.compare(this, other, "temporada", "nombre");
 	}
 	
+	@javax.inject.Inject
+    RepositoryService repositoryService;
+    
 	@javax.inject.Inject
     JugadorServicio jugadorServicio;	
 }
