@@ -37,12 +37,13 @@ import domainapp.dom.cuotaclub.CuotaClubServicio;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.pagoclub.PagoClub;
+import domainapp.dom.pagoclub.PagoClubServicio;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "Club"
-)
+        table = "Club")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="club_id")
@@ -228,52 +229,60 @@ public class Club implements Comparable<Club> {
 	@CollectionLayout(named="Lista de Cuotas a Pagar")
 	private SortedSet<CuotaClub> cuotasClub = new TreeSet<CuotaClub>();
 	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
-	public void setCuotasClub(SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
+	public void setCuotasClub(final SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
 
-	//METODO PARA AGREGAR CUOTA		
+	//LISTA DE PAGOS
 	@MemberOrder(sequence = "12")
-	@ActionLayout(named="Agregar Cuota", cssClassFa="fa fa-plus")
-	public Club agregarCuota(CuotaClub e) {
-		if(e == null || cuotasClub.contains(e)) return this;
-		cuotasClub.add(e);
-		e.getListaClubes().add(this);
-		return this;
-	}
+	@Persistent(table="club_pagoclub")
+	@Join(column="club_id")
+	@Element(column="pagoClub_id")
+	@CollectionLayout(named="Lista de Pagos realizados")
+	private SortedSet<PagoClub> pagosClub = new TreeSet<PagoClub>();
+	public SortedSet<PagoClub> getPagosClub() {return pagosClub;}
+	public void setPagosClub(final SortedSet<PagoClub> pagosClub) {this.pagosClub = pagosClub;}
+	
+//	//METODO PARA AGREGAR PAGO		
+//	@MemberOrder(sequence = "15")
+//	@ActionLayout(named="Agregar Pago", cssClassFa="fa fa-plus")
+//	public Club agregarPago(PagoClub e) {
+//		if(e == null || pagosClub.contains(e)) return this;
+//		pagosClub.add(e);
+//		e.getListaClubes().remove(this);
+//		return this;
+//	}
+//
+//	//METODO PARA QUITAR PAGO		
+//		@MemberOrder(sequence = "16")
+//		@ActionLayout(named="Quitar Pago", cssClassFa="fa fa-trash-o")
+//		public Club quitarPago(PagoClub e) {
+//			if(e == null || pagosClub.contains(e)) return this;
+//			pagosClub.remove(e);
+//			e.getListaClubes().remove(this);
+//			return this;
+//		}	
+//	
+//	public List<PagoClub> choices0AgregarPago(){
+//		
+//		return repositoryService.allMatches(PagoClub.class, new Predicate<PagoClub>() {
+//			@Override
+//			public boolean apply(PagoClub c) {
+//				
+//				return (pagoClubServicio.listarPagosClub().contains(c))?true:false;
+//			}
+//		});
+//	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	//METODO PARA QUITAR CUOTA		
-		@MemberOrder(sequence = "13")
-		@ActionLayout(named="Quitar Cuota", cssClassFa="fa fa-trash-o")
-		public Club quitarCuota(CuotaClub e) {
-			if(e == null || cuotasClub.contains(e)) return this;
-			cuotasClub.remove(e);
-			e.getListaClubes().remove(this);
-			return this;
-		}	
-	
-	public List<CuotaClub> choices0AgregarCuota(){
-		
-		return repositoryService.allMatches(CuotaClub.class, new Predicate<CuotaClub>() {
-			@Override
-			public boolean apply(CuotaClub c) {
-				
-				return (cuotaClubServicio.listarCuotasClub().contains(c))?true:false;
-			}
-		});
-	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
 
 		/**
@@ -308,6 +317,9 @@ public class Club implements Comparable<Club> {
     
     @javax.inject.Inject
     CuotaClubServicio cuotaClubServicio;
+    
+    @javax.inject.Inject
+    PagoClubServicio pagoClubServicio;
     
     @javax.inject.Inject
     JugadorServicio jugadorServicio;

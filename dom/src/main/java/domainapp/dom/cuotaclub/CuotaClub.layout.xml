@@ -32,6 +32,7 @@
                         <bs3:col span="12">
                             <c:fieldSet name="nombre">
                                 <!--  <c:action id="delete"/> -->
+                                <c:property id="temporada" />
                                 <c:property id="nombre" />
                                 <c:property id="valor" />
                                 <c:property id="vencimiento" />

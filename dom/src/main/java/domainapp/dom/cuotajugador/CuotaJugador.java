@@ -40,8 +40,10 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Cuota: " + this.getNombre());
+				"Cuota de Jugador: " + this.getNombre());
 	}
+	
+	public String iconName(){return "CuotaJugador";}
 	
 	//LISTA DE JUGADORES
   	@MemberOrder(sequence = "5")

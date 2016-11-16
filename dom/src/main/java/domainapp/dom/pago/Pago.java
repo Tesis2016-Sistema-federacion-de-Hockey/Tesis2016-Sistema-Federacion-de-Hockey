@@ -1,5 +1,7 @@
 package domainapp.dom.pago;
 
+import java.math.BigDecimal;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
@@ -17,29 +19,25 @@ public abstract class Pago {
 
 	//VALOR
 	@MemberOrder(sequence = "2")
-	@Column(allowsNull="false")
-	@Property(domainEvent = NameDomainEvent.class)
-	private Double valor;
-	public Double getValor() {return valor;}
-	public void setValor(Double valor) {this.valor = valor;}
+    @Column(allowsNull="false")
+    @Property(domainEvent = NameDomainEvent.class)
+    private BigDecimal valor;
+	public BigDecimal getValor() {return valor;}
+	public void setValor(BigDecimal valor) {this.valor = valor;}
 	
-	//VALOR
+	//FECHA DE PAGO
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull="false")
 	@Property(domainEvent = NameDomainEvent.class)
-	private LocalDate fecha;
-	public LocalDate getFecha() {return fecha;}
-	public void setFecha(LocalDate fecha) {this.fecha = fecha;}
+	private LocalDate fechaDePago;
+	public LocalDate getFechaDePago() {return fechaDePago;}
+	public void setFechaDePago(LocalDate fechaDePago) {this.fechaDePago = fechaDePago;}
 	
 	//NRORECIBO
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull="false")
 	@Property(domainEvent = NameDomainEvent.class)
-	private Double nroRecibo;
-	public Double getNroRecibo() {return nroRecibo;}
-	public void setNroRecibo(Double nroRecibo) {this.nroRecibo = nroRecibo;}
-	
-	
-	
-	
+	private String nroRecibo;
+	public String getNroRecibo() {return nroRecibo;}
+	public void setNroRecibo(String nroRecibo) {this.nroRecibo = nroRecibo;}
 }

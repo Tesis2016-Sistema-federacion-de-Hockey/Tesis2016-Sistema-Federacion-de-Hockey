@@ -1,4 +1,4 @@
-package domainapp.dom.cuotaclub;
+package domainapp.dom.pagoclub;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,8 +11,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -20,7 +18,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
-import domainapp.dom.temporada.Temporada;
+import domainapp.dom.cuotaclub.CuotaClub;
 
 @SuppressWarnings("deprecation")
 @DomainService(
@@ -31,16 +29,16 @@ import domainapp.dom.temporada.Temporada;
         menuOrder = "3",
         named="Cuotas"
 )
-public class CuotaClubServicio {
-	public TranslatableString title() {return TranslatableString.tr("Cuotas del Club");}
+public class PagoClubServicio {
+	public TranslatableString title() {return TranslatableString.tr("Pagos del Club");}
 	
-	public static class CreateDomainEvent extends ActionDomainEvent<CuotaClubServicio> {
+	public static class CreateDomainEvent extends ActionDomainEvent<PagoClubServicio> {
         /**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public CreateDomainEvent(final CuotaClubServicio source, final Identifier identifier, final Object... arguments) {
+		public CreateDomainEvent(final PagoClubServicio source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
@@ -51,11 +49,11 @@ public class CuotaClubServicio {
     @ActionLayout(
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Listar Cuotas del Club"
+            named="Listar Pagos del Club"
     )
-	@MemberOrder(name="Cuotas", sequence = "3.1")
-    public List<CuotaClub> listarCuotasClub() {
-        return repositoryService.allInstances(CuotaClub.class);
+	@MemberOrder(name="Pagos", sequence = "3.1")
+    public List<PagoClub> listarPagosClub() {
+        return repositoryService.allInstances(PagoClub.class);
     }
 	
 	
@@ -70,21 +68,16 @@ public class CuotaClubServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(name="Cuotas", sequence = "3.2")
-    public CuotaClub crearCuotaClub(
-    		final @ParameterLayout(named="Temporada") Temporada temporada,
-    		final @ParameterLayout(named="Nombre") String nombre,
+    @MemberOrder(name="Pagos", sequence = "3.2")
+    public PagoClub crearPagoClub(
     		final @ParameterLayout(named="Valor") BigDecimal valor,
-            final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
-            final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
+            final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
+            final @ParameterLayout(named="Recibo") String nroRecibo            
     		){
-        final CuotaClub obj = repositoryService.instantiate(CuotaClub.class);
-        obj.setTemporada(temporada);
-        obj.setNombre(nombre);
+        final PagoClub obj = repositoryService.instantiate(PagoClub.class);
+        obj.setFechaDePago(fechaDePago);
+        obj.setNroRecibo(nroRecibo);
         obj.setValor(valor);
-        obj.setVencimiento(vencimiento);
-        obj.setDetalle(detalle);
-        
         repositoryService.persist(obj);
         return obj;
     }

@@ -12,10 +12,19 @@ import org.apache.isis.applib.annotation.Property;
 import org.joda.time.LocalDate;
 
 import domainapp.dom.jugador.Jugador.NameDomainEvent;
+import domainapp.dom.temporada.Temporada;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class Cuota {
+	
+	//TEMPORADA
+	@MemberOrder(sequence = "1")
+    @Column(allowsNull="false")
+    @Property(domainEvent = NameDomainEvent.class)
+	private Temporada temporada;
+	public Temporada getTemporada() {return temporada;}
+	public void setTemporada(final Temporada temporada) {this.temporada = temporada;}
 	
 	//NOMBRE
 	@MemberOrder(sequence = "1")
@@ -43,7 +52,7 @@ public abstract class Cuota {
 	
 	//DETALLE
 	@MemberOrder(sequence = "4")
-    @Column(allowsNull="false")
+    @Column(allowsNull="true")
     @Property(domainEvent = NameDomainEvent.class)
 	private String detalle;
 	public String getDetalle() {return detalle;}
