@@ -19,27 +19,20 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
+import domainapp.dom.temporada.Temporada;
+
 @SuppressWarnings("deprecation")
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = CuotaJugador.class
 )
-@DomainServiceLayout()
+@DomainServiceLayout(
+        menuOrder = "3",
+        named="Cuotas"
+)
 public class CuotaJugadorServicio {
 	public TranslatableString title() {return TranslatableString.tr("Cuotas del Jugador");}
-
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-    		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
-    @MemberOrder(name="Cuotas", sequence = "3.2")
-    public List<CuotaJugador> listarCuotasJugador() {
-        return repositoryService.allInstances(CuotaJugador.class);
-    }
-    
+	
     public static class CreateDomainEvent extends ActionDomainEvent<CuotaJugadorServicio> {
         /**
 		 * 
@@ -50,6 +43,19 @@ public class CuotaJugadorServicio {
             super(source, identifier, arguments);
         }
     }
+
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Cuotas del Jugador"
+    )
+    @MemberOrder(name="Cuotas", sequence = "3.1")
+    public List<CuotaJugador> listarCuotasJugador() {
+        return repositoryService.allInstances(CuotaJugador.class);
+    }
     
     @Action(
             domainEvent = CreateDomainEvent.class
@@ -57,14 +63,16 @@ public class CuotaJugadorServicio {
     @ActionLayout(
     		cssClassFa="fa fa-plus-square"
     )
-    @MemberOrder(name="Cuotas", sequence = "3.3")
+    @MemberOrder(name="Cuotas", sequence = "3.2")
     public CuotaJugador crearCuotaJugador(
+    		final @ParameterLayout(named="Temporada") Temporada temporada,
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Valor") BigDecimal valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
             final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
     		){
         final CuotaJugador obj = repositoryService.instantiate(CuotaJugador.class);
+        obj.setTemporada(temporada);
         obj.setNombre(nombre);
         obj.setValor(valor);
         obj.setVencimiento(vencimiento);

@@ -58,12 +58,6 @@ public class CuotaClubServicio {
         return repositoryService.allInstances(CuotaClub.class);
     }
 	
-	
-	
-	
-	
-	
-	
 	@Action(
             domainEvent = CreateDomainEvent.class
     )

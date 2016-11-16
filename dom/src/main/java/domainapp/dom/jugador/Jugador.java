@@ -175,38 +175,38 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	@CollectionLayout(named="Lista de Cuotas a Pagar")
 	private SortedSet<CuotaJugador> cuotasJugador = new TreeSet<CuotaJugador>();	
 	public SortedSet<CuotaJugador> getCuotasJugador() {return cuotasJugador;}
-	public void setCuotasJugador(SortedSet<CuotaJugador> cuotasJugador) {this.cuotasJugador = cuotasJugador;}
+	public void setCuotasJugador(final SortedSet<CuotaJugador> cuotasJugador) {this.cuotasJugador = cuotasJugador;}
 
-	//METODO PARA AGREGAR CUOTA		
-	@MemberOrder(sequence = "21")
-	@ActionLayout(named="Agregar Cuota", cssClassFa="fa fa-plus")
-	public Jugador agregarCuota(CuotaJugador e) {
-		if(e == null || cuotasJugador.contains(e)) return this;
-		cuotasJugador.add(e);
-		e.getListaJugadores().add(this);
-		return this;
-	}
-
-	//METODO PARA QUITAR CUOTA		
-	@MemberOrder(sequence = "22")
-	@ActionLayout(named="Quitar Cuota", cssClassFa="fa fa-trash-o")
-	public Jugador quitarCuota(CuotaJugador e) {
-		if(e == null || cuotasJugador.contains(e)) return this;
-		cuotasJugador.remove(e);
-		e.getListaJugadores().remove(this);
-		return this;
-	}	
-	
-	public List<CuotaJugador> choices0AgregarCuota(){
-		
-		return repositoryService.allMatches(CuotaJugador.class, new Predicate<CuotaJugador>() {
-			@Override
-			public boolean apply(CuotaJugador c) {
-				
-				return (cuotaJugadorServicio.listarCuotasJugador().contains(c))?true:false;
-			}
-		});
-	}	
+//	//METODO PARA AGREGAR CUOTA		
+//	@MemberOrder(sequence = "21")
+//	@ActionLayout(named="Agregar Cuota", cssClassFa="fa fa-plus")
+//	public Jugador agregarCuota(CuotaJugador e) {
+//		if(e == null || cuotasJugador.contains(e)) return this;
+//		cuotasJugador.add(e);
+//		e.getListaJugadores().add(this);
+//		return this;
+//	}
+//
+//	//METODO PARA QUITAR CUOTA		
+//	@MemberOrder(sequence = "22")
+//	@ActionLayout(named="Quitar Cuota", cssClassFa="fa fa-trash-o")
+//	public Jugador quitarCuota(CuotaJugador e) {
+//		if(e == null || cuotasJugador.contains(e)) return this;
+//		cuotasJugador.remove(e);
+//		e.getListaJugadores().remove(this);
+//		return this;
+//	}	
+//	
+//	public List<CuotaJugador> choices0AgregarCuota(){
+//		
+//		return repositoryService.allMatches(CuotaJugador.class, new Predicate<CuotaJugador>() {
+//			@Override
+//			public boolean apply(CuotaJugador c) {
+//				
+//				return (cuotaJugadorServicio.listarCuotasJugador().contains(c))?true:false;
+//			}
+//		});
+//	}	
 	
 	
 	
