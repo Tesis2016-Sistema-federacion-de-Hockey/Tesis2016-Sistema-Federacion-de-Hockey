@@ -15,13 +15,16 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
 import domainapp.dom.cuota.Cuota;
+import domainapp.dom.jugador.Jugador;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -79,6 +82,15 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 		return this;
 	}
 	
+	public List<Club> choices0AgregarClubACuota(){		
+		return repositoryService.allMatches(Club.class, new Predicate<Club>() {
+			@Override
+			public boolean apply(Club club) {				
+				return (clubServicio.listarTodosLosClubes().contains(club)&&!listaClubes.contains(club))?true:false;
+			}
+		});
+	}
+	
 	public List<Club> choices0QuitarClubACuota(){
 		
 			return Lists.newArrayList(getListaClubes());
@@ -102,6 +114,9 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 		return ObjectContracts.compare(this, other, "temporada", "nombre");
 	}
 	
+	@javax.inject.Inject
+    RepositoryService repositoryService;
+    
 	@javax.inject.Inject
     ClubServicio clubServicio;	
 }
