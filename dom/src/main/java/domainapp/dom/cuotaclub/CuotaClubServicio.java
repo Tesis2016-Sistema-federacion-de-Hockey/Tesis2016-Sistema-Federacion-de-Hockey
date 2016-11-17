@@ -71,7 +71,7 @@ public class CuotaClubServicio {
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Valor") BigDecimal valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
-            final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
+            final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle
     		){
         final CuotaClub obj = repositoryService.instantiate(CuotaClub.class);
         obj.setTemporada(temporada);

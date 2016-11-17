@@ -1,6 +1,7 @@
 package domainapp.dom.pagoclub;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.isis.applib.Identifier;
@@ -26,7 +27,7 @@ import domainapp.dom.cuotaclub.CuotaClubServicio;
 
 @SuppressWarnings("deprecation")
 @DomainService(
-        nature = NatureOfService.VIEW,
+        nature = NatureOfService.VIEW_MENU_ONLY,
         repositoryFor = CuotaClub.class
 )
 @DomainServiceLayout(
@@ -100,6 +101,10 @@ public class PagoClubServicio {
         return obj;
     }
 	
+	public LocalDate default1CrearPago(){
+		return LocalDate.now();
+	}
+	
 	List<CuotaClub> choices4CrearPago(
 			final String nroRecibo,
 			final LocalDate fechaDePago,
@@ -107,7 +112,27 @@ public class PagoClubServicio {
     		final Club clubb,
     		final CuotaClub cuotaClub
 			){
-		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class, "traerCuotaClub", "club", clubb));
+		
+		List<CuotaClub> llss=repositoryService.allMatches(QueryDefault.create(CuotaClub.class, "traerCuotaClub", "club", clubb));
+		
+		List<CuotaClub> llss2=llss;
+		llss2.clear();
+		
+		for (Iterator<?> it=llss.iterator();it.hasNext();){
+			CuotaClub cuoclu=((CuotaClub)it.next());
+			
+			
+			
+			if(cuoclu.getListaPagosClub().contains(this)){
+				llss2.add(cuoclu);
+			}
+			
+			//llss2.add(cuoclu);
+		}
+		
+		return llss2;
+		
+//		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class, "traerCuotaClub", "club", clubb));
 	}
 	
 	

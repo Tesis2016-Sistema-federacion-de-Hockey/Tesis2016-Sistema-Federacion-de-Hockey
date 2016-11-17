@@ -7,12 +7,14 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.pago.Pago;
+import domainapp.dom.torneo.Torneo.NameDomainEvent;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -63,9 +65,10 @@ public class PagoClub extends Pago implements Comparable<PagoClub>{
 	//CUOTA CLUB
 	@MemberOrder(sequence = "5")
     @Column(allowsNull="false")
+	@Property(domainEvent = NameDomainEvent.class)
 	private CuotaClub cuotaClub;
 	public CuotaClub getCuotaClub() {return cuotaClub;}
-	public void setCuotaClub(CuotaClub cuotaClub) {this.cuotaClub = cuotaClub;}
+	public void setCuotaClub(final CuotaClub cuotaClub) {this.cuotaClub = cuotaClub;}
 
 	@SuppressWarnings("deprecation")
 	@Override

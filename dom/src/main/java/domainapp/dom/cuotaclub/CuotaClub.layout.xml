@@ -37,8 +37,6 @@
                                 <c:property id="valor" />
                                 <c:property id="vencimiento" />
                                 <c:property id="detalle" />
-                                
-                                
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

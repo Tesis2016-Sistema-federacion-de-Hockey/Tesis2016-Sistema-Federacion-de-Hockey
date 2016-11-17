@@ -36,6 +36,7 @@ import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.pagoclub.PagoClub;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -249,8 +250,7 @@ public class Club implements Comparable<Club> {
 //		return (!listaJugadores.isEmpty()||!cuotasClub.isEmpty()||!pagosClub.isEmpty())?"La lista de jugadores debe estar vacia.":null;
 		return (!listaJugadores.isEmpty()||!cuotasClub.isEmpty())?"La lista de jugadores debe estar vacia.":null;
 	}
-		
-	
+
 	@SuppressWarnings("deprecation")
 	public int compareTo(final Club other) {
         return ObjectContracts.compare(this, other, "nombre");

@@ -24,6 +24,7 @@ import com.google.common.collect.Lists;
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
 import domainapp.dom.cuota.Cuota;
+import domainapp.dom.pagoclub.PagoClub;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -44,8 +45,10 @@ import domainapp.dom.cuota.Cuota;
             name = "traerCuotaClub", language = "JDOQL",
             value = "SELECT "
                     + "FROM domainapp.dom.cuotaclub.CuotaClub "
-//                    + "WHERE this.listaClubes.contains(:club) && :club.cuotasClub.contains(this)")
-            		+ "WHERE this.listaClubes.contains(:club) ")
+                    + "WHERE this.listaClubes.contains(:club) ")
+//            		+ "WHERE !:club.cuotasClub.contains(this)")
+//                  + "WHERE this.listaClubes.contains(:club) && :club.cuotasClub.contains(this)")
+//            		+ "WHERE this.listaClubes.contains(:club) ")
 })
 @javax.jdo.annotations.Unique(name="CuotaClub_UNQ", members = {"temporada","nombre"})
 //@DomainObject(autoCompleteRepository = PagoClubServicio.class, autoCompleteAction = "buscarCuotaClub")
@@ -60,6 +63,14 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	
 	public String iconName(){return "CuotaClub";}
 	
+	//LISTA DE PAGOS DE CLUB
+	@MemberOrder(sequence = "5.1")
+	@Persistent(mappedBy="cuotaClub", dependentElement="true")
+	@CollectionLayout(named="Lista de Pagos de Club")
+	private SortedSet<PagoClub> listaPagosClub = new TreeSet<PagoClub>();
+	public SortedSet<PagoClub> getListaPagosClub() {return listaPagosClub;}
+	public void setListaPagosClub(SortedSet<PagoClub> listaPagosClub) {this.listaPagosClub = listaPagosClub;}
+
 	//LISTA DE CLUBES
   	@MemberOrder(sequence = "5")
   	@Persistent(mappedBy = "cuotasClub")
@@ -118,7 +129,7 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 		}
 		return this;
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final CuotaClub other) {
