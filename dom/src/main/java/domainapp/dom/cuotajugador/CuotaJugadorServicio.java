@@ -50,7 +50,7 @@ public class CuotaJugadorServicio {
     @ActionLayout(
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Listar Cuotas del Jugador"
+            named="Listar Cuotas de Jugador"
     )
     @MemberOrder(name="Cuotas", sequence = "3.1")
     public List<CuotaJugador> listarCuotasJugador() {
@@ -61,7 +61,8 @@ public class CuotaJugadorServicio {
             domainEvent = CreateDomainEvent.class
     )
     @ActionLayout(
-    		cssClassFa="fa fa-plus-square"
+    		cssClassFa="fa fa-plus-square",
+    		named="Crear Cuota de Jugador"
     )
     @MemberOrder(name="Cuotas", sequence = "3.2")
     public CuotaJugador crearCuotaJugador(

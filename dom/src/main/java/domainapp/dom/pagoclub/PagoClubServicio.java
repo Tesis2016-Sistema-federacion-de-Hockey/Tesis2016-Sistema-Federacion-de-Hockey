@@ -13,12 +13,16 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
+import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
+import domainapp.dom.cuotaclub.CuotaClubServicio;
 
 @SuppressWarnings("deprecation")
 @DomainService(
@@ -26,8 +30,8 @@ import domainapp.dom.cuotaclub.CuotaClub;
         repositoryFor = CuotaClub.class
 )
 @DomainServiceLayout(
-        menuOrder = "3",
-        named="Cuotas"
+        menuOrder = "4",
+        named="Pagos"
 )
 public class PagoClubServicio {
 	public TranslatableString title() {return TranslatableString.tr("Pagos del Club");}
@@ -49,38 +53,114 @@ public class PagoClubServicio {
     @ActionLayout(
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Listar Pagos del Club"
+            named="Listar Pagos de Clubes (todos)"
     )
 	@MemberOrder(name="Pagos", sequence = "3.1")
-    public List<PagoClub> listarPagosClub() {
+    public List<PagoClub> listarTodosLosPagosDeLosClubes() {
         return repositoryService.allInstances(PagoClub.class);
     }
 	
-	
-	
-	
-	
-	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Listar Pagos por Club"
+    )
+	@MemberOrder(name="Pagos", sequence = "3.2")
+    public List<PagoClub> listarPagosPorClub(final Club club) {
+		
+		return repositoryService.allMatches(new QueryDefault<PagoClub>(PagoClub.class, "listarPagosPorClub", "club", club));
+    	
+	}
 	
 	@Action(
             domainEvent = CreateDomainEvent.class
     )
     @ActionLayout(
-    		cssClassFa="fa fa-plus-square"
+    		cssClassFa="fa fa-plus-square",
+    		named="Crear Pago de Club"
     )
-    @MemberOrder(name="Pagos", sequence = "3.2")
-    public PagoClub crearPagoClub(
+    @MemberOrder(name="Pagos", sequence = "3.9")
+    public PagoClub crearPago(
+    		final @ParameterLayout(named="Recibo") String nroRecibo,
+    		final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
     		final @ParameterLayout(named="Valor") BigDecimal valor,
-            final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
-            final @ParameterLayout(named="Recibo") String nroRecibo            
+    		final @ParameterLayout(named="Club") Club club,
+    		final @ParameterLayout(named="Cuota a pagar") CuotaClub cuotaClub          
     		){
         final PagoClub obj = repositoryService.instantiate(PagoClub.class);
-        obj.setFechaDePago(fechaDePago);
         obj.setNroRecibo(nroRecibo);
+        obj.setFechaDePago(fechaDePago);
         obj.setValor(valor);
+        obj.setClub(club);
+        obj.setCuotaClub(cuotaClub);
         repositoryService.persist(obj);
         return obj;
     }
+	
+	List<CuotaClub> choices4CrearPago(
+			final String nroRecibo,
+			final LocalDate fechaDePago,
+    		final BigDecimal valor,
+    		final Club clubb,
+    		final CuotaClub cuotaClub
+			){
+		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class, "traerCuotaClub", "club", clubb));
+	}
+	
+	
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public String buscarCuotaClub(final Club club, CuotaClub cuotaClub) {
+		return "";
+	}
+	
+	public List<Club> choices0BuscarCuotaClub(final Club club) {
+		return repositoryService.allMatches(QueryDefault.create(Club.class,
+				"traerClub", "club", club));
+	}
+	
+	public Club default0BuscarCuotaClub(final Club clu) {
+		return repositoryService.allInstances(Club.class, 0).get(0);
+	}
+	
+	public List<Club> choices1BuscarCuotaClub(final Club club,
+			CuotaClub cuotaClub) {
+		return repositoryService.allMatches(QueryDefault.create(Club.class,
+				"traerCuotaClub", "club", club, "cuotaClub", cuotaClub));
+	}
+	
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Club> buscarClub(String clu) {
+		return repositoryService.allMatches(QueryDefault.create(Club.class,
+				"traerClub", "nombre", clu));
+	}
+	
+	public Club default3CrearPago() {
+		return repositoryService.firstMatch(QueryDefault.create(Club.class,
+				"traerTodos"));
+	}
+	
+	public List<CuotaClub> choices4CrearPago(
+			final String nroRecibo,
+			final LocalDate fechaDePago,
+    		final BigDecimal valor,
+    		final Club clubb
+    		) {
+		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class,
+				"traerCuotaClub", "club", clubb));
+	}
+	
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<PagoClub> buscarPagoClub(String nroRecibo) {
+		return repositoryService.allMatches(QueryDefault
+				.create(PagoClub.class, "buscarPagoClub", "nroRecibo", nroRecibo));
+	}
+	
+	@javax.inject.Inject
+	CuotaClubServicio cuotaClubServicio;
+	
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

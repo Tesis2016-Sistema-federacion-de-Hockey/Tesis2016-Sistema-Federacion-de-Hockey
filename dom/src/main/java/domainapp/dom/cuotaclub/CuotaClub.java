@@ -24,7 +24,6 @@ import com.google.common.collect.Lists;
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
 import domainapp.dom.cuota.Cuota;
-import domainapp.dom.jugador.Jugador;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -40,9 +39,16 @@ import domainapp.dom.jugador.Jugador;
     @javax.jdo.annotations.Query(
             name = "traerTodos", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.cuotaclub.CuotaClub")
+                    + "FROM domainapp.dom.cuotaclub.CuotaClub"),
+    @javax.jdo.annotations.Query(
+            name = "traerCuotaClub", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.cuotaclub.CuotaClub "
+//                    + "WHERE this.listaClubes.contains(:club) && :club.cuotasClub.contains(this)")
+            		+ "WHERE this.listaClubes.contains(:club) ")
 })
 @javax.jdo.annotations.Unique(name="CuotaClub_UNQ", members = {"temporada","nombre"})
+//@DomainObject(autoCompleteRepository = PagoClubServicio.class, autoCompleteAction = "buscarCuotaClub")
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
@@ -57,14 +63,16 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	//LISTA DE CLUBES
   	@MemberOrder(sequence = "5")
   	@Persistent(mappedBy = "cuotasClub")
-  	@CollectionLayout(named="Lista de Clubes que deben Pagar")
+  	@CollectionLayout(named="Lista de Clubes")
   	private SortedSet<Club> listaClubes=new TreeSet<Club>();
   	public SortedSet<Club> getListaClubes() {return listaClubes;}
   	public void setListaClubes(final SortedSet<Club> listaClubes) {this.listaClubes = listaClubes;}
 
 	//METODO PARA AGREGAR CUOTA	A UN CLUB	
 	@MemberOrder(sequence = "6")
-	@ActionLayout(named="Agregar Cuota a un Club", cssClassFa="fa fa-plus")
+	@ActionLayout(
+			describedAs="Asigna un CLUB a la lista de clubes que le corresponde pagar esta cuota",
+			named="Agregar Club", cssClassFa="fa fa-plus")
 	public CuotaClub agregarClubACuota(final Club e) {
 		if(e == null || listaClubes.contains(e)) return this;
 		listaClubes.add(e);
@@ -74,7 +82,9 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	
 	//METODO PARA QUITAR CUOTA A UN CLUB	
 	@MemberOrder(sequence = "7")
-	@ActionLayout(named="Quitar Cuota a un Club", cssClassFa="fa fa-minus")
+	@ActionLayout(
+			describedAs="Desasigna un CLUB de la lista de clubes que no le corresponde pagar esta cuota",
+			named="Quitar Club", cssClassFa="fa fa-minus")
 	public CuotaClub quitarClubACuota(final Club e) {
 		if(e == null || !listaClubes.contains(e)) return this;
 		listaClubes.remove(e);
@@ -98,7 +108,9 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	
 	//METODO PARA AGREGAR TODAS LAS CUOTAS AL CLUB
 	@MemberOrder(sequence = "8")
-	@ActionLayout(named="Agregar cuota a TODOS los clubes", cssClassFa="fa fa-thumbs-o-up")
+	@ActionLayout(
+			describedAs="Asigna todos los clubes a la lista de clubes que deben pagar esta cuota",
+			named="Agregar TODOS los clubes", cssClassFa="fa fa-thumbs-o-up")
 	public CuotaClub agregarTodas(){
 		for (Iterator<?> it=clubServicio.listarTodosLosClubes().iterator();it.hasNext();){
 			Club clu=((Club)it.next());

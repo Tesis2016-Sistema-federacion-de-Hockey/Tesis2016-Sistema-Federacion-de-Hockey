@@ -33,12 +33,9 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import domainapp.dom.cuotaclub.CuotaClub;
-import domainapp.dom.cuotaclub.CuotaClubServicio;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
-import domainapp.dom.pagoclub.PagoClub;
-import domainapp.dom.pagoclub.PagoClubServicio;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -55,7 +52,7 @@ import domainapp.dom.pagoclub.PagoClubServicio;
         @javax.jdo.annotations.Query(
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.club.Club "),
+                        + "FROM domainapp.dom.club.Club"),
         @javax.jdo.annotations.Query(
                 name = "buscarPorNombre", language = "JDOQL",
                 value = "SELECT "
@@ -70,6 +67,7 @@ import domainapp.dom.pagoclub.PagoClubServicio;
 })
 @javax.jdo.annotations.Unique(name="Club_idInterno_UNQ", members = {"idInterno"})
 @DomainObject(bounded=true)
+//@DomainObject(bounded=true, autoCompleteRepository = PagoClubServicio.class, autoCompleteAction = "buscarClub")
 @DomainObjectLayout(bookmarking=BookmarkPolicy.AS_ROOT)
 public class Club implements Comparable<Club> {
 	
@@ -226,62 +224,10 @@ public class Club implements Comparable<Club> {
 	@Persistent(table="club_cuotaclub")
 	@Join(column="club_id")
 	@Element(column="cuotaClub_id")
-	@CollectionLayout(named="Lista de Cuotas a Pagar")
+	@CollectionLayout(named="Lista de Cuotas")
 	private SortedSet<CuotaClub> cuotasClub = new TreeSet<CuotaClub>();
 	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
 	public void setCuotasClub(final SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
-
-	//LISTA DE PAGOS
-	@MemberOrder(sequence = "12")
-	@Persistent(table="club_pagoclub")
-	@Join(column="club_id")
-	@Element(column="pagoClub_id")
-	@CollectionLayout(named="Lista de Pagos realizados")
-	private SortedSet<PagoClub> pagosClub = new TreeSet<PagoClub>();
-	public SortedSet<PagoClub> getPagosClub() {return pagosClub;}
-	public void setPagosClub(final SortedSet<PagoClub> pagosClub) {this.pagosClub = pagosClub;}
-	
-//	//METODO PARA AGREGAR PAGO		
-//	@MemberOrder(sequence = "15")
-//	@ActionLayout(named="Agregar Pago", cssClassFa="fa fa-plus")
-//	public Club agregarPago(PagoClub e) {
-//		if(e == null || pagosClub.contains(e)) return this;
-//		pagosClub.add(e);
-//		e.getListaClubes().remove(this);
-//		return this;
-//	}
-//
-//	//METODO PARA QUITAR PAGO		
-//		@MemberOrder(sequence = "16")
-//		@ActionLayout(named="Quitar Pago", cssClassFa="fa fa-trash-o")
-//		public Club quitarPago(PagoClub e) {
-//			if(e == null || pagosClub.contains(e)) return this;
-//			pagosClub.remove(e);
-//			e.getListaClubes().remove(this);
-//			return this;
-//		}	
-//	
-//	public List<PagoClub> choices0AgregarPago(){
-//		
-//		return repositoryService.allMatches(PagoClub.class, new Predicate<PagoClub>() {
-//			@Override
-//			public boolean apply(PagoClub c) {
-//				
-//				return (pagoClubServicio.listarPagosClub().contains(c))?true:false;
-//			}
-//		});
-//	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
 
@@ -300,7 +246,8 @@ public class Club implements Comparable<Club> {
     }
 	
 	public String disableDelete(){
-		return !listaJugadores.isEmpty()?"La lista de jugadores debe estar vacia.":null;
+//		return (!listaJugadores.isEmpty()||!cuotasClub.isEmpty()||!pagosClub.isEmpty())?"La lista de jugadores debe estar vacia.":null;
+		return (!listaJugadores.isEmpty()||!cuotasClub.isEmpty())?"La lista de jugadores debe estar vacia.":null;
 	}
 		
 	
@@ -314,13 +261,7 @@ public class Club implements Comparable<Club> {
     
     @javax.inject.Inject
     ClubServicio clubServicio;
-    
-    @javax.inject.Inject
-    CuotaClubServicio cuotaClubServicio;
-    
-    @javax.inject.Inject
-    PagoClubServicio pagoClubServicio;
-    
+
     @javax.inject.Inject
     JugadorServicio jugadorServicio;
 }

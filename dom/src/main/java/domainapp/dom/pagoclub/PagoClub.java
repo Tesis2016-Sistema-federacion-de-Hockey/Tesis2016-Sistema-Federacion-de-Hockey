@@ -1,18 +1,17 @@
 package domainapp.dom.pagoclub;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
+import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.pago.Pago;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -30,23 +29,43 @@ import domainapp.dom.pago.Pago;
     @javax.jdo.annotations.Query(
             name = "traerTodos", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.pagoclub.PagoClub")
-})public class PagoClub extends Pago implements Comparable<PagoClub>{
+                    + "FROM domainapp.dom.pagoclub.PagoClub"),
+    @javax.jdo.annotations.Query(
+            name = "listarPagosPorClub", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.pagoclub.PagoClub "
+            		+ "WHERE (club == :club)"),
+    @javax.jdo.annotations.Query(
+            name = "buscarPagoClub", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.pagoclub.PagoClub "
+            		+ "WHERE nroRecibo == :nroRecibo")
+})
+@javax.jdo.annotations.Unique(name="PagoClub_UNQ", members = {"nroRecibo"})
+@DomainObject(bounded=true)
+@DomainObjectLayout
+public class PagoClub extends Pago implements Comparable<PagoClub>{
 	
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
+		return TranslatableString.tr("{nroRecibo}", "nroRecibo",
 				"Pago: " + this.getNroRecibo());
 	}
 	
 	public String iconName(){return "PagoClub";}
 	
-	//LISTA DE CLUBES
-  	@MemberOrder(sequence = "5")
-  	@Persistent(mappedBy = "pagosClub")
-  	@CollectionLayout(named="Lista de Clubes que deben Pagar")
-  	private SortedSet<Club> listaClubes=new TreeSet<Club>();
-  	public SortedSet<Club> getListaClubes() {return listaClubes;}
-  	public void setListaClubes(SortedSet<Club> listaClubes) {this.listaClubes = listaClubes;}
+	//CLUB
+	@MemberOrder(sequence = "4")
+    @Column(allowsNull="false")
+	private Club club;
+	public Club getClub() {return club;}
+	public void setClub(Club club) {this.club = club;}
+
+	//CUOTA CLUB
+	@MemberOrder(sequence = "5")
+    @Column(allowsNull="false")
+	private CuotaClub cuotaClub;
+	public CuotaClub getCuotaClub() {return cuotaClub;}
+	public void setCuotaClub(CuotaClub cuotaClub) {this.cuotaClub = cuotaClub;}
 
 	@SuppressWarnings("deprecation")
 	@Override
