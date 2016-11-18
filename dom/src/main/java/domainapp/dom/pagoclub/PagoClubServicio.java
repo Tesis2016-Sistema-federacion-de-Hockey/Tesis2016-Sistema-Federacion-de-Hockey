@@ -1,9 +1,7 @@
 package domainapp.dom.pagoclub;
 
 import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.List;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -27,7 +25,7 @@ import domainapp.dom.cuotaclub.CuotaClubServicio;
 
 @SuppressWarnings("deprecation")
 @DomainService(
-        nature = NatureOfService.VIEW_MENU_ONLY,
+        nature = NatureOfService.VIEW,
         repositoryFor = CuotaClub.class
 )
 @DomainServiceLayout(
@@ -81,7 +79,7 @@ public class PagoClubServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-plus-square",
-    		named="Crear Pago de Club"
+    		named="Cobrar Cuota"
     )
     @MemberOrder(name="Pagos", sequence = "3.9")
     public PagoClub crearPago(
@@ -105,35 +103,22 @@ public class PagoClubServicio {
 		return LocalDate.now();
 	}
 	
-	List<CuotaClub> choices4CrearPago(
+	public String validateCrearPago(
 			final String nroRecibo,
 			final LocalDate fechaDePago,
     		final BigDecimal valor,
     		final Club clubb,
-    		final CuotaClub cuotaClub
+    		final CuotaClub cuotaClubb
 			){
-		
-		List<CuotaClub> llss=repositoryService.allMatches(QueryDefault.create(CuotaClub.class, "traerCuotaClub", "club", clubb));
-		
-		List<CuotaClub> llss2=llss;
-		llss2.clear();
-		
-		for (Iterator<?> it=llss.iterator();it.hasNext();){
-			CuotaClub cuoclu=((CuotaClub)it.next());
-			
-			
-			
-			if(cuoclu.getListaPagosClub().contains(this)){
-				llss2.add(cuoclu);
-			}
-			
-			//llss2.add(cuoclu);
+		final List<PagoClub> listaPagoClub = repositoryService.allMatches(QueryDefault
+				.create(PagoClub.class, "listarPagosPorClubYCuota",
+						"club", clubb, "cuotaClub", cuotaClubb));
+		if (!listaPagoClub.isEmpty()){			
+			return "La cuota elegida ya fue pagada. Seleccione otra";
 		}
-		
-		return llss2;
-		
-//		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class, "traerCuotaClub", "club", clubb));
+		return "";
 	}
+	
 	
 	
 	@ActionLayout(hidden = Where.EVERYWHERE)
@@ -185,7 +170,6 @@ public class PagoClubServicio {
 	
 	@javax.inject.Inject
 	CuotaClubServicio cuotaClubServicio;
-	
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;

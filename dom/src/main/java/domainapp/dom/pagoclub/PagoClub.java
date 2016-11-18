@@ -38,6 +38,11 @@ import domainapp.dom.torneo.Torneo.NameDomainEvent;
                     + "FROM domainapp.dom.pagoclub.PagoClub "
             		+ "WHERE (club == :club)"),
     @javax.jdo.annotations.Query(
+            name = "listarPagosPorClubYCuota", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.pagoclub.PagoClub "
+            		+ "WHERE (club == :club) && (cuotaClub == :cuotaClub)"),
+    @javax.jdo.annotations.Query(
             name = "buscarPagoClub", language = "JDOQL",
             value = "SELECT "
                     + "FROM domainapp.dom.pagoclub.PagoClub "
