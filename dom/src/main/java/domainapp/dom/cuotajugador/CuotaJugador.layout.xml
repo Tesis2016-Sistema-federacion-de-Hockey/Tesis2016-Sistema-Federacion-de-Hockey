@@ -33,7 +33,6 @@
                             <c:fieldSet name="nombre">
                                 <!--  <c:action id="delete"/> -->
                                 <c:property id="temporada" namedEscaped="true" />
-                                <c:property id="nombre" namedEscaped="true" />
                                 <c:property id="valor" namedEscaped="true" />
                                 <c:property id="vencimiento" namedEscaped="true" />
                                 <c:property id="detalle" namedEscaped="true"/>

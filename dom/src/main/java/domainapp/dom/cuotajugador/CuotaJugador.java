@@ -41,14 +41,14 @@ import domainapp.dom.jugador.JugadorServicio;
             value = "SELECT "
                     + "FROM domainapp.dom.cuotajugador.CuotaJugador")
 })
-@javax.jdo.annotations.Unique(name="CuotaJugador_UNQ", members = {"temporada","nombre"})
+@javax.jdo.annotations.Unique(name="CuotaJugador_UNQ", members = {"vencimiento"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Cuota de Jugador: " + this.getNombre());
+				"Cuota de Jugador: " + this.getVencimiento());
 	}
 	
 	public String iconName(){return "CuotaJugador";}
@@ -128,7 +128,7 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 	@Override
 	public int compareTo(final CuotaJugador other) {
 		// TODO Auto-generated method stub
-		return ObjectContracts.compare(this, other, "temporada", "nombre");
+		return ObjectContracts.compare(this, other, "temporada", "vencimiento");
 	}
 	
 	@javax.inject.Inject

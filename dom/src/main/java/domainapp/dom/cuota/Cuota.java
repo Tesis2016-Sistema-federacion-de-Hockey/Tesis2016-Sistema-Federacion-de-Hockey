@@ -26,14 +26,6 @@ public abstract class Cuota {
 	public Temporada getTemporada() {return temporada;}
 	public void setTemporada(final Temporada temporada) {this.temporada = temporada;}
 	
-	//NOMBRE
-	@MemberOrder(sequence = "1")
-    @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
-    private String nombre;
-	public String getNombre() {return nombre;}
-	public void setNombre(String nombre) {this.nombre = nombre;}
-
 	//VALOR
 	@MemberOrder(sequence = "2")
     @Column(allowsNull="false")

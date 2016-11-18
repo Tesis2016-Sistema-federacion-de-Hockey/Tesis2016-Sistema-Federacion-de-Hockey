@@ -46,19 +46,15 @@ import domainapp.dom.pagoclub.PagoClub;
             value = "SELECT "
                     + "FROM domainapp.dom.cuotaclub.CuotaClub "
                     + "WHERE this.listaClubes.contains(:club) ")
-//            		+ "WHERE !:club.cuotasClub.contains(this)")
-//                  + "WHERE this.listaClubes.contains(:club) && :club.cuotasClub.contains(this)")
-//            		+ "WHERE this.listaClubes.contains(:club) ")
 })
-@javax.jdo.annotations.Unique(name="CuotaClub_UNQ", members = {"temporada","nombre"})
-//@DomainObject(autoCompleteRepository = PagoClubServicio.class, autoCompleteAction = "buscarCuotaClub")
+@javax.jdo.annotations.Unique(name="CuotaClub_UNQ", members = {"vencimiento"})
 @DomainObject(bounded=true)
 @DomainObjectLayout
 public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Cuota de Club: " + this.getNombre());
+				"Cuota de Club: " + this.getVencimiento());
 	}
 	
 	public String iconName(){return "CuotaClub";}
@@ -134,7 +130,7 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	@Override
 	public int compareTo(final CuotaClub other) {
 		// TODO Auto-generated method stub
-		return ObjectContracts.compare(this, other, "temporada", "nombre");
+		return ObjectContracts.compare(this, other, "temporada", "vencimiento");
 	}
 	
 	@javax.inject.Inject

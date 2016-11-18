@@ -27,15 +27,16 @@
     <bs3:row>
         <bs3:col span="6">
             <bs3:tabGroup>
-                <bs3:tab name="Cuota Club">
+                <bs3:tab name="Pago Jugador">
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="nombre">
                                 <!--  <c:action id="delete"/> -->
-                                <c:property id="temporada" />
+                                <c:property id="nroRecibo" />
+                                <c:property id="fechaDePago" />
                                 <c:property id="valor" />
-                                <c:property id="vencimiento" />
-                                <c:property id="detalle" />
+                                <c:property id="jugador" />
+                                <c:property id="cuotaJugador" />
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

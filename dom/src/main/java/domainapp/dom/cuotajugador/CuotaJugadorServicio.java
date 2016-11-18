@@ -31,7 +31,7 @@ import domainapp.dom.temporada.Temporada;
         named="Cuotas"
 )
 public class CuotaJugadorServicio {
-	public TranslatableString title() {return TranslatableString.tr("Cuotas del Jugador");}
+	public TranslatableString title() {return TranslatableString.tr("Cuotas de Jugador");}
 	
     public static class CreateDomainEvent extends ActionDomainEvent<CuotaJugadorServicio> {
         /**
@@ -67,14 +67,12 @@ public class CuotaJugadorServicio {
     @MemberOrder(name="Cuotas", sequence = "3.2")
     public CuotaJugador crearCuotaJugador(
     		final @ParameterLayout(named="Temporada") Temporada temporada,
-    		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Valor") BigDecimal valor,
             final @ParameterLayout(named="Vencimiento") LocalDate vencimiento,
             final @ParameterLayout(named="Detalle") @Parameter(optionality=Optionality.OPTIONAL) String detalle            
     		){
         final CuotaJugador obj = repositoryService.instantiate(CuotaJugador.class);
         obj.setTemporada(temporada);
-        obj.setNombre(nombre);
         obj.setValor(valor);
         obj.setVencimiento(vencimiento);
         obj.setDetalle(detalle);

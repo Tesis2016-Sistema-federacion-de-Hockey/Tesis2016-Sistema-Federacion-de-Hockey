@@ -79,7 +79,7 @@ public class PagoClubServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-plus-square",
-    		named="Cobrar Cuota"
+    		named="Cobrar Cuota de Club"
     )
     @MemberOrder(name="Pagos", sequence = "3.9")
     public PagoClub crearPago(
