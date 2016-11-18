@@ -1,6 +1,5 @@
 package domainapp.dom.jugador;
 
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -27,8 +26,6 @@ import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
-
-import com.google.common.base.Predicate;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotajugador.CuotaJugador;
@@ -88,7 +85,13 @@ import domainapp.dom.tarjeta.Tarjeta;
         		name = "buscarDocumentoDuplicado", language = "JDOQL",
         		value = "SELECT "
 				+ "FROM dom.jugador.Jugador "
-				+ "WHERE documento ==:documento")
+				+ "WHERE documento ==:documento"),
+        @javax.jdo.annotations.Query(
+                name = "traerJugador", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.jugador.Jugador "
+                        + "WHERE nombre == :nombre "
+                        + "|| nombre.indexOf(:nombre) >= 0")
 })
 @javax.jdo.annotations.Unique(name="Jugador_ficha_UNQ", members = {"ficha"})
 @DomainObject(bounded=true)

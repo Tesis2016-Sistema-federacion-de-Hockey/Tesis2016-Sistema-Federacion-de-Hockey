@@ -135,6 +135,7 @@ public class PagoClubServicio {
 		return repositoryService.allInstances(Club.class, 0).get(0);
 	}
 	
+	//aca parece que hay un error en traercuotajugador
 	public List<Club> choices1BuscarCuotaClub(final Club club,
 			CuotaClub cuotaClub) {
 		return repositoryService.allMatches(QueryDefault.create(Club.class,

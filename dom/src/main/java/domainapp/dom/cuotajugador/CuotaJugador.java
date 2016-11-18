@@ -24,6 +24,7 @@ import com.google.common.collect.Lists;
 import domainapp.dom.cuota.Cuota;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.pagojugador.PagoJugador;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -39,7 +40,12 @@ import domainapp.dom.jugador.JugadorServicio;
     @javax.jdo.annotations.Query(
             name = "traerTodos", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.cuotajugador.CuotaJugador")
+                    + "FROM domainapp.dom.cuotajugador.CuotaJugador"),
+    @javax.jdo.annotations.Query(
+            name = "traerCuotaJugador", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.cuotajugador.CuotaJugador "
+                    + "WHERE this.listaJugadores.contains(:jugador) ")
 })
 @javax.jdo.annotations.Unique(name="CuotaJugador_UNQ", members = {"vencimiento"})
 @DomainObject(bounded=true)
@@ -53,17 +59,27 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 	
 	public String iconName(){return "CuotaJugador";}
 	
+	//LISTA DE PAGOS DE JUGADOR
+	@MemberOrder(sequence = "5.1")
+	@Persistent(mappedBy="cuotaJugador", dependentElement="true")
+	@CollectionLayout(named="Lista de Pagos de Jugador")
+	private SortedSet<PagoJugador> listaPagosJugador = new TreeSet<PagoJugador>();
+	public SortedSet<PagoJugador> getListaPagosJugador() {return listaPagosJugador;}
+	public void setListaPagosJugador(SortedSet<PagoJugador> listaPagosJugador) {this.listaPagosJugador = listaPagosJugador;}
+
 	//LISTA DE JUGADORES
-  	@MemberOrder(sequence = "5")
+  	@MemberOrder(sequence = "6.1")
   	@Persistent(mappedBy = "cuotasJugador")
   	@CollectionLayout(named="Lista de Jugadores que deben Pagar")
   	private SortedSet<Jugador> listaJugadores=new TreeSet<Jugador>();
   	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
-	public void setListaJugadores(final SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
+	public void setListaJugadores(SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
 
 	//METODO PARA AGREGAR CUOTA	A UN JUGADOR	
 	@MemberOrder(sequence = "6")
-	@ActionLayout(named="Agregar Cuota a un Jugador", cssClassFa="fa fa-plus")
+	@ActionLayout(
+			describedAs="Asigna un JUGADOR a la lista de jugadores que le corresponde pagar esta cuota",
+			named="Agregar Jugador", cssClassFa="fa fa-plus")
 	public CuotaJugador agregarJugadorACuota(final Jugador e) {
 		if(e == null || listaJugadores.contains(e)) return this;
 		listaJugadores.add(e);
@@ -73,7 +89,9 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 	
 	//METODO PARA QUITAR CUOTA A UN JUGADOR	
 	@MemberOrder(sequence = "7")
-	@ActionLayout(named="Quitar Cuota a un Club", cssClassFa="fa fa-minus")
+	@ActionLayout(
+			describedAs="Desasigna un JUGADOR de la lista de jugadores que no le corresponde pagar esta cuota",
+			named="Quitar Jugador", cssClassFa="fa fa-minus")
 	public CuotaJugador quitarJugadorACuota(final Jugador e) {
 		if(e == null || !listaJugadores.contains(e)) return this;
 		listaJugadores.remove(e);
@@ -97,7 +115,9 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 	
 	//METODO PARA AGREGAR TODAS LAS CUOTAS AL JUGADOR
 	@MemberOrder(sequence = "8")
-	@ActionLayout(named="Agregar cuota a TODOS los jugadores", cssClassFa="fa fa-thumbs-o-up")
+	@ActionLayout(
+			describedAs="Asigna todos los jugadores a la lista de jugadores que deben pagar esta cuota",
+			named="Agregar TODOS los jugadores", cssClassFa="fa fa-thumbs-o-up")
 	public CuotaJugador agregarTodas(){
 		for (Iterator<?> it=jugadorServicio.listarTodosLosJugadores().iterator();it.hasNext();){
 			Jugador jug=((Jugador)it.next());
@@ -105,24 +125,6 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 		}
 		return this;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@SuppressWarnings("deprecation")
 	@Override
