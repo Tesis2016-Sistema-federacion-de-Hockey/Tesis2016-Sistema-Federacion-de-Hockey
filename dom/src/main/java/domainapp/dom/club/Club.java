@@ -252,8 +252,14 @@ public class Club implements Comparable<Club> {
     }
 	
 	public String disableDelete(){
-//		return (!listaJugadores.isEmpty()||!cuotasClub.isEmpty()||!pagosClub.isEmpty())?"La lista de jugadores debe estar vacia.":null;
-		return (!listaJugadores.isEmpty()||!cuotasClub.isEmpty())?"La lista de jugadores debe estar vacia.":null;
+		
+		if (!listaJugadores.isEmpty()) return "La lista de jugadores debe estar vacia.";
+		
+		else if (!cuotasClub.isEmpty()) return "La lista de cuotas debe estar vacia.";
+		
+		else if (!pagosClub.isEmpty()) return "La lista de pagos debe estar vacia.";
+		
+		return "";
 	}
 
 	@SuppressWarnings("deprecation")
