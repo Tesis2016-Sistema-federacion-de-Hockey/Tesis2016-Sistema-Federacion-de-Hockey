@@ -36,6 +36,7 @@ import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.pagoclub.PagoClub;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -80,7 +81,6 @@ public class Club implements Comparable<Club> {
     public String iconName(){return "Club";}
     
     public static class NameDomainEvent extends PropertyDomainEvent<Club,String> {
-
 		/**
 		 * 
 		 */
@@ -229,8 +229,14 @@ public class Club implements Comparable<Club> {
 	public SortedSet<CuotaClub> getCuotasClub() {return cuotasClub;}
 	public void setCuotasClub(final SortedSet<CuotaClub> cuotasClub) {this.cuotasClub = cuotasClub;}
 
-	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
+	//LISTA DE PAGOS
+	@MemberOrder(sequence = "11")
+	@CollectionLayout(named="Lista de Pagos")
+	private SortedSet<PagoClub> pagosClub = new TreeSet<PagoClub>();
+	public SortedSet<PagoClub> getPagosClub() {return pagosClub;}
+	public void setPagosClub(SortedSet<PagoClub> pagosClub) {this.pagosClub = pagosClub;}
 
+	public static class DeleteDomainEvent extends ActionDomainEvent<Club> {
 		/**
 		 * 
 		 */

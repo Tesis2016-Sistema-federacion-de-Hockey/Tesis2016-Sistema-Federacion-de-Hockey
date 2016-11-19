@@ -100,7 +100,7 @@
                 <bs3:tab name="Situacion Federacion">
                     <bs3:row>
                         <bs3:col span="12" size="MD">
-                            <c:collection defaultView="table" id="cuotas"/>
+                            <c:collection defaultView="table" id="cuotasJugador"/>
                         </bs3:col>
                     </bs3:row>
                     <bs3:row>
