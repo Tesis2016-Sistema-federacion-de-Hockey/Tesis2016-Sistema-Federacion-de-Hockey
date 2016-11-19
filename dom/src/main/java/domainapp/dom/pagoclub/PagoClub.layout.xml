@@ -25,18 +25,18 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="6">
+        <bs3:col span="5">
             <bs3:tabGroup>
                 <bs3:tab name="Pago Club">
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="nombre">
-                                <!--  <c:action id="delete"/> -->
-                                <c:property id="nroRecibo" />
+                            	<c:action id="delete" />
+                            	<c:property id="cuotaClub" />
                                 <c:property id="fechaDePago" />
                                 <c:property id="valor" />
+                                <c:property id="nroRecibo" />
                                 <c:property id="club" />
-                                <c:property id="cuotaClub" />
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
@@ -61,7 +61,7 @@
             <bs3:tabGroup>
             </bs3:tabGroup>
         </bs3:col>
-        <bs3:col span="6">
+        <bs3:col span="7">
             <bs3:tabGroup  unreferencedCollections="true">
             </bs3:tabGroup>
         </bs3:col>

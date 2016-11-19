@@ -4,15 +4,22 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
+import domainapp.dom.cuotaclub.CuotaClub.DeleteDomainEvent;
 import domainapp.dom.pago.Pago;
 import domainapp.dom.torneo.Torneo.NameDomainEvent;
 
@@ -63,6 +70,7 @@ public class PagoClub extends Pago implements Comparable<PagoClub>{
 	//CLUB
 	@MemberOrder(sequence = "4")
     @Column(allowsNull="false")
+	@PropertyLayout(named="Club")
 	private Club club;
 	public Club getClub() {return club;}
 	public void setClub(Club club) {this.club = club;}
@@ -71,14 +79,43 @@ public class PagoClub extends Pago implements Comparable<PagoClub>{
 	@MemberOrder(sequence = "5")
     @Column(allowsNull="false")
 	@Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Cuota")
 	private CuotaClub cuotaClub;
 	public CuotaClub getCuotaClub() {return cuotaClub;}
 	public void setCuotaClub(final CuotaClub cuotaClub) {this.cuotaClub = cuotaClub;}
 
+	public static class DeleteDomainEvent extends ActionDomainEvent<PagoClub> {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	@ActionLayout(named="Eliminar Pago")
+	public void delete() {
+        repositoryService.remove(this);
+    }
+	
+//	public String disableDelete(){
+//		
+//		if(!cuotaClub.getListaPagosClub().isEmpty()) return "La lista de pagos debe estar vacia.";
+//		
+//		else if (!cuotaClub.getListaClubes().isEmpty()) return "La lista de clubes debe estar vacia.";
+//		
+//		return "";
+//	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final PagoClub other) {
 		// TODO Auto-generated method stub
 		return ObjectContracts.compare(this, other, "nroRecibo");
 	}
+	
+	@javax.inject.Inject
+    RepositoryService repositoryService;
+
 }
