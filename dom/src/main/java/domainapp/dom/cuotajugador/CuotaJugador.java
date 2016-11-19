@@ -9,11 +9,14 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -54,7 +57,7 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Cuota de Jugador: " + this.getVencimiento());
+				"Cuota: " + this.getVencimiento());
 	}
 	
 	public String iconName(){return "CuotaJugador";}
@@ -62,7 +65,7 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 	//LISTA DE PAGOS DE JUGADOR
 	@MemberOrder(sequence = "5.1")
 	@Persistent(mappedBy="cuotaJugador", dependentElement="true")
-	@CollectionLayout(named="Lista de Pagos de Jugador")
+	@CollectionLayout(named="Lista de Pagos")
 	private SortedSet<PagoJugador> listaPagosJugador = new TreeSet<PagoJugador>();
 	public SortedSet<PagoJugador> getListaPagosJugador() {return listaPagosJugador;}
 	public void setListaPagosJugador(SortedSet<PagoJugador> listaPagosJugador) {this.listaPagosJugador = listaPagosJugador;}
@@ -70,7 +73,7 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 	//LISTA DE JUGADORES
   	@MemberOrder(sequence = "6.1")
   	@Persistent(mappedBy = "cuotasJugador")
-  	@CollectionLayout(named="Lista de Jugadores que deben Pagar")
+  	@CollectionLayout(named="Lista de Jugadores")
   	private SortedSet<Jugador> listaJugadores=new TreeSet<Jugador>();
   	public SortedSet<Jugador> getListaJugadores() {return listaJugadores;}
 	public void setListaJugadores(SortedSet<Jugador> listaJugadores) {this.listaJugadores = listaJugadores;}
@@ -124,6 +127,30 @@ public class CuotaJugador extends Cuota implements Comparable<CuotaJugador> {
 			jug.getCuotasJugador().add(this);
 		}
 		return this;
+	}
+
+	public static class DeleteDomainEvent extends ActionDomainEvent<CuotaJugador> {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	@ActionLayout(named="Eliminar Cuota")
+	public void delete() {
+        repositoryService.remove(this);
+    }
+	
+	public String disableDelete(){
+		
+		if(!listaJugadores.isEmpty()) return "La lista de jugadores debe estar vacia.";
+		
+		else if (!listaPagosJugador.isEmpty()) return "La lista de pagos debe estar vacia.";
+		
+		return "";
 	}
 	
 	@SuppressWarnings("deprecation")

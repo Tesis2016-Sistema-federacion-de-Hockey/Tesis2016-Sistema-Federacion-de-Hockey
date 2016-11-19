@@ -25,19 +25,17 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="6">
+        <bs3:col span="5">
             <bs3:tabGroup>
                 <bs3:tab name="Cuota Federativa">
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="nombre">
-                                <!--  <c:action id="delete"/> -->
+                                <c:action id="delete" />
                                 <c:property id="temporada" namedEscaped="true" />
                                 <c:property id="valor" namedEscaped="true" />
                                 <c:property id="vencimiento" namedEscaped="true" />
                                 <c:property id="detalle" namedEscaped="true"/>
-                                
-                                
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
@@ -62,8 +60,24 @@
             <bs3:tabGroup>
             </bs3:tabGroup>
         </bs3:col>
-        <bs3:col span="6">
+        <bs3:col span="7">
             <bs3:tabGroup  unreferencedCollections="true">
+	            <bs3:tab name="JUGADORES">
+		            <bs3:row>
+		                <bs3:col span="12" size="MD">
+		                    <c:collection defaultView="table" id="listaJugadores"/>
+		                </bs3:col>
+		            </bs3:row>
+		        </bs3:tab>
+	        </bs3:tabGroup>
+	        <bs3:tabGroup  unreferencedCollections="true">
+		        <bs3:tab name="PAGOS">
+		            <bs3:row>
+		                <bs3:col span="12" size="MD">
+		                    <c:collection defaultView="table" id="listaPagosJugador"/>
+		                </bs3:col>
+		            </bs3:row>
+		        </bs3:tab>
             </bs3:tabGroup>
         </bs3:col>
     </bs3:row>
