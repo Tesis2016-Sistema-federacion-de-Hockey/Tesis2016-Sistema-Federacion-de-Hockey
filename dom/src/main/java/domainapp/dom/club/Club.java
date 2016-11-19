@@ -36,7 +36,6 @@ import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
-import domainapp.dom.pagoclub.PagoClub;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,

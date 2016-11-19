@@ -25,13 +25,13 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="6">
+        <bs3:col span="5">
             <bs3:tabGroup>
                 <bs3:tab name="Cuota Club">
                     <bs3:row>
                         <bs3:col span="12">
                             <c:fieldSet name="nombre">
-                                <!--  <c:action id="delete"/> -->
+                                <c:action id="delete"/>
                                 <c:property id="temporada" />
                                 <c:property id="valor" />
                                 <c:property id="vencimiento" />
@@ -60,8 +60,24 @@
             <bs3:tabGroup>
             </bs3:tabGroup>
         </bs3:col>
-        <bs3:col span="6">
+        <bs3:col span="7">
             <bs3:tabGroup  unreferencedCollections="true">
+	            <bs3:tab name="CLUBES">
+		            <bs3:row>
+		                <bs3:col span="12" size="MD">
+		                    <c:collection defaultView="table" id="listaClubes"/>
+		                </bs3:col>
+		            </bs3:row>
+		        </bs3:tab>
+	        </bs3:tabGroup>
+	        <bs3:tabGroup  unreferencedCollections="true">
+		        <bs3:tab name="PAGOS">
+		            <bs3:row>
+		                <bs3:col span="12" size="MD">
+		                    <c:collection defaultView="table" id="listaPagosClub"/>
+		                </bs3:col>
+		            </bs3:row>
+		        </bs3:tab>
             </bs3:tabGroup>
         </bs3:col>
     </bs3:row>

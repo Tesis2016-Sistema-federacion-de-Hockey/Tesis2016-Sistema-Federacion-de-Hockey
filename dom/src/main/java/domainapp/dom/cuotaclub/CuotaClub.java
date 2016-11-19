@@ -9,11 +9,14 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -54,7 +57,7 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 	
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Cuota de Club: " + this.getVencimiento());
+				"Cuota: " + this.getVencimiento());
 	}
 	
 	public String iconName(){return "CuotaClub";}
@@ -124,6 +127,30 @@ public class CuotaClub extends Cuota implements Comparable<CuotaClub> {
 			clu.getCuotasClub().add(this);
 		}
 		return this;
+	}
+	
+	public static class DeleteDomainEvent extends ActionDomainEvent<CuotaClub> {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	@ActionLayout(named="Eliminar Cuota")
+	public void delete() {
+        repositoryService.remove(this);
+    }
+	
+	public String disableDelete(){
+		
+		if(!listaClubes.isEmpty()) return "La lista de clubes debe estar vacia.";
+		
+		else if (!listaPagosClub.isEmpty()) return "La lista de pagos debe estar vacia.";
+		
+		return "";
 	}
 	
 	@SuppressWarnings("deprecation")

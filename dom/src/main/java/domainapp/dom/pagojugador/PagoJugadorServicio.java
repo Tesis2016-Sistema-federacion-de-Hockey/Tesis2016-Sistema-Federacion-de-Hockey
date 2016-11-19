@@ -55,7 +55,7 @@ public class PagoJugadorServicio {
             bookmarking = BookmarkPolicy.AS_ROOT,
             named="Listar Pagos de Jugadores (todos)"
     )
-	@MemberOrder(name="Pagos", sequence = "3.1")
+	@MemberOrder(name="Pagos", sequence = "4.1")
     public List<PagoJugador> listarTodosLosPagosDeLosJugadores() {
         return repositoryService.allInstances(PagoJugador.class);
     }
@@ -66,9 +66,9 @@ public class PagoJugadorServicio {
     @ActionLayout(
     		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Listar Pagos por Club"
+            named="Listar Pagos por Jugador"
     )
-	@MemberOrder(name="Pagos", sequence = "3.2")
+	@MemberOrder(name="Pagos", sequence = "4.2")
     public List<PagoJugador> listarPagosPorJugador(final Jugador jugador) {
 		
 		return repositoryService.allMatches(new QueryDefault<PagoJugador>(PagoJugador.class, "listarPagosPorJugador", "jugador", jugador));
@@ -82,7 +82,7 @@ public class PagoJugadorServicio {
     		cssClassFa="fa fa-plus-square",
     		named="Cobrar Cuota de Jugador"
     )
-    @MemberOrder(name="Pagos", sequence = "3.9")
+    @MemberOrder(name="Pagos", sequence = "4.9")
     public PagoJugador crearPago(
     		final @ParameterLayout(named="Recibo") String nroRecibo,
     		final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
@@ -135,9 +135,9 @@ public class PagoJugadorServicio {
 	}
 	
 	//aca parece que hay un error en traercuotajugador
-	public List<Jugador> choices1BuscarCuotaJugador(final Jugador jugador,
+	public List<CuotaJugador> choices1BuscarCuotaJugador(final Jugador jugador,
 			CuotaJugador cuotaJugador) {
-		return repositoryService.allMatches(QueryDefault.create(Jugador.class,
+		return repositoryService.allMatches(QueryDefault.create(CuotaJugador.class,
 				"traerCuotaJugador", "jugador", jugador, "cuotaJugador", cuotaJugador));
 	}
 	

@@ -119,8 +119,6 @@ public class PagoClubServicio {
 		return "";
 	}
 	
-	
-	
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public String buscarCuotaClub(final Club club, CuotaClub cuotaClub) {
 		return "";
@@ -135,12 +133,18 @@ public class PagoClubServicio {
 		return repositoryService.allInstances(Club.class, 0).get(0);
 	}
 	
-	//aca parece que hay un error en traercuotajugador
-	public List<Club> choices1BuscarCuotaClub(final Club club,
-			CuotaClub cuotaClub) {
-		return repositoryService.allMatches(QueryDefault.create(Club.class,
-				"traerCuotaClub", "club", club, "cuotaClub", cuotaClub));
-	}
+	public List<CuotaClub> choices1BuscarCuotaClub(final Club club,
+	CuotaClub cuotaClub) {
+		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class,
+		"traerCuotaClub", "club", club, "cuotaClub", cuotaClub));
+}
+	
+//	//aca parece que hay un error en traercuotaclub
+//	public List<Club> choices1BuscarCuotaClub(final Club club,
+//			CuotaClub cuotaClub) {
+//		return repositoryService.allMatches(QueryDefault.create(Club.class,
+//				"traerCuotaClub", "club", club, "cuotaClub", cuotaClub));
+//	}
 	
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Club> buscarClub(String clu) {
