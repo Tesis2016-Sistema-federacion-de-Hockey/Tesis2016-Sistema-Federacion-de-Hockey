@@ -17,6 +17,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
@@ -81,11 +82,15 @@ public class TemporadaServicio {
     public Temporada crearTemporada(
     		final @ParameterLayout(named="Nombre") String nombre,
     		final @ParameterLayout(named="Estado") Estado estado,
+    		final @ParameterLayout(named="Inicio") LocalDate fechaInicio,
+    		final @ParameterLayout(named="Cierre") LocalDate fechaCierre,
     		final @ParameterLayout(named="Observaciones") @Parameter(optionality=Optionality.OPTIONAL) String observaciones
     		){
         final Temporada obj = repositoryService.instantiate(Temporada.class);
         obj.setNombre(nombre);
         obj.setEstado(estado);
+        obj.setFechaInicio(fechaInicio);
+        obj.setFechaCierre(fechaCierre);
         obj.setObservaciones(observaciones);
         repositoryService.persist(obj);
         return obj;
@@ -95,7 +100,17 @@ public class TemporadaServicio {
     public Estado default1CrearTemporada(){    	
     	return Estado.ACTIVO;
     }
-
+    
+    //POR DEFECTO, AL CREAR LA TEMPORADA INICIA EL 1/ENERO DE ESE AÑO
+    public LocalDate default2CrearTemporada(){    	
+    	return new LocalDate(LocalDate.now().getYear(),1,1);
+    }
+    
+    //POR DEFECTO, AL CREAR LA TEMPORADA CIERRA EL 31/DICIEMBRE DE ESE AÑO
+    public LocalDate default3CrearTemporada(){    	
+    	return new LocalDate(LocalDate.now().getYear(),12,31);
+    }
+    
     @javax.inject.Inject
     RepositoryService repositoryService;
 }

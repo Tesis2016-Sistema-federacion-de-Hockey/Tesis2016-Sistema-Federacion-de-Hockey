@@ -143,7 +143,7 @@ public class DivisionServicio {
     	if (diaInicio==null)ahora = DateTime.now();
     	else ahora=diaInicio;
 
-    	String mensaje01;
+//    	String mensaje01;
     	
     	if (!division.getListaFechas().isEmpty()){
     		JOptionPane.showMessageDialog(null, "No se puede crear un fixture. Ya existe uno para esta Division.");

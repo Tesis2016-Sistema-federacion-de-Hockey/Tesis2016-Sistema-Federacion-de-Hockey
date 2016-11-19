@@ -34,6 +34,8 @@
                             	<c:action id="delete"/>
                                 <c:property id="nombre"/>
                                 <c:property id="estado"/>
+                                <c:property id="fechaInicio" hidden="PARENTED_TABLES"/>
+                                <c:property id="fechaCierre" hidden="PARENTED_TABLES"/>
                                 <c:property id="observaciones"/>
                                 <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
                             </c:fieldSet>

@@ -31,7 +31,7 @@ public class TemporadaFixture extends FixtureScript {
 //    	BorrarDBClub(executionContext);
     	
         
-    	Temporada tempo01=creaTemporada("2016", Estado.ACTIVO, "Sin observaciones", executionContext);
+    	Temporada tempo01=crearTemporada("2016", Estado.ACTIVO, new LocalDate(2016, 1, 1), new LocalDate(2016, 12, 31), "Sin observaciones", executionContext);
     	
     	Torneo tor01=torneoServicio.crearTorneo("APERTURA", Estado.ACTIVO, tempo01, "Sin observaciones");
     	torneoServicio.crearTorneo("CLAUSURA", Estado.ACTIVO, tempo01, "Sin observaciones");
@@ -80,8 +80,8 @@ public class TemporadaFixture extends FixtureScript {
     	equipoServicio.crearEquipo("CAN", Estado.ACTIVO, club06, divi02);
     	equipoServicio.crearEquipo("Limay", Estado.ACTIVO, club07, divi02);
    	
-    	Temporada tempo02=creaTemporada("2015", Estado.INACTIVO, "Sin observaciones", executionContext);
-    	Temporada tempo03=creaTemporada("2014", Estado.INACTIVO, "Sin observaciones", executionContext);
+    	Temporada tempo02=crearTemporada("2015", Estado.INACTIVO, new LocalDate(2015, 1, 1), new LocalDate(2015, 12, 31), "Sin observaciones", executionContext);
+    	Temporada tempo03=crearTemporada("2014", Estado.INACTIVO, new LocalDate(2014, 1, 1), new LocalDate(2014, 12, 31),"Sin observaciones", executionContext);
     	tempo02.setEstado(Estado.INACTIVO);
     	tempo03.setEstado(Estado.INACTIVO);
     	
@@ -201,13 +201,15 @@ public class TemporadaFixture extends FixtureScript {
     }
 	
     @SuppressWarnings("deprecation")
-    	private Temporada creaTemporada(
+    	private Temporada crearTemporada(
                 final String nombre,
                 final Estado estado,
+                final LocalDate fechaInicio,
+                final LocalDate fechaCierre,
                 final String observaciones
         		,
                 ExecutionContext executionContext) {
-    	return executionContext.add(this, temporadaServicio.crearTemporada(nombre, Estado.ACTIVO, observaciones));
+    	return executionContext.add(this, temporadaServicio.crearTemporada(nombre, Estado.ACTIVO, fechaInicio, fechaCierre, observaciones));
     }
    
     public void BorrarDBTemporada(ExecutionContext executionContext)

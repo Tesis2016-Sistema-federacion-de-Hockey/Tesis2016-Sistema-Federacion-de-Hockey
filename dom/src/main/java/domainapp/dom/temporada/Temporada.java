@@ -17,12 +17,14 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+import org.joda.time.LocalDate;
 
 import domainapp.dom.estado.Estado;
 import domainapp.dom.torneo.Torneo;
@@ -37,7 +39,6 @@ import domainapp.dom.torneo.Torneo;
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="temporada_id")
 @javax.jdo.annotations.Version(
-//        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
@@ -63,7 +64,6 @@ public class Temporada implements Comparable<Temporada>{
 		 */
 		private static final long serialVersionUID = 1L;}
 	
-	
     //NOMBRE DE LA TEMPORADA
     @MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
@@ -78,16 +78,34 @@ public class Temporada implements Comparable<Temporada>{
 	private Estado estado;
 	public Estado getEstado() {return estado;}
 	public void setEstado(Estado estado) {this.estado = estado;}
+	
+	//FECHA DE INICIO
+	@MemberOrder(sequence = "3")
+    @Column(allowsNull="false")
+    @Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Fecha de Inicio")
+	private LocalDate fechaInicio;
+    public LocalDate getFechaInicio() {return fechaInicio;}
+	public void setFechaInicio(LocalDate fechaInicio) {this.fechaInicio = fechaInicio;}
 
-    //OBSERVACIONES
-    @MemberOrder(sequence = "3")
+	//FECHA DE CIERRE
+	@MemberOrder(sequence = "4")
+    @Column(allowsNull="false")
+    @Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Fecha de Cierre")
+	private LocalDate fechaCierre;
+	public LocalDate getFechaCierre() {return fechaCierre;}
+	public void setFechaCierre(LocalDate fechaCierre) {this.fechaCierre = fechaCierre;}
+
+	//OBSERVACIONES
+    @MemberOrder(sequence = "5")
 	@Column(allowsNull = "true")
 	private String observaciones;
 	public String getObservaciones() {return observaciones;}
 	public void setObservaciones(String observaciones) {this.observaciones = observaciones;}
 
 	//LISTA DE TORNEOS DE UNA TEMPORADA
-	@MemberOrder(sequence = "4")
+	@MemberOrder(sequence = "6")
 	@Persistent(mappedBy="temporada", dependentElement="true")
 	@CollectionLayout(named="Torneos")
 	private SortedSet<Torneo> listaTorneos=new TreeSet<Torneo>();
@@ -103,7 +121,6 @@ public class Temporada implements Comparable<Temporada>{
 	public void setVisible(Boolean visible) {this.visible = visible;}
 
 	public static class DeleteDomainEvent extends ActionDomainEvent<Temporada> {
-
 		/**
 		 * 
 		 */
