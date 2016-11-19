@@ -4,10 +4,15 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -64,6 +69,7 @@ public class PagoJugador extends Pago implements Comparable<PagoJugador>{
 	//JUGADOR
 	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "false")
+	@PropertyLayout(named="Jugador")
 	private Jugador jugador;	
 	public Jugador getJugador() {return jugador;}
 	public void setJugador(Jugador jugador) {this.jugador = jugador;}
@@ -72,10 +78,26 @@ public class PagoJugador extends Pago implements Comparable<PagoJugador>{
 	@MemberOrder(sequence = "5")
     @Column(allowsNull="false")
 	@Property(domainEvent = NameDomainEvent.class)
+	@PropertyLayout(named="Cuota")
 	private CuotaJugador cuotaJugador;
 	public CuotaJugador getCuotaJugador() {return cuotaJugador;}
 	public void setCuotaJugador(final CuotaJugador cuotaJugador) {this.cuotaJugador = cuotaJugador;}
 
+	public static class DeleteDomainEvent extends ActionDomainEvent<PagoJugador> {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
+	
+	@Action(
+            domainEvent = DeleteDomainEvent.class,
+            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+    )
+	@ActionLayout(named="Eliminar Pago")
+	public void delete() {
+        repositoryService.remove(this);
+    }	
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final PagoJugador other) {

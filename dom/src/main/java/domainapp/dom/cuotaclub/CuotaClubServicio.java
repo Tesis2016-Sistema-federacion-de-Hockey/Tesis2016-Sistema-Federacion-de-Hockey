@@ -24,7 +24,7 @@ import domainapp.dom.temporada.Temporada;
 
 @SuppressWarnings("deprecation")
 @DomainService(
-        nature = NatureOfService.VIEW,
+        nature = NatureOfService.VIEW_MENU_ONLY,
         repositoryFor = CuotaClub.class
 )
 @DomainServiceLayout(

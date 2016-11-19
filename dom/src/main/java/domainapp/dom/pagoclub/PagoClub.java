@@ -19,7 +19,6 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
-import domainapp.dom.cuotaclub.CuotaClub.DeleteDomainEvent;
 import domainapp.dom.pago.Pago;
 import domainapp.dom.torneo.Torneo.NameDomainEvent;
 
@@ -98,15 +97,6 @@ public class PagoClub extends Pago implements Comparable<PagoClub>{
 	public void delete() {
         repositoryService.remove(this);
     }
-	
-//	public String disableDelete(){
-//		
-//		if(!cuotaClub.getListaPagosClub().isEmpty()) return "La lista de pagos debe estar vacia.";
-//		
-//		else if (!cuotaClub.getListaClubes().isEmpty()) return "La lista de clubes debe estar vacia.";
-//		
-//		return "";
-//	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
