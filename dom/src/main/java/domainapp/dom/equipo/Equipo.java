@@ -20,6 +20,7 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.ActionLayout.Position;
@@ -215,7 +216,6 @@ public class Equipo implements Comparable<Equipo>{
 		repositoryService.remove(this);
     }
 		
-	//REVISAR
 	public String disableDelete(){
 		
 		if (!division.getListaFechas().isEmpty()) return "El equipo esta participando en un torneo.";
@@ -267,7 +267,58 @@ public class Equipo implements Comparable<Equipo>{
 			return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
     
-    @javax.inject.Inject
+    //PARTIDOS JUGADOS
+    @PropertyLayout(named="PJ", describedAs="Partidos Jugados")
+    private int partidosJugados;
+    public int getPartidosJugados() {return partidosJugados;}
+    public void setPartidosJugados(int partidosJugados) {this.partidosJugados = partidosJugados;}
+    
+    //PARTIDOS GANADOS
+    @PropertyLayout(named="PG", describedAs="Partidos Ganados")
+    private int partidosGanados;
+	public int getPartidosGanados() {return partidosGanados;}
+	public void setPartidosGanados(int partidosGanados) {this.partidosGanados = partidosGanados;}
+    
+    //PARTIDOS PERDIDOS
+	@PropertyLayout(named="PP", describedAs="Partidos Perdidos")
+    private int partidosPerdidos;
+    public int getPartidosPerdidos() {return partidosPerdidos;}
+	public void setPartidosPerdidos(int partidosPerdidos) {this.partidosPerdidos = partidosPerdidos;}
+    
+    //PARTIDOS EMPATADOS
+	@PropertyLayout(named="PE", describedAs="Partidos Empatados")
+    private int partidosEmpatados;
+	public int getPartidosEmpatados() {return partidosEmpatados;}
+	public void setPartidosEmpatados(int partidosEmpatados) {this.partidosEmpatados = partidosEmpatados;}
+    
+    //GOLES A FAVOR
+	@PropertyLayout(named="Gf", describedAs="Goles a Favor")
+	private int golesAFavor;
+	public int getGolesAFavor() {return golesAFavor;}
+	public void setGolesAFavor(int golesAFavor) {this.golesAFavor = golesAFavor;}
+
+    //GOLES EN CONTRA
+	@PropertyLayout(named="Gc", describedAs="Goles en Contra")
+	private int golesAContra;
+	public int getGolesAContra() {return golesAContra;}
+	public void setGolesAContra(int golesAContra) {this.golesAContra = golesAContra;}
+
+    //PUNTOS
+	@PropertyLayout(named="Pts", describedAs="Puntos")
+	private int puntos;
+	public int getPuntos() {return puntos;}
+	public void setPuntos(int puntos) {this.puntos = puntos;}
+
+	//ORDEN PARA LA TABLA DE POSICIONES
+	@PropertyLayout(hidden=Where.EVERYWHERE)
+	private int ordenDescendentePuntos;
+	public int getOrdenDescendentePuntos() {return ordenDescendentePuntos;}
+	public void setOrdenDescendentePuntos(int ordenDescendentePuntos) {this.ordenDescendentePuntos = ordenDescendentePuntos;}
+	
+	@javax.inject.Inject
+    EquipoServicio equipoServicio;
+
+	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;
 		
 	@javax.inject.Inject
@@ -279,6 +330,6 @@ public class Equipo implements Comparable<Equipo>{
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Equipo o) {
-		return ObjectContracts.compare(this, o, "nombre");
+		return ObjectContracts.compare(this, o, "ordenDescendentePuntos", "nombre");
 	}
 }

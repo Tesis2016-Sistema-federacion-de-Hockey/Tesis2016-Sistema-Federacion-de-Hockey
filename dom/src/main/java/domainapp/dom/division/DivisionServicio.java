@@ -20,7 +20,9 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Predicate;
+
 import domainapp.dom.equipo.Equipo;
+import domainapp.dom.equipo.EquipoServicio;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
@@ -109,7 +111,7 @@ public class DivisionServicio {
 	
     //POR DEFECTO, AL CREAR LA DIVISION ES CATEGORIA 1970
     public int default1CrearDivision(){    	
-    	return 1970;
+    	return 0;
     }    
 
     //POR DEFECTO, AL CREAR LA DIVISION ES ACTIVA
@@ -331,6 +333,29 @@ public class DivisionServicio {
 		JOptionPane.showMessageDialog(null, "Fixture creado con exito");
 		return division;
     }
+    
+    //METODO PARA ACTUALIZAR LA TABLA DE POSICIONES
+    @ActionLayout(
+    		named="Actualizar Tabla de Posiciones"
+    		)
+    @MemberOrder(name="Planificacion", sequence = "5")
+    public Division actualizarTablaPosiciones(
+    		@ParameterLayout(named="Ingrese Division") final Division division
+    		){
+    	
+    	for (Iterator<?> it=division.getListaEquipos().iterator();it.hasNext();){
+    		
+			Equipo eq=((Equipo)it.next());
+			
+			equipoServicio.calcularTablaPosiciones(eq);
+			
+		}
+    	
+    	return division;
+    }
+    
+    @javax.inject.Inject
+    EquipoServicio equipoServicio;
     
     @javax.inject.Inject
     RepositoryService repositoryService;

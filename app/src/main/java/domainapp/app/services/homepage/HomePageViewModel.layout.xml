@@ -60,11 +60,6 @@
     		<bs3:sizeSpan size="XS" span="2" offset="true"/>
             	<bs3:row>
                 	<bs3:col span="8">
-                    	<collection id="equipos" defaultView="table"/>
-                	</bs3:col>
-            	</bs3:row>
-            	<bs3:row>
-                	<bs3:col span="8">
                     	<collection id="clubes" defaultView="table"/>
                 	</bs3:col>
             	</bs3:row>

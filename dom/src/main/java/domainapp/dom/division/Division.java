@@ -130,7 +130,7 @@ public class Division implements Comparable<Division>{
 	//LISTA DE EQUIPOS DE UNA DIVISION
 	@MemberOrder(sequence = "9")
 	@Persistent(mappedBy="division", dependentElement="true")
-	@CollectionLayout(named="Equipos")
+	@CollectionLayout(named="Tabla de Posiciones")
 	private SortedSet<Equipo> listaEquipos=new TreeSet<Equipo>();
 	public SortedSet<Equipo> getListaEquipos() {return listaEquipos;}
 	public void setListaEquipos(SortedSet<Equipo> listaEquipos) {this.listaEquipos = listaEquipos;}

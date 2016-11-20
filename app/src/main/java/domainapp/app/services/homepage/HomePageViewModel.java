@@ -28,8 +28,6 @@ import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
 import domainapp.dom.division.Division;
 import domainapp.dom.division.DivisionServicio;
-import domainapp.dom.equipo.Equipo;
-import domainapp.dom.equipo.EquipoServicio;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 import domainapp.dom.temporada.Temporada;
@@ -72,12 +70,6 @@ public class HomePageViewModel {
     }
     
     @HomePage
-    @CollectionLayout(named="Equipos Activos")
-    public List<Equipo> getEquipos() {
-        return equipoServicio.listarTodosLosEquipos();
-    }
-    
-    @HomePage
     @CollectionLayout(named="Clubes")
     public List<Club> getClubes() {
         return clubServicio.listarTodosLosClubes();
@@ -89,9 +81,6 @@ public class HomePageViewModel {
         return jugadorServicio.listarJugadoresActivos();
     }
 
-    @javax.inject.Inject
-    EquipoServicio equipoServicio;
-    
     @javax.inject.Inject
     JugadorServicio jugadorServicio;
     
