@@ -1,10 +1,16 @@
 package domainapp.fixture.scenarios;
 
+import java.math.BigDecimal;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.joda.time.LocalDate;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
+import domainapp.dom.cuotaclub.CuotaClub;
+import domainapp.dom.cuotaclub.CuotaClubServicio;
+import domainapp.dom.cuotajugador.CuotaJugador;
+import domainapp.dom.cuotajugador.CuotaJugadorServicio;
 import domainapp.dom.division.Division;
 import domainapp.dom.division.DivisionServicio;
 import domainapp.dom.equipo.Equipo;
@@ -74,7 +80,7 @@ public class TemporadaFixture extends FixtureScript {
     	
     	equipoServicio.crearEquipo("CAI A", Estado.ACTIVO, club01, divi02);
     	equipoServicio.crearEquipo("CAI B", Estado.ACTIVO, club01, divi02);
-    	equipoServicio.crearEquipo("Alta Barda", Estado.ACTIVO, club02, divi02);
+    	equipoServicio.crearEquipo("Alta Barda", Estado.ACTIVO, club03, divi02);
     	equipoServicio.crearEquipo("San Jorge", Estado.ACTIVO, club05, divi02);
     	equipoServicio.crearEquipo("Ribera", Estado.ACTIVO, club04, divi02);
     	equipoServicio.crearEquipo("CAN", Estado.ACTIVO, club06, divi02);
@@ -196,6 +202,39 @@ public class TemporadaFixture extends FixtureScript {
     	equipo02.getListaBuenaFe().add(jug30);
     	equipo02.getListaBuenaFe().add(jug31);
     	
+    	//CREO CUOTAS DE CLUB
+    	
+    	CuotaClub cuotaClub01= cuotaClubServicio.crearCuotaClub(tempo01, new BigDecimal(1750), new LocalDate(2016,3,31), "Primera");
+    	CuotaClub cuotaClub02= cuotaClubServicio.crearCuotaClub(tempo01, new BigDecimal(2270), new LocalDate(2016,6,30), "Segunda");
+    	CuotaClub cuotaClub03= cuotaClubServicio.crearCuotaClub(tempo01, new BigDecimal(3100), new LocalDate(2016,9,30), "Tercera");
+    	
+    	CuotaJugador cuotaJugador01=cuotaJugadorServicio.crearCuotaJugador(tempo01, new BigDecimal(450), new LocalDate(2016,3,31), "Primera");
+    	CuotaJugador cuotaJugador02=cuotaJugadorServicio.crearCuotaJugador(tempo01, new BigDecimal(600), new LocalDate(2016,4,30), "Segunda");
+    	CuotaJugador cuotaJugador03=cuotaJugadorServicio.crearCuotaJugador(tempo01, new BigDecimal(500), new LocalDate(2016,5,31), "Tercera");
+  	
+    	cuotaClub01.getListaClubes().add(club01);
+    	cuotaClub01.getListaClubes().add(club02);
+    	cuotaClub01.getListaClubes().add(club03);
+    	cuotaClub01.getListaClubes().add(club04);
+    	cuotaClub01.getListaClubes().add(club05);
+    	cuotaClub01.getListaClubes().add(club06);
+    	cuotaClub01.getListaClubes().add(club07);
+    	cuotaClub01.getListaClubes().add(club08);
+    	
+    	cuotaClub02.getListaClubes().add(club01);
+    	cuotaClub02.getListaClubes().add(club03);
+    	cuotaClub02.getListaClubes().add(club06);
+    	
+    	cuotaClub03.getListaClubes().add(club02);
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	
     }
@@ -233,6 +272,12 @@ public class TemporadaFixture extends FixtureScript {
     
     @javax.inject.Inject
     private ClubServicio clubServicio;
+    
+    @javax.inject.Inject
+    private CuotaClubServicio cuotaClubServicio;
+    
+    @javax.inject.Inject
+    private CuotaJugadorServicio cuotaJugadorServicio;
     
     @javax.inject.Inject
     private JugadorServicio jugadorServicio;

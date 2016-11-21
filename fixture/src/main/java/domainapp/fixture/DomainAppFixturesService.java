@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
+import domainapp.fixture.scenarios.CuotaClubFixture;
 import domainapp.fixture.scenarios.JugadorFixture;
 import domainapp.fixture.scenarios.TemporadaFixture;
 
@@ -43,6 +44,12 @@ public class DomainAppFixturesService extends FixtureScripts {
     }
     
 //    @MemberOrder(sequence="50")
+//    public Object instalarFixturesCuotasClub() {
+//        final List<FixtureResult> CuotaClub = findFixtureScriptFor(CuotaClubFixture.class).run(null);
+//        return CuotaClub.get(0).getObject();
+//    }
+    
+//    @MemberOrder(sequence="50")
 //    public Object instalarFixturesTorneo() {
 //        final List<FixtureResult> Torneo = findFixtureScriptFor(TorneoFixture.class).run(null);
 //        return Torneo.get(0).getObject();
@@ -75,7 +82,9 @@ public class DomainAppFixturesService extends FixtureScripts {
 	    	
 	    	this.instalarFixturesJugador();
 
-	    	this.instalarFixturesTemporada(); 
+	    	this.instalarFixturesTemporada();
+	    	
+//	    	this.instalarFixturesCuotasClub();
 	    	
 //	    	this.instalarFixturesTorneo();
 //	    	
