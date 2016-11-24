@@ -51,6 +51,17 @@
             <artifactId>isis-core-applib</artifactId>
         </dependency>
 
+		<!-- AGREGO PARA JASPERREPORTS 01 -->
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>6.3.1</version>
+		</dependency>
+
+
+
+
         <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-unittestsupport</artifactId>
@@ -69,6 +80,20 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <!-- AGREGO PARA JASPERREPORTS 02 -->
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.2</version>
+		</dependency>
         
         <dependency>
    			<groupId>org.isisaddons.module.security</groupId>

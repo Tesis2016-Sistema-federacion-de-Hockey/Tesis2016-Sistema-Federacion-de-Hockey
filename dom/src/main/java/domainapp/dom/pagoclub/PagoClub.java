@@ -1,5 +1,8 @@
 package domainapp.dom.pagoclub;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -19,8 +22,11 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
+import domainapp.dom.modules.reportes.GenerarReporte;
+import domainapp.dom.modules.reportes.PagoClubReporte;
 import domainapp.dom.pago.Pago;
 import domainapp.dom.torneo.Torneo.NameDomainEvent;
+import net.sf.jasperreports.engine.JRException;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -97,6 +103,28 @@ public class PagoClub extends Pago implements Comparable<PagoClub>{
 	public void delete() {
         repositoryService.remove(this);
     }
+	
+	public String imprimirPagoClub() throws JRException{
+		
+		List<Object> objectsReport = new ArrayList<Object>();
+		
+		PagoClubReporte pagoClub = new PagoClubReporte();
+			
+		pagoClub.setNroRecibo(getNroRecibo());
+		pagoClub.setFechaDePago(String.valueOf(getFechaDePago()));
+		pagoClub.setValor(getValor());
+		
+		pagoClub.setClub(String.valueOf(getClub().getNombreInstitucional()));
+		pagoClub.setCuotaClub(getCuotaClub().getDetalle());
+		
+		objectsReport.add(pagoClub);
+		
+		String nombreArchivo ="reportes/PagoClub_" + String.valueOf(pagoClub.getNroRecibo()) ;
+		
+		GenerarReporte.generarReporte("reportes/PagoClub.jrxml", objectsReport, nombreArchivo);
+		
+		return "Reporte Generado.";
+}	
 	
 	@SuppressWarnings("deprecation")
 	@Override
