@@ -1,7 +1,12 @@
 package domainapp.dom.equipo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
@@ -18,6 +23,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.value.Blob;
 
 import domainapp.dom.club.Club;
 import domainapp.dom.club.ClubServicio;
@@ -25,7 +31,18 @@ import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.fecha.Fecha;
+import domainapp.dom.jugador.Jugador;
+import domainapp.dom.modules.reportes.ListaBuenaFeDataSource;
+import domainapp.dom.modules.reportes.ReporteListaBuenaFe;
 import domainapp.dom.partido.Partido;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @DomainService(
 		nature = NatureOfService.VIEW,
@@ -232,6 +249,84 @@ public class EquipoServicio {
     	
     	return;
     }
+    
+    @ActionLayout(named = "Exportar Lista de Buena Fe")
+	public Blob downloadAll(final Equipo equipo) throws JRException, IOException {
+		
+		ListaBuenaFeDataSource datasource = new ListaBuenaFeDataSource();
+		
+		for (Jugador jug : equipo.getListaBuenaFe()){
+		
+			ReporteListaBuenaFe reporteListaBuenaFe=new ReporteListaBuenaFe();
+			
+			reporteListaBuenaFe.setNombre(jug.getNombre());
+			reporteListaBuenaFe.setApellido(jug.getApellido());
+			reporteListaBuenaFe.setDni(jug.getDocumento());
+			
+			datasource.addParticipante(reporteListaBuenaFe);
+		}
+		
+		File file = new File("reporte105.jrxml");
+		
+		FileInputStream input = null;
+		
+		try {
+			input = new FileInputStream(file);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		JasperDesign jd = JRXmlLoader.load(input);
+		
+		JasperReport reporte = JasperCompileManager.compileReport(jd);
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("equipo", equipo.getNombre());
+		parametros.put("club", equipo.getClub().getNombre());
+		parametros.put("division", equipo.getDivision().getNombre());
+//		parametros.put("jugadores", lst);
+		
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, datasource);
+//		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,datasource);
+		
+		JasperExportManager.exportReportToPdfFile(jasperPrint, "/tmp/salida.pdf");
+		
+		File archivo = new File("/tmp/salida.pdf");
+		
+		byte[] fileContent = new byte[(int) archivo.length()];
+		
+		if (!(archivo.exists())) {
+			try {
+				archivo.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		try {
+			FileInputStream fileInputStream = new FileInputStream(archivo);
+
+			fileInputStream.read(fileContent);
+			
+			fileInputStream.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			
+			return new Blob(equipo.getNombre()+" - "+"lista de buena fe.pdf", "application/pdf", fileContent);
+			
+		} catch (Exception e) {
+			byte[] result = new String("error en crear archivo").getBytes();
+			return new Blob("error.txt", "text/plain", result);
+		}
+	}
+    
+	@javax.inject.Inject
+    EquipoServicio equipoServicio;
+
     
     @javax.inject.Inject
     Equipo equipo;

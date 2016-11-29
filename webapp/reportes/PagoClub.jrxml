@@ -4,7 +4,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="13"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -53,7 +53,7 @@
 					<text><![CDATA[Numero de recibo:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="144" y="0" width="100" height="20" uuid="7ecfb605-1f95-4519-8f87-a044b2ae243a"/>
+					<reportElement x="144" y="0" width="306" height="20" uuid="7ecfb605-1f95-4519-8f87-a044b2ae243a"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -76,7 +76,7 @@
 					<text><![CDATA[Cuota:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="144" y="0" width="100" height="32" uuid="e575e1cb-8d5c-4c09-a84f-3efa9ff311f0"/>
+					<reportElement x="144" y="0" width="306" height="32" uuid="e575e1cb-8d5c-4c09-a84f-3efa9ff311f0"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -99,11 +99,11 @@
 					<text><![CDATA[Valor:]]></text>
 				</staticText>
 				<textField evaluationTime="Group" evaluationGroup="Group4">
-					<reportElement x="144" y="0" width="100" height="32" uuid="55a70060-5b9d-4354-8509-87662caa7f3b"/>
+					<reportElement x="144" y="0" width="306" height="32" uuid="55a70060-5b9d-4354-8509-87662caa7f3b"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{valor_1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["$"+ $V{valor_1}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -155,7 +155,7 @@
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="5ead5723-c6eb-47f4-b021-ed18289a92bd"/>
 			</line>
 			<textField>
-				<reportElement x="144" y="0" width="100" height="20" uuid="006c542c-9e8c-4c8a-b984-f55ffe305d98"/>
+				<reportElement x="144" y="0" width="306" height="20" uuid="006c542c-9e8c-4c8a-b984-f55ffe305d98"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -185,7 +185,7 @@
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="cd511a64-94ed-4e3e-9613-e57c8ff5b959"/>
+				<reportElement x="0" y="4" width="302" height="13" uuid="cd511a64-94ed-4e3e-9613-e57c8ff5b959"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>

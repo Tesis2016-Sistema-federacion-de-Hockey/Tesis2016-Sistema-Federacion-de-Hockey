@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte100" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="468f5298-c4db-4bf9-9253-f021d1b6d5be">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="ca2e1178-9c7e-46fc-9ff1-b067eee8e468">
+		<parameter name="jugadores" class="java.util.List">
+			<defaultValueExpression><![CDATA[Arrays.asList("Juan", "Pepe","Esteban","Carlos")]]></defaultValueExpression>
+		</parameter>
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="club" class="java.lang.String"/>
+	<parameter name="division" class="java.lang.String"/>
+	<parameter name="equipo" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="dni" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="25" uuid="26ae1272-8ee7-4087-b218-df898d2d0b8c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Club: "+$P{club}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="25" width="555" height="23" uuid="994321f0-2512-4af9-b1de-74836a161104"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Division: "+$P{division}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="48" width="555" height="20" uuid="e3055a84-c353-4c25-98ff-a14ee6665cf4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Equipo: "+$P{equipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="0" width="255" height="20" uuid="ef4dbb10-9778-4041-976d-27e077a9651f"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Lista de Buena Fe]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="150" height="20" uuid="38c8be38-446a-4585-8ed1-491e467ea192"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="150" height="20" uuid="50c99a67-ebf6-418b-8f30-1ea78fa6b237"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="150" height="20" uuid="0faaba12-967c-4459-8c2a-4aac92e64534"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[dni]]></text>
+			</staticText>
+			<line>
+				<reportElement x="150" y="0" width="1" height="20" uuid="988b3dad-421a-4576-8061-d4a4fe61d6f0"/>
+			</line>
+			<line>
+				<reportElement x="300" y="0" width="1" height="20" uuid="0bf8b028-1fd4-4361-815b-9d06b8980a83"/>
+			</line>
+			<line>
+				<reportElement x="0" y="19" width="450" height="1" uuid="834c1f57-3cc2-4e25-a197-09ee2989b2fc"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="150" height="20" uuid="c64af16e-8d99-4a46-a7fc-6b7b1ba18c7c"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="150" y="0" width="150" height="20" uuid="01ee990a-e4ca-4228-993c-aef0efd4c036"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="150" height="20" uuid="0efa39c4-5e2d-46c5-8b9a-2888046f7426"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="300" y="0" width="1" height="20" uuid="f6b9682d-efe1-439c-8dd1-bb1ab2d64a25"/>
+			</line>
+			<line>
+				<reportElement x="150" y="0" width="1" height="20" uuid="7accd832-fb95-481b-8981-7421cff113d6"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

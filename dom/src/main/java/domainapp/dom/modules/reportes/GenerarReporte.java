@@ -5,7 +5,6 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import net.sf.jasperreports.engine.ReportContext;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import org.apache.isis.applib.DomainObjectContainer;
 
 
 
@@ -29,15 +27,13 @@ public class GenerarReporte {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//Levanta el jrxml
-		
-		
 		File file = new File(jrxml);
-
 		
 		//Almacena el array de datos
 		JRBeanArrayDataSource jArray= new JRBeanArrayDataSource(parametros.toArray());
 		
-		InputStream input = null;
+		FileInputStream input = null;
+		
 		try{
 			input = new FileInputStream(file);
 
@@ -57,8 +53,10 @@ public class GenerarReporte {
 //		Lo muestra con el jasperviewer
 //		JasperViewer.viewReport(print, false);
 		
-		
 		JasperExportManager.exportReportToPdfFile(print, nombreArchivo + ".pdf");
+		
+		// Muestra el reporte en otra ventana
+ 		// JasperExportManager.exportReportToHtmlFile(print, "nuevo.html");
 		
 		//Abre el reporte recien generado
 		try {
@@ -67,17 +65,8 @@ public class GenerarReporte {
 		}catch (IOException ex) {
 		     ex.printStackTrace();
 		}
-
-							
-
-		
 	}	
 	
-	
 	@javax.inject.Inject	
-	public ReportContext reportContext;
-	
-	@javax.inject.Inject
-	DomainObjectContainer container;
-	
+	public ReportContext reportContext;	
 }

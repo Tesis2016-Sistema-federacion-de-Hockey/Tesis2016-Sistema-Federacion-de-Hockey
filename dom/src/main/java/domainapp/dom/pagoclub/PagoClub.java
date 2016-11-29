@@ -135,5 +135,8 @@ public class PagoClub extends Pago implements Comparable<PagoClub>{
 	
 	@javax.inject.Inject
     RepositoryService repositoryService;
+	
+	@javax.inject.Inject	
+	PagoClubServicio pagoClubServicio;
 
 }
