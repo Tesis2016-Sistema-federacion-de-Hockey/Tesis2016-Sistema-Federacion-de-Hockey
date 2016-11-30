@@ -69,10 +69,10 @@ public class PartidoServicio {
     		jugadoresLocal.add(jug.getNombre()+" "+jug.getApellido());
     	}
     	
-//    	List<String> jugadoresVisitantes=new ArrayList<String>();
-//    	for(Jugador jug : partido.getEquipoVisitante().getListaBuenaFe()){
-//    		jugadoresVisitantes.add(jug.getNombre()+" "+jug.getApellido());
-//    	}
+    	List<String> jugadoresVisitante=new ArrayList<String>();
+    	for(Jugador jug : partido.getEquipoVisitante().getListaBuenaFe()){
+    		jugadoresVisitante.add(jug.getNombre()+" "+jug.getApellido());
+    	}
     	
     	File file = new File("planillaPartido.jrxml");
 		
@@ -103,7 +103,7 @@ public class PartidoServicio {
 		
 		
 		
-//		parametros.put("jugadoresVisitantes", jugadoresVisitantes);
+		parametros.put("jugadoresVisitante", jugadoresVisitante);
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros,new JREmptyDataSource());
     	
