@@ -266,7 +266,7 @@ public class EquipoServicio {
 			datasource.addParticipante(reporteListaBuenaFe);
 		}
 		
-		File file = new File("reporte105.jrxml");
+		File file = new File("listaBuenaFe.jrxml");
 		
 		FileInputStream input = null;
 		
