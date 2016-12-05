@@ -79,7 +79,7 @@ public class PartidoServicio {
     		jugadoresVisitante.add(jug.getNombre()+" "+jug.getApellido());
     	}
     	
-    	File file = new File("planillaPartido.jrxml");
+    	File file = new File("planillaPartido1.jrxml");
 		
 		FileInputStream input = null;
 		

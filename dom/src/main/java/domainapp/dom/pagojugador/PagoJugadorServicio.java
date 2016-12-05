@@ -2,6 +2,9 @@ package domainapp.dom.pagojugador;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -19,6 +22,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
+import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.cuotaclub.CuotaClubServicio;
 import domainapp.dom.cuotajugador.CuotaJugador;
@@ -82,7 +86,7 @@ public class PagoJugadorServicio {
     		cssClassFa="fa fa-plus-square",
     		named="Cobrar Cuota de Jugador"
     )
-    @MemberOrder(name="Pagos", sequence = "4.9")
+    @MemberOrder(name="Pagos", sequence = "4.8")
     public PagoJugador crearPago(
     		final @ParameterLayout(named="Recibo") String nroRecibo,
     		final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
@@ -134,7 +138,7 @@ public class PagoJugadorServicio {
 		return repositoryService.allInstances(Jugador.class, 0).get(0);
 	}
 	
-	//aca parece que hay un error en traercuotajugador
+	//revisar traercuotajugador
 	public List<CuotaJugador> choices1BuscarCuotaJugador(final Jugador jugador,
 			CuotaJugador cuotaJugador) {
 		return repositoryService.allMatches(QueryDefault.create(CuotaJugador.class,
@@ -166,6 +170,53 @@ public class PagoJugadorServicio {
 	public List<PagoJugador> buscarPagoJugador(String nroRecibo) {
 		return repositoryService.allMatches(QueryDefault
 				.create(PagoJugador.class, "buscarPagoJugador", "nroRecibo", nroRecibo));
+	}
+	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Deuda por Cuota de Jugador y por Club"
+    )
+	@MemberOrder(name="Pagos", sequence = "4.9")
+    public SortedSet<Jugador> listarJugadoresConDeuda(
+    		
+    		final @ParameterLayout(named="Ingrese Cuota:") CuotaJugador cuotaJugador,
+    		
+    		final @ParameterLayout(named="Ingrese Club:") Club club){   		
+		
+		SortedSet<Jugador>listaPagaron=new TreeSet<Jugador>();
+		SortedSet<Jugador>listaDeudores=new TreeSet<Jugador>();
+		
+		for (Jugador jug:cuotaJugador.getListaJugadores()){
+			
+			if(jug.getClub()==club){
+				
+				for(PagoJugador pagoJug:cuotaJugador.getListaPagosJugador()){
+					
+					if ((pagoJug.getJugador()==jug)&&(pagoJug.getJugador().getClub()==club)){
+						
+						listaPagaron.add(jug);
+						
+					}
+				}
+			}
+		}
+		
+		for (Jugador jug:cuotaJugador.getListaJugadores()){
+			
+			if(jug.getClub()==club){
+				
+				if (!listaPagaron.contains(jug)){
+					
+					listaDeudores.add(jug);
+					
+				}
+			}
+		}
+		return listaDeudores;
 	}
 	
 	@javax.inject.Inject
