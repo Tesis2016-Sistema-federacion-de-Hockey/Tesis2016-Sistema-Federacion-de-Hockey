@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.swing.JOptionPane;
+
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -90,7 +92,7 @@ public class PagoJugadorServicio {
     public PagoJugador crearPago(
     		final @ParameterLayout(named="Recibo") String nroRecibo,
     		final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
-    		final @ParameterLayout(named="Valor") BigDecimal valor,
+    		final @ParameterLayout(named="Monto entregado") BigDecimal valor,
     		final @ParameterLayout(named="Jugador") Jugador jugador,
     		final @ParameterLayout(named="Cuota a pagar") CuotaJugador cuotaJugador          
     		){
@@ -108,21 +110,49 @@ public class PagoJugadorServicio {
 		return LocalDate.now();
 	}
 	
+	
 	public String validateCrearPago(
-			final String nroRecibo,
-			final LocalDate fechaDePago,
-    		final BigDecimal valor,
-    		final Jugador jugadorr,
-    		final CuotaJugador cuotaJugadorr
-			){
+		final String nroRecibo,
+		final LocalDate fechaDePago,
+		final BigDecimal valor,
+		final Jugador jugadorr,
+		final CuotaJugador cuotaJugadorr
+		){
 		final List<PagoJugador> listaPagoJugador = repositoryService.allMatches(QueryDefault
-				.create(PagoJugador.class, "listarPagosPorJugadorYCuota",
-						"jugador", jugadorr, "cuotaJugador", cuotaJugadorr));
-		if (!listaPagoJugador.isEmpty()){			
-			return "La cuota elegida ya fue pagada. Seleccione otra cuota";
+			.create(PagoJugador.class, "listarPagosPorJugadorYCuota",
+					"jugador", jugadorr, "cuotaJugador", cuotaJugadorr));
+		
+		if (!listaPagoJugador.isEmpty()){
+			
+			BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+			
+			BigDecimal restoAPagar=new BigDecimal(0); // resto a pagar para alcanzar el valor de la cuotaJugador
+			
+			for(PagoJugador pagoJug:listaPagoJugador){
+				
+				sumaPagosParciales=sumaPagosParciales.add(pagoJug.getValor());
+			}
+			
+			restoAPagar=restoAPagar.add(cuotaJugadorr.getValor().subtract(sumaPagosParciales));
+			
+			if(valor.compareTo(restoAPagar)==1){
+				
+				return "El valor del pago ingresado ($ " + valor.toString() +
+						") no debe ser mayor que el valor que falta pagar de la cuota ($ " +
+						restoAPagar.toString() + ")";
+			}
+		}
+		else if(listaPagoJugador.isEmpty()){
+			
+			if (valor.compareTo(cuotaJugadorr.getValor())==1){
+				
+				return "El valor del pago ingresado ($ " + valor.toString() +
+						") no debe ser mayor que el valor de la cuota ($ " +
+						cuotaJugadorr.getValor().toString() + ")";
+			}
 		}
 		return "";
-	}
+		}
 	
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public String buscarCuotaJugador(final Jugador jugador, CuotaJugador cuotaJugador) {
@@ -183,25 +213,30 @@ public class PagoJugadorServicio {
 	@MemberOrder(name="Pagos", sequence = "4.9")
     public SortedSet<Jugador> listarJugadoresConDeuda(
     		
-    		final @ParameterLayout(named="Ingrese Cuota:") CuotaJugador cuotaJugador,
+    		final @ParameterLayout(named="Ingrese Cuota de Jugador:") CuotaJugador cuotaJugador,
     		
     		final @ParameterLayout(named="Ingrese Club:") Club club){   		
 		
 		SortedSet<Jugador>listaPagaron=new TreeSet<Jugador>();
+		
 		SortedSet<Jugador>listaDeudores=new TreeSet<Jugador>();
 		
+		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+		
 		for (Jugador jug:cuotaJugador.getListaJugadores()){
+			
+			sumaPagosParciales=sumaPagosParciales.subtract(sumaPagosParciales);
 			
 			if(jug.getClub()==club){
 				
 				for(PagoJugador pagoJug:cuotaJugador.getListaPagosJugador()){
 					
-					if ((pagoJug.getJugador()==jug)&&(pagoJug.getJugador().getClub()==club)){
+					if (pagoJug.getJugador()==jug){
 						
-						listaPagaron.add(jug);
-						
+						sumaPagosParciales=sumaPagosParciales.add(pagoJug.getValor());
 					}
 				}
+				if (sumaPagosParciales.compareTo(cuotaJugador.getValor())==0) listaPagaron.add(jug);
 			}
 		}
 		
@@ -212,12 +247,11 @@ public class PagoJugadorServicio {
 				if (!listaPagaron.contains(jug)){
 					
 					listaDeudores.add(jug);
-					
 				}
 			}
 		}
 		return listaDeudores;
-	}
+	}	
 	
 	@javax.inject.Inject
 	CuotaClubServicio cuotaClubServicio;
