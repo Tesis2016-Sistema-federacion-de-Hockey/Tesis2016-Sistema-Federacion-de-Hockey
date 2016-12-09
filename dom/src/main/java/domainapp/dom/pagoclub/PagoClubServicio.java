@@ -22,6 +22,7 @@ import org.joda.time.LocalDate;
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.cuotaclub.CuotaClubServicio;
+import domainapp.dom.pagojugador.PagoJugador;
 
 @SuppressWarnings("deprecation")
 @DomainService(
@@ -81,11 +82,11 @@ public class PagoClubServicio {
     		cssClassFa="fa fa-plus-square",
     		named="Cobrar Cuota de Club"
     )
-    @MemberOrder(name="Pagos", sequence = "3.9")
+    @MemberOrder(name="Pagos", sequence = "3.8")
     public PagoClub crearPago(
     		final @ParameterLayout(named="Recibo") String nroRecibo,
     		final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago,
-    		final @ParameterLayout(named="Valor") BigDecimal valor,
+    		final @ParameterLayout(named="Monto entregado") BigDecimal valor,
     		final @ParameterLayout(named="Club") Club club,
     		final @ParameterLayout(named="Cuota a pagar") CuotaClub cuotaClub          
     		){
@@ -113,8 +114,34 @@ public class PagoClubServicio {
 		final List<PagoClub> listaPagoClub = repositoryService.allMatches(QueryDefault
 				.create(PagoClub.class, "listarPagosPorClubYCuota",
 						"club", clubb, "cuotaClub", cuotaClubb));
-		if (!listaPagoClub.isEmpty()){			
-			return "La cuota elegida ya fue pagada. Seleccione otra";
+		
+		if (!listaPagoClub.isEmpty()){
+			
+			BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+			
+			BigDecimal restoAPagar=new BigDecimal(0); // resto a pagar para alcanzar el valor de la cuotaClub
+			
+			for(PagoClub pagoCl:listaPagoClub){
+				
+				sumaPagosParciales=sumaPagosParciales.add(pagoCl.getValor());
+			}
+			restoAPagar=restoAPagar.add(cuotaClubb.getValor().subtract(sumaPagosParciales));
+			
+			if(valor.compareTo(restoAPagar)==1){
+				
+				return "El valor del pago ingresado ($ " + valor.toString() +
+						") no debe ser mayor que el valor que falta pagar de la cuota ($ " +
+						restoAPagar.toString() + ")";
+			}
+		}
+		else if (listaPagoClub.isEmpty()){
+			
+			if (valor.compareTo(cuotaClubb.getValor())==1){
+				
+				return "El valor del pago ingresado ($ " + valor.toString() +
+						") no debe ser mayor que el valor de la cuota ($ " +
+						cuotaClubb.getValor().toString() + ")";
+			}
 		}
 		return "";
 	}
@@ -166,6 +193,19 @@ public class PagoClubServicio {
 		return repositoryService.allMatches(QueryDefault.create(CuotaClub.class,
 				"traerCuotaClub", "club", clubb));
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<PagoClub> buscarPagoClub(String nroRecibo) {
