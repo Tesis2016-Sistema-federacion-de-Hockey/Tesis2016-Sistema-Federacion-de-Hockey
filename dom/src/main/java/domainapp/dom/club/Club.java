@@ -1,5 +1,6 @@
 package domainapp.dom.club;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -19,6 +20,7 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -219,6 +221,14 @@ public class Club implements Comparable<Club> {
 		return Lists.newArrayList(getListaJugadores());
 	}
 	
+	//DEUDA (sirve para ver cuanto debe cada club de cuotaClub)
+	@PropertyLayout(named="Deuda", describedAs="Deuda de cuotas")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
+	@Column(allowsNull = "true")
+	private BigDecimal deuda;
+	public BigDecimal getDeuda() {return deuda;}
+	public void setDeuda(BigDecimal deuda) {this.deuda = deuda;}
+
 	//LISTA DE CUOTAS
 	@MemberOrder(sequence = "11")
 	@Persistent(table="club_cuotaclub")
@@ -231,7 +241,8 @@ public class Club implements Comparable<Club> {
 
 	//LISTA DE PAGOS
 	@MemberOrder(sequence = "11")
-	@CollectionLayout(named="Lista de Pagos")
+	@Persistent(mappedBy="club", dependentElement="true")
+	@CollectionLayout(named="Pagos realizados")
 	private SortedSet<PagoClub> pagosClub = new TreeSet<PagoClub>();
 	public SortedSet<PagoClub> getPagosClub() {return pagosClub;}
 	public void setPagosClub(SortedSet<PagoClub> pagosClub) {this.pagosClub = pagosClub;}
@@ -257,7 +268,7 @@ public class Club implements Comparable<Club> {
 		
 		else if (!cuotasClub.isEmpty()) return "La lista de cuotas debe estar vacia.";
 		
-		else if (!pagosClub.isEmpty()) return "La lista de pagos debe estar vacia.";
+//		else if (!pagosClub.isEmpty()) return "La lista de pagos debe estar vacia.";
 		
 		return "";
 	}

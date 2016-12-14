@@ -7,6 +7,7 @@ import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -39,7 +40,7 @@ public abstract class Pago {
 	//VALOR
 	@MemberOrder(sequence = "3")
     @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
+    @Property(domainEvent = NameDomainEvent.class, editing=Editing.DISABLED)
 	@PropertyLayout(named="Monto")
     private BigDecimal valor;
 	public BigDecimal getValor() {return valor;}

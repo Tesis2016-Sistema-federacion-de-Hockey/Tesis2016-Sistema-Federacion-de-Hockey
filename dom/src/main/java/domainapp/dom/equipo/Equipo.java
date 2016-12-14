@@ -269,42 +269,49 @@ public class Equipo implements Comparable<Equipo>{
     
     //PARTIDOS JUGADOS
     @PropertyLayout(named="PJ", describedAs="Partidos Jugados")
+    @Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
     private int partidosJugados;
     public int getPartidosJugados() {return partidosJugados;}
     public void setPartidosJugados(int partidosJugados) {this.partidosJugados = partidosJugados;}
     
     //PARTIDOS GANADOS
     @PropertyLayout(named="PG", describedAs="Partidos Ganados")
+    @Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
     private int partidosGanados;
 	public int getPartidosGanados() {return partidosGanados;}
 	public void setPartidosGanados(int partidosGanados) {this.partidosGanados = partidosGanados;}
     
     //PARTIDOS PERDIDOS
 	@PropertyLayout(named="PP", describedAs="Partidos Perdidos")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
     private int partidosPerdidos;
     public int getPartidosPerdidos() {return partidosPerdidos;}
 	public void setPartidosPerdidos(int partidosPerdidos) {this.partidosPerdidos = partidosPerdidos;}
     
     //PARTIDOS EMPATADOS
 	@PropertyLayout(named="PE", describedAs="Partidos Empatados")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
     private int partidosEmpatados;
 	public int getPartidosEmpatados() {return partidosEmpatados;}
 	public void setPartidosEmpatados(int partidosEmpatados) {this.partidosEmpatados = partidosEmpatados;}
     
     //GOLES A FAVOR
 	@PropertyLayout(named="Gf", describedAs="Goles a Favor")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
 	private int golesAFavor;
 	public int getGolesAFavor() {return golesAFavor;}
 	public void setGolesAFavor(int golesAFavor) {this.golesAFavor = golesAFavor;}
 
     //GOLES EN CONTRA
 	@PropertyLayout(named="Gc", describedAs="Goles en Contra")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
 	private int golesAContra;
 	public int getGolesAContra() {return golesAContra;}
 	public void setGolesAContra(int golesAContra) {this.golesAContra = golesAContra;}
 
     //PUNTOS
 	@PropertyLayout(named="Pts", describedAs="Puntos")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
 	private int puntos;
 	public int getPuntos() {return puntos;}
 	public void setPuntos(int puntos) {this.puntos = puntos;}

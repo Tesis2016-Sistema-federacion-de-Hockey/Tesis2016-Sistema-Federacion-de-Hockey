@@ -1,5 +1,6 @@
 package domainapp.dom.jugador;
 
+import java.math.BigDecimal;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -20,6 +21,7 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
@@ -55,7 +57,18 @@ import domainapp.dom.tarjeta.Tarjeta;
         @javax.jdo.annotations.Query(
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.jugador.Jugador "),               
+                        + "FROM domainapp.dom.jugador.Jugador "),
+        
+        @javax.jdo.annotations.Query(
+                name = "Listar", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.jugador.Jugador "
+                		
+        		
+        		),
+        
+        
+        
         @javax.jdo.annotations.Query(
                 name = "buscarPorDocumento", language = "JDOQL",
                 value = "SELECT "
@@ -179,7 +192,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public SortedSet<CuotaJugador> getCuotasJugador() {return cuotasJugador;}
 	public void setCuotasJugador(final SortedSet<CuotaJugador> cuotasJugador) {this.cuotasJugador = cuotasJugador;}
 
-	//PAGOS
+	//LISTA DE PAGOS
 	@MemberOrder(sequence = "17")
 	@Persistent(mappedBy="jugador", dependentElement="true")
 	@CollectionLayout(named="Pagos realizados")
@@ -192,13 +205,17 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	@Persistent(mappedBy = "jugador", dependentElement = "true")
 	@CollectionLayout(named="Goles")
 	private SortedSet<Gol> goles = new TreeSet<Gol>();	
-	public SortedSet<Gol> getGoles() {
-		return goles;
-	}
-	public void setGoles(SortedSet<Gol> goles) {
-		this.goles = goles;
-	}
+	public SortedSet<Gol> getGoles() {return goles;}
+	public void setGoles(SortedSet<Gol> goles) {this.goles = goles;}
 	
+	//DEUDA (sirve para ver cuanto debe cada club de cuotaClub)
+	@PropertyLayout(named="Deuda", describedAs="Deuda de cuotas")
+	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
+	@Column(allowsNull = "true")
+	private BigDecimal deuda;
+	public BigDecimal getDeuda() {return deuda;}
+	public void setDeuda(BigDecimal deuda) {this.deuda = deuda;}
+
 	public static class DeleteDomainEvent extends ActionDomainEvent<Jugador> {
 		/**
 		 * 

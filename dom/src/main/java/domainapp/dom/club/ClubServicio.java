@@ -41,7 +41,7 @@ public class ClubServicio {
     )
     @ActionLayout(
     		cssClassFa="fa fa-list",
-            bookmarking = BookmarkPolicy.AS_ROOT
+            bookmarking = BookmarkPolicy.AS_ROOT                 
     )
     @MemberOrder(sequence = "1")
     public List<Club> listarTodosLosClubes() {

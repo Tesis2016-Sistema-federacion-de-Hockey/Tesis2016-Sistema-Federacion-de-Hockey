@@ -103,7 +103,7 @@
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA["$ "+ $F{valor}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["$"+ $V{valor_1}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

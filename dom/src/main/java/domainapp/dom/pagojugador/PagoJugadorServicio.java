@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import javax.swing.JOptionPane;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -135,7 +132,13 @@ public class PagoJugadorServicio {
 			
 			restoAPagar=restoAPagar.add(cuotaJugadorr.getValor().subtract(sumaPagosParciales));
 			
-			if(valor.compareTo(restoAPagar)==1){
+			if(cuotaJugadorr.getValor().compareTo(sumaPagosParciales)==0){
+				
+				return "La cuota ya esta pagada";
+				
+			}
+			
+			else if(valor.compareTo(restoAPagar)==1){
 				
 				return "El valor del pago ingresado ($ " + valor.toString() +
 						") no debe ser mayor que el valor que falta pagar de la cuota ($ " +
@@ -206,7 +209,7 @@ public class PagoJugadorServicio {
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
-    		cssClassFa="fa fa-list",
+    		cssClassFa="fa fa-usd",
             bookmarking = BookmarkPolicy.AS_ROOT,
             named="Deuda por Cuota de Jugador y por Club"
     )
@@ -236,7 +239,10 @@ public class PagoJugadorServicio {
 						sumaPagosParciales=sumaPagosParciales.add(pagoJug.getValor());
 					}
 				}
+				
 				if (sumaPagosParciales.compareTo(cuotaJugador.getValor())==0) listaPagaron.add(jug);
+				
+				jug.setDeuda(cuotaJugador.getValor().subtract(sumaPagosParciales));
 			}
 		}
 		
