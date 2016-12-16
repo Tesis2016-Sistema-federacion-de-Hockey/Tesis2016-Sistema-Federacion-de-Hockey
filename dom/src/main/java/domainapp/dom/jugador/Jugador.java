@@ -32,6 +32,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import domainapp.dom.club.Club;
 import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.cuotajugador.CuotaJugadorServicio;
+import domainapp.dom.division.Division;
 import domainapp.dom.domicilio.Domicilio;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
@@ -244,6 +245,13 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		}
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
+	
+
+	public long golesEquipo(Division division){
+		return this.goles.stream().filter(x -> division.equals(x.getEquipo().getDivision())).count();
+	}
+
+
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

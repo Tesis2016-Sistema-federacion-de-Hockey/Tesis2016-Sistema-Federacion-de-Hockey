@@ -1,5 +1,8 @@
 package domainapp.dom.division;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -7,6 +10,7 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
+
 import org.apache.isis.applib.IsisApplibModule.ActionDomainEvent;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -29,6 +33,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.estado.Estado;
 import domainapp.dom.fecha.Fecha;
+import domainapp.dom.jugador.Jugador;
 import domainapp.dom.modalidad.Modalidad;
 import domainapp.dom.torneo.Torneo;
 
@@ -183,6 +188,20 @@ public class Division implements Comparable<Division>{
 		}
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
+	
+	public List<Jugador> tablaDeGoleadores(){
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		for (Iterator<?> it=this.getListaEquipos().iterator();it.hasNext();){
+			Equipo eq=((Equipo)it.next());
+			for (Iterator<?> it2=eq.getListaBuenaFe().iterator();it2.hasNext();){
+				Jugador jug=(Jugador)it2.next();
+				if (jug.golesEquipo(this) > 0){
+					jugadores.add(jug);
+				}
+			}
+		}
+		return jugadores;
+	} 
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;
