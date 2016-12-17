@@ -63,7 +63,7 @@ public class PagoClubServicio {
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
-    		cssClassFa="fa fa-list",
+    		cssClassFa="fa fa-list-ol",
             bookmarking = BookmarkPolicy.AS_ROOT,
             named="Listar Pagos por Club"
     )

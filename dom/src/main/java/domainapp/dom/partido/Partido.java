@@ -72,7 +72,7 @@ public class Partido implements Comparable<Partido>{
 	
     public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				this.getNombre()
+				this.getEquipoLocal().getNombre()+" - "+this.getEquipoVisitante().getNombre()
 				);
 	}
 	
@@ -90,7 +90,9 @@ public class Partido implements Comparable<Partido>{
 	@Column(allowsNull = "false")
 	private String nombre;
 	public String getNombre() {return nombre;}
-	public void setNombre(final String nombre) {this.nombre = nombre;}
+	public void setNombre(final String nombre) {
+		this.nombre = nombre;
+	}
 	
     //EQUIPO LOCAL
     @MemberOrder(sequence = "1.1")
@@ -325,6 +327,6 @@ public class Partido implements Comparable<Partido>{
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Partido o) {
-		return ObjectContracts.compare(this, o, "nombre");
+		return ObjectContracts.compare(this, o, "fecha", "nombre");
 	}
 }

@@ -55,7 +55,7 @@ public class PartidoServicio {
             semantics = SemanticsOf.SAFE
     )
     @ActionLayout(
-    		cssClassFa="fa fa-list fa-lg",
+    		cssClassFa="fa fa-list",
             bookmarking = BookmarkPolicy.AS_ROOT,
             named="Partidos Disputados por Equipo",
             hidden=Where.PARENTED_TABLES
@@ -66,7 +66,7 @@ public class PartidoServicio {
     }
     
     //PARA IMPRIMIR
-    @ActionLayout(named = "Imprimir Planilla de Partido")
+    @ActionLayout(named = "Imprimir Planilla de Partido", cssClassFa="fa fa-download")
 	public Blob imprimirPlanillaPartido(final Partido partido) throws JRException, IOException {
 		
     	List<String> jugadoresLocal=new ArrayList<String>();
