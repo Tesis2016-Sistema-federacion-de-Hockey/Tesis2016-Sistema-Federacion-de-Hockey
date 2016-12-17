@@ -2,9 +2,6 @@ package domainapp.dom.pagoclub;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -202,51 +199,51 @@ public class PagoClubServicio {
 				"traerCuotaClub", "club", clubb));
 	}
 	
-	@Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-    		cssClassFa="fa fa-usd",
-            bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Clubes que adeudan Cuotas"
-    )
-	@MemberOrder(name="Pagos", sequence = "4.9")
-    public SortedSet<Club> listarClubesConDeuda(
-    		
-    		final @ParameterLayout(named="Ingrese Cuota de Club:") CuotaClub cuotaClub){
-	
-		SortedSet<Club>listaPagaron=new TreeSet<Club>();
-		
-		SortedSet<Club>listaDeudores=new TreeSet<Club>();
-		
-		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
-		
-		for (Club cl:cuotaClub.getListaClubes()){
-			
-			sumaPagosParciales=sumaPagosParciales.subtract(sumaPagosParciales);
-			
-			for(PagoClub pagoCl:cuotaClub.getListaPagosClub()){
-				
-				if (pagoCl.getClub()==cl){
-					
-					sumaPagosParciales=sumaPagosParciales.add(pagoCl.getValor());
-				}
-			}
-			
-			if (sumaPagosParciales.compareTo(cuotaClub.getValor())==0) listaPagaron.add(cl);
-			
-			cl.setDeuda(cuotaClub.getValor().subtract(sumaPagosParciales));
-		}
-		
-		for (Club cl:cuotaClub.getListaClubes()){
-				
-			if (!listaPagaron.contains(cl)){
-				
-				listaDeudores.add(cl);
-			}
-		}
-		return listaDeudores;
-	}
+//	@Action(
+//            semantics = SemanticsOf.SAFE
+//    )
+//    @ActionLayout(
+//    		cssClassFa="fa fa-usd",
+//            bookmarking = BookmarkPolicy.AS_ROOT,
+//            named="Clubes que adeudan Cuotas"
+//    )
+//	@MemberOrder(name="Pagos", sequence = "4.9")
+//    public SortedSet<Club> listarClubesConDeuda(
+//    		
+//    		final @ParameterLayout(named="Ingrese Cuota de Club:") CuotaClub cuotaClub){
+//	
+//		SortedSet<Club>listaPagaron=new TreeSet<Club>();
+//		
+//		SortedSet<Club>listaDeudores=new TreeSet<Club>();
+//		
+//		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+//		
+//		for (Club cl:cuotaClub.getListaClubes()){
+//			
+//			sumaPagosParciales=sumaPagosParciales.subtract(sumaPagosParciales);
+//			
+//			for(PagoClub pagoCl:cuotaClub.getListaPagosClub()){
+//				
+//				if (pagoCl.getClub()==cl){
+//					
+//					sumaPagosParciales=sumaPagosParciales.add(pagoCl.getValor());
+//				}
+//			}
+//			
+//			if (sumaPagosParciales.compareTo(cuotaClub.getValor())==0) listaPagaron.add(cl);
+//			
+//			cl.setDeuda(cuotaClub.getValor().subtract(sumaPagosParciales));
+//		}
+//		
+//		for (Club cl:cuotaClub.getListaClubes()){
+//				
+//			if (!listaPagaron.contains(cl)){
+//				
+//				listaDeudores.add(cl);
+//			}
+//		}
+//		return listaDeudores;
+//	}
 	
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<PagoClub> buscarPagoClub(String nroRecibo) {

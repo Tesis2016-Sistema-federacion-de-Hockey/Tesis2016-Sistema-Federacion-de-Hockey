@@ -6,7 +6,6 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.Nature;
 import org.apache.isis.applib.annotation.Title;
 
-import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
 import domainapp.dom.jugador.Jugador;
 

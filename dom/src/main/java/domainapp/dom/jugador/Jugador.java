@@ -211,7 +211,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	
 	//DEUDA (sirve para ver cuanto debe cada club de cuotaClub)
 	@PropertyLayout(named="Deuda", describedAs="Deuda de cuotas")
-	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
+	@Property(editing=Editing.DISABLED, hidden=Where.EVERYWHERE)
 	@Column(allowsNull = "true")
 	private BigDecimal deuda;
 	public BigDecimal getDeuda() {return deuda;}
@@ -245,13 +245,10 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		}
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
-	
 
 	public long golesEquipo(Division division){
 		return this.goles.stream().filter(x -> division.equals(x.getEquipo().getDivision())).count();
 	}
-
-
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

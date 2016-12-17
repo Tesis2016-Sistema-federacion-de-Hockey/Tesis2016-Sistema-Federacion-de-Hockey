@@ -38,18 +38,9 @@ import domainapp.dom.torneo.TorneoServicio;
 @ViewModel
 public class HomePageViewModel {
 
-    //region > title
     public String title() {
-        return "Federacion de Hockey de Neuquen";
+        return "Federacion Neuquina de Hockey";
     }
-    //endregion
-
-    //region > object (collection)
-    //@org.apache.isis.applib.annotation.HomePage
-//    @HomePage
-//    public List<Club> getClubes() {
-//        return clubServicio.listarTodosLosClubes();
-//    }
     
     @HomePage()
     @CollectionLayout(named="Temporadas Activas")

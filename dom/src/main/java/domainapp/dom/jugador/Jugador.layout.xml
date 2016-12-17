@@ -47,7 +47,7 @@
                                 <c:property id="visible" namedEscaped="true" hidden="ALL_TABLES"/>
                                 <c:property id="club" namedEscaped="true" hidden="PARENTED_TABLES"/>
                                 <c:property id="equipo" namedEscaped="true" hidden="PARENTED_TABLES"/>
-                                <c:property id="deuda" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
+                                <c:property id="deuda" hidden="EVERYWHERE"/>
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

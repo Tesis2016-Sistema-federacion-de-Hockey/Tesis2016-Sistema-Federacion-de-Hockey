@@ -223,7 +223,7 @@ public class Club implements Comparable<Club> {
 	
 	//DEUDA (sirve para ver cuanto debe cada club de cuotaClub)
 	@PropertyLayout(named="Deuda", describedAs="Deuda de cuotas")
-	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
+	@Property(editing=Editing.DISABLED, hidden=Where.EVERYWHERE)
 	@Column(allowsNull = "true")
 	private BigDecimal deuda;
 	public BigDecimal getDeuda() {return deuda;}
@@ -268,8 +268,6 @@ public class Club implements Comparable<Club> {
 		
 		else if (!cuotasClub.isEmpty()) return "La lista de cuotas debe estar vacia.";
 		
-//		else if (!pagosClub.isEmpty()) return "La lista de pagos debe estar vacia.";
-		
 		return "";
 	}
 
@@ -286,4 +284,19 @@ public class Club implements Comparable<Club> {
 
     @javax.inject.Inject
     JugadorServicio jugadorServicio;
+
+	public BigDecimal deuda(CuotaClub cuotaClub) {
+		
+		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+		
+		for(PagoClub pagoCl:this.getPagosClub()){
+			
+			if (pagoCl.getCuotaClub()==cuotaClub){
+				
+				sumaPagosParciales=sumaPagosParciales.add(pagoCl.getValor());
+			}
+		}
+		
+		return (cuotaClub.getValor().subtract(sumaPagosParciales));
+	}
 }
