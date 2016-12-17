@@ -49,7 +49,8 @@ public class GolServicio {
             domainEvent = CreateDomainEvent.class
     )
     @ActionLayout(
-    		cssClassFa="fa fa-futbol-o fa-lg fa-fw"
+    		cssClassFa="fa fa-futbol-o fa-lg fa-fw",
+    		named="Asignar GOL"
     )
     public Partido crearGol(
             final @ParameterLayout(named="Jugador") Jugador jugador,
@@ -90,8 +91,6 @@ public class GolServicio {
     	return "";
     }
     
-	
 	@javax.inject.Inject
     RepositoryService repositoryService;
-
 }
