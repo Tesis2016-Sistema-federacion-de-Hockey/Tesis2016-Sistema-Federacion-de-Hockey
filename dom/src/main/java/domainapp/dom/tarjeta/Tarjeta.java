@@ -9,8 +9,6 @@ import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Nature;
-import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -20,10 +18,8 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.joda.time.DateTime;
 
-import domainapp.dom.club.Club;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.partido.Partido;
-import domainapp.dom.partido.Partido.NameDomainEvent;
 
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -100,9 +96,10 @@ public class Tarjeta implements Comparable<Tarjeta>{
 	//HORARIO DE CUANDO SE SACO LA TARJETA
 	private DateTime fechaHora;
 	public DateTime getFechaHora() {
-		fechaHora=partido.getFechaHora();
-		return fechaHora;
-		}
+		
+		fechaHora=partido.getFechaHora();return fechaHora;
+		
+	}
  
 	public static class DeleteDomainEvent extends ActionDomainEvent<Tarjeta> {
 
@@ -130,6 +127,6 @@ public class Tarjeta implements Comparable<Tarjeta>{
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Tarjeta o) {
-		return ObjectContracts.compare(this, o, "minutoTarjeta");
+		return ObjectContracts.compare(this, o, "minutoTarjeta","tipoTarjeta","partido","jugador");
 	}
 }

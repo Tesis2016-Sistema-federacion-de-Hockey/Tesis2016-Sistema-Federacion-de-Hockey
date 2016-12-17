@@ -62,7 +62,8 @@ public class TarjetaServicio {
             domainEvent = CreateDomainEvent.class
     )
     @ActionLayout(
-    		cssClassFa="fa fa-plus-square"
+    		cssClassFa="fa fa-plus",
+    		named="Asignar TARJETA"
     		)
     public Partido crearTarjeta(
     		final @ParameterLayout(named="Jugador") Jugador jugador,
