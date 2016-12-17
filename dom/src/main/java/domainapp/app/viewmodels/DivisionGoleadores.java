@@ -22,7 +22,6 @@ import domainapp.app.viewmodels.GoleadoresViewModel;
 import domainapp.dom.division.Division;
 import domainapp.dom.jugador.Jugador;
 
-
 @Mixin
 public class DivisionGoleadores {
 	private final Division division;
@@ -32,26 +31,33 @@ public class DivisionGoleadores {
 	}
 
 	@Action(
-	            semantics = SemanticsOf.SAFE,
-	            restrictTo = RestrictTo.PROTOTYPING
-	    )
+			semantics = SemanticsOf.SAFE,
+			restrictTo = RestrictTo.PROTOTYPING
+			)
 	@ActionLayout(
-	            cssClassFa = "fa-external-link",
-	            named = "Tabla de Goleadores"
-	    )
+			cssClassFa = "fa-external-link",
+			named = "Tabla de Goleadores"
+			)
 	public List<GoleadoresViewModel> goleadores() {
+		
 		final List<Jugador> jugadores = division.tablaDeGoleadores();
-		List<GoleadoresViewModel> listaGoleadores=Lists.newArrayList(Iterables.transform(jugadores, byPosiciones()));
+		
+		List<GoleadoresViewModel> listaGoleadores=
+				Lists.newArrayList(Iterables.transform(jugadores, byPosiciones()));
+		
 		Collections.sort(listaGoleadores);
+		
 		return listaGoleadores;        
 	}
 	private Function<Jugador, GoleadoresViewModel> byPosiciones() {
+		
 		return new Function<Jugador, GoleadoresViewModel>(){
+			
 			@Override
 	        public GoleadoresViewModel apply(final Jugador jugador) {
+				
 				return new GoleadoresViewModel(jugador,division);
 	        }
 	     };
 	 } 
-	
 }

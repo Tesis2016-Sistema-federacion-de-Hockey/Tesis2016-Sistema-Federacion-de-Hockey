@@ -18,6 +18,7 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
@@ -189,6 +190,7 @@ public class Division implements Comparable<Division>{
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
 	
+	@ActionLayout(named="Tabla de Goleadores", hidden=Where.EVERYWHERE)
 	public List<Jugador> tablaDeGoleadores(){
 		List<Jugador> jugadores = new ArrayList<Jugador>();
 		for (Iterator<?> it=this.getListaEquipos().iterator();it.hasNext();){
