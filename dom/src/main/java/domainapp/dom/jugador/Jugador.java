@@ -59,17 +59,6 @@ import domainapp.dom.tarjeta.Tarjeta;
                 name = "traerTodos", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.jugador.Jugador "),
-        
-        @javax.jdo.annotations.Query(
-                name = "Listar", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.jugador.Jugador "
-                		
-        		
-        		),
-        
-        
-        
         @javax.jdo.annotations.Query(
                 name = "buscarPorDocumento", language = "JDOQL",
                 value = "SELECT "
@@ -249,6 +238,36 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public long golesEquipo(Division division){
 		return this.goles.stream().filter(x -> division.equals(x.getEquipo().getDivision())).count();
 	}
+	
+	
+	
+	
+	
+	public BigDecimal deuda(CuotaJugador cuotaJugador) {
+		
+		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+		
+		for(PagoJugador pagoJug:this.getPagosJugador()){
+			
+			if (pagoJug.getCuotaJugador()==cuotaJugador){
+				
+				sumaPagosParciales=sumaPagosParciales.add(pagoJug.getValor());
+			}
+		}
+		
+		return (cuotaJugador.getValor().subtract(sumaPagosParciales));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

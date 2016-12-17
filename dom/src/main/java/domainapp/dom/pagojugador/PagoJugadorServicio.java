@@ -2,8 +2,6 @@ package domainapp.dom.pagojugador;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -21,7 +19,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.LocalDate;
 
-import domainapp.dom.club.Club;
 import domainapp.dom.cuotaclub.CuotaClub;
 import domainapp.dom.cuotaclub.CuotaClubServicio;
 import domainapp.dom.cuotajugador.CuotaJugador;
@@ -106,7 +103,6 @@ public class PagoJugadorServicio {
 	public LocalDate default1CrearPago(){
 		return LocalDate.now();
 	}
-	
 	
 	public String validateCrearPago(
 		final String nroRecibo,
@@ -205,59 +201,59 @@ public class PagoJugadorServicio {
 				.create(PagoJugador.class, "buscarPagoJugador", "nroRecibo", nroRecibo));
 	}
 	
-	@Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-    		cssClassFa="fa fa-usd",
-            bookmarking = BookmarkPolicy.AS_ROOT,
-            named="Deuda por Cuota de Jugador y por Club"
-    )
-	@MemberOrder(name="Pagos", sequence = "4.9")
-    public SortedSet<Jugador> listarJugadoresConDeuda(
-    		
-    		final @ParameterLayout(named="Ingrese Cuota de Jugador:") CuotaJugador cuotaJugador,
-    		
-    		final @ParameterLayout(named="Ingrese Club:") Club club){   		
-		
-		SortedSet<Jugador>listaPagaron=new TreeSet<Jugador>();
-		
-		SortedSet<Jugador>listaDeudores=new TreeSet<Jugador>();
-		
-		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
-		
-		for (Jugador jug:cuotaJugador.getListaJugadores()){
-			
-			sumaPagosParciales=sumaPagosParciales.subtract(sumaPagosParciales);
-			
-			if(jug.getClub()==club){
-				
-				for(PagoJugador pagoJug:cuotaJugador.getListaPagosJugador()){
-					
-					if (pagoJug.getJugador()==jug){
-						
-						sumaPagosParciales=sumaPagosParciales.add(pagoJug.getValor());
-					}
-				}
-				
-				if (sumaPagosParciales.compareTo(cuotaJugador.getValor())==0) listaPagaron.add(jug);
-				
-				jug.setDeuda(cuotaJugador.getValor().subtract(sumaPagosParciales));
-			}
-		}
-		
-		for (Jugador jug:cuotaJugador.getListaJugadores()){
-			
-			if(jug.getClub()==club){
-				
-				if (!listaPagaron.contains(jug)){
-					
-					listaDeudores.add(jug);
-				}
-			}
-		}
-		return listaDeudores;
-	}	
+//	@Action(
+//            semantics = SemanticsOf.SAFE
+//    )
+//    @ActionLayout(
+//    		cssClassFa="fa fa-usd",
+//            bookmarking = BookmarkPolicy.AS_ROOT,
+//            named="Deuda por Cuota de Jugador y por Club"
+//    )
+//	@MemberOrder(name="Pagos", sequence = "4.9")
+//    public SortedSet<Jugador> listarJugadoresConDeuda(
+//    		
+//    		final @ParameterLayout(named="Ingrese Cuota de Jugador:") CuotaJugador cuotaJugador,
+//    		
+//    		final @ParameterLayout(named="Ingrese Club:") Club club){   		
+//		
+//		SortedSet<Jugador>listaPagaron=new TreeSet<Jugador>();
+//		
+//		SortedSet<Jugador>listaDeudores=new TreeSet<Jugador>();
+//		
+//		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
+//		
+//		for (Jugador jug:cuotaJugador.getListaJugadores()){
+//			
+//			sumaPagosParciales=sumaPagosParciales.subtract(sumaPagosParciales);
+//			
+//			if(jug.getClub()==club){
+//				
+//				for(PagoJugador pagoJug:cuotaJugador.getListaPagosJugador()){
+//					
+//					if (pagoJug.getJugador()==jug){
+//						
+//						sumaPagosParciales=sumaPagosParciales.add(pagoJug.getValor());
+//					}
+//				}
+//				
+//				if (sumaPagosParciales.compareTo(cuotaJugador.getValor())==0) listaPagaron.add(jug);
+//				
+//				jug.setDeuda(cuotaJugador.getValor().subtract(sumaPagosParciales));
+//			}
+//		}
+//		
+//		for (Jugador jug:cuotaJugador.getListaJugadores()){
+//			
+//			if(jug.getClub()==club){
+//				
+//				if (!listaPagaron.contains(jug)){
+//					
+//					listaDeudores.add(jug);
+//				}
+//			}
+//		}
+//		return listaDeudores;
+//	}	
 	
 	@javax.inject.Inject
 	CuotaClubServicio cuotaClubServicio;
