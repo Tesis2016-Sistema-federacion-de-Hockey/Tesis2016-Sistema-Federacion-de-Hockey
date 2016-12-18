@@ -11,9 +11,8 @@ import org.apache.isis.applib.annotation.Title;
 import domainapp.dom.club.Club;
 import domainapp.dom.equipo.Equipo;
 
-
 @DomainObjectLayout(
-        named="Tabla de posisiones",
+        named="Tabla de posiciones",
         bookmarking = BookmarkPolicy.AS_ROOT
 )
 @DomainObject(
@@ -21,14 +20,13 @@ import domainapp.dom.equipo.Equipo;
 )
 public class PosicionesViewModel implements Comparable<PosicionesViewModel>{
 
-	
+	public String iconName(){return "PosicionesViewModel";}
 	
 	public PosicionesViewModel() {}
 	
 	public PosicionesViewModel(Equipo equipo) {				
 		this.equipo = equipo;
 	}
-
 
 	@MemberOrder(sequence = "1")
 	@PropertyLayout(named="Club")
@@ -95,7 +93,4 @@ public class PosicionesViewModel implements Comparable<PosicionesViewModel>{
 		if (this.getPuntos() > o.getPuntos()) return -1;
 		return 0;
 	}
-	
-	
-
 }

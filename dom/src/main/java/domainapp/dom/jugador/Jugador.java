@@ -198,7 +198,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 	public SortedSet<Gol> getGoles() {return goles;}
 	public void setGoles(SortedSet<Gol> goles) {this.goles = goles;}
 	
-	//DEUDA (sirve para ver cuanto debe cada club de cuotaClub)
+	//DEUDA
 	@PropertyLayout(named="Deuda", describedAs="Deuda de cuotas")
 	@Property(editing=Editing.DISABLED, hidden=Where.EVERYWHERE)
 	@Column(allowsNull = "true")
@@ -239,10 +239,7 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		return this.goles.stream().filter(x -> division.equals(x.getEquipo().getDivision())).count();
 	}
 	
-	
-	
-	
-	
+	@ActionLayout(named="Deuda de Cuota")
 	public BigDecimal deuda(CuotaJugador cuotaJugador) {
 		
 		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
@@ -257,17 +254,6 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		
 		return (cuotaJugador.getValor().subtract(sumaPagosParciales));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

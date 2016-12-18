@@ -18,7 +18,6 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
@@ -204,8 +203,6 @@ public class Division implements Comparable<Division>{
 		}
 		return jugadores;
 	} 
-	
-	
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

@@ -285,7 +285,8 @@ public class Club implements Comparable<Club> {
     @javax.inject.Inject
     JugadorServicio jugadorServicio;
 
-	public BigDecimal deuda(CuotaClub cuotaClub) {
+    @ActionLayout(named="Deuda de Cuota")
+    public BigDecimal deuda(CuotaClub cuotaClub) {
 		
 		BigDecimal sumaPagosParciales=new BigDecimal(0); // suma de pagos parciales
 		

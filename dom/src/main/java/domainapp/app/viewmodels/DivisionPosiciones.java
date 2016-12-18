@@ -16,7 +16,6 @@ import com.google.common.collect.Lists;
 
 import domainapp.dom.division.Division;
 import domainapp.dom.equipo.Equipo;
-import domainapp.dom.jugador.Jugador;
 
 @Mixin
 public class DivisionPosiciones {

@@ -30,7 +30,7 @@
                 <bs3:tab name="Datos">
                     <bs3:row>
                         <bs3:col span="12">
-                            <c:fieldSet name="Nombre">
+                            <c:fieldSet name="Equipo">
                                 <c:property id="club" namedEscaped="false"/>
                                 <c:property id="equipo" namedEscaped="false"/>
                                 <c:property id="puntos" namedEscaped="false"/>

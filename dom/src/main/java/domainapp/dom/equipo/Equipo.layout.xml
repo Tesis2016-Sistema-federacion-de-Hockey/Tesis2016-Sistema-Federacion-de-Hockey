@@ -34,7 +34,7 @@
                                 <c:property id="nombre" namedEscaped="true"/>
                                 <c:property id="club"/>
                                 <c:property id="estado" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
-                                <c:property id="division" hidden="ALL_TABLES"/>
+                                <c:property id="division" />
                                 
                                 <c:property id="puntos" hidden="ALL_TABLES"  />
                                 <c:property id="partidosJugados" hidden="ALL_TABLES"/>

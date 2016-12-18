@@ -12,6 +12,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import domainapp.dom.club.Club;
 import domainapp.dom.cuotajugador.CuotaJugador;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
@@ -33,9 +34,9 @@ public class CuotaJugadorDeudores {
             cssClassFa = "fa-external-link",
             named = "Lista de Jugadores que adeudan Cuota"            
     )
-	public List<CuotaJugadorViewModel> deudores(){
+	public List<CuotaJugadorViewModel> deudores(final Club club){
 		
-		final List<Jugador> jugadores=jugadorServicio.listarJugadoresActivos();
+		final List<Jugador> jugadores=jugadorServicio.listarJugadoresActivosSegunClub(club);
 		
 		List<CuotaJugadorViewModel>listaDeudores=Lists.newArrayList(Iterables.transform(jugadores, byPosiciones()));
 		
