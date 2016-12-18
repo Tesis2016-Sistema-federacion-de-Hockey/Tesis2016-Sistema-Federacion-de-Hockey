@@ -127,6 +127,6 @@ public class Tarjeta implements Comparable<Tarjeta>{
 	@SuppressWarnings("deprecation")
 	@Override
 	public int compareTo(final Tarjeta o) {
-		return ObjectContracts.compare(this, o, "minutoTarjeta","tipoTarjeta","partido","jugador");
+		return ObjectContracts.compare(this, o, "fechaHora", "minutoTarjeta","tipoTarjeta","partido","jugador");
 	}
 }

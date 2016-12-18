@@ -42,6 +42,7 @@ import domainapp.dom.partido.Partido;
 import domainapp.dom.persona.Persona;
 import domainapp.dom.sector.Sector;
 import domainapp.dom.tarjeta.Tarjeta;
+import domainapp.dom.tarjeta.TipoTarjeta;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -235,8 +236,33 @@ public class Jugador extends Persona implements Comparable<Jugador> {
 		return actionInvocationContext.getInvokedOn().isObject()?this:null;
 	}
 
+	@ActionLayout(hidden=Where.EVERYWHERE)
 	public long golesEquipo(Division division){
 		return this.goles.stream().filter(x -> division.equals(x.getEquipo().getDivision())).count();
+	}
+	
+	@ActionLayout(hidden=Where.EVERYWHERE)
+	public long tarjetasVerdesEquipo(Division division){
+		
+		return this.tarjetas.stream().filter(x -> division.equals(x.getPartido().getFecha().getDivision()) 
+				
+				&& x.getTipoTarjeta().equals(TipoTarjeta.VERDE)).count();
+	}
+	
+	@ActionLayout(hidden=Where.EVERYWHERE)
+	public long tarjetasAmarillasEquipo(Division division){
+		
+		return this.tarjetas.stream().filter(x -> division.equals(x.getPartido().getFecha().getDivision()) 
+				
+				&& x.getTipoTarjeta().equals(TipoTarjeta.AMARILLA)).count();
+	}
+	
+	@ActionLayout(hidden=Where.EVERYWHERE)
+	public long tarjetasRojasEquipo(Division division){
+		
+		return this.tarjetas.stream().filter(x -> division.equals(x.getPartido().getFecha().getDivision()) 
+				
+				&& x.getTipoTarjeta().equals(TipoTarjeta.ROJA)).count();
 	}
 	
 	@ActionLayout(named="Deuda de Cuota")

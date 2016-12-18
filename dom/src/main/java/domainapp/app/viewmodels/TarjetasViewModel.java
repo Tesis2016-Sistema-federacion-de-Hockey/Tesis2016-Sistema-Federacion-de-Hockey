@@ -9,7 +9,6 @@ import org.apache.isis.applib.annotation.Title;
 
 import domainapp.dom.division.Division;
 import domainapp.dom.jugador.Jugador;
-import domainapp.dom.tarjeta.Tarjeta;
 
 @DomainObjectLayout(
         named="Tabla de Tarjetas",
@@ -20,7 +19,7 @@ import domainapp.dom.tarjeta.Tarjeta;
 )
 public class TarjetasViewModel implements Comparable<TarjetasViewModel>{
 	
-	public String iconName(){return "TarjetasViewModel";}
+	public String iconName(){return "PosicionesViewModel";}
 	
 	public TarjetasViewModel(){}
 	
@@ -40,10 +39,14 @@ public class TarjetasViewModel implements Comparable<TarjetasViewModel>{
 	public Jugador getJugador() {return jugador;}
 	public void setJugador(Jugador jugador) {this.jugador = jugador;}
 	
-	@PropertyLayout(named="Tarjetas")
-	private Tarjeta tarjeta;
-	public Tarjeta getTarjeta() {return tarjeta;}
-	public void setTarjeta(Tarjeta tarjeta) {this.tarjeta = tarjeta;}
+	@PropertyLayout(named="Tarjetas Verdes")
+	public long getTarjetasVerdes() {return jugador.tarjetasVerdesEquipo(division);}
+
+	@PropertyLayout(named="Tarjetas Amarillas")
+	public long getTarjetasAmarillas() {return jugador.tarjetasAmarillasEquipo(division);}
+
+	@PropertyLayout(named="Tarjetas Rojas")
+	public long getTarjetasRojas() {return jugador.tarjetasRojasEquipo(division);}
 
 	@Override
 	public int compareTo(TarjetasViewModel o) {
