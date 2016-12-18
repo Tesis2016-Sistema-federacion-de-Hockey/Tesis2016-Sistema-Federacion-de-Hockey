@@ -1,7 +1,7 @@
 package domainapp.dom.resultado;
 
 public enum Resultado {
-	GANADO("Ganado"), PERDIDO("Perdido"),EMPATADO("Empatado");
+	GANADO("Ganado"), PERDIDO("Perdido"),EMPATADO("Empatado"),SINRESULTADO("Sin resultado");
 	
 	private final String nombre;
 

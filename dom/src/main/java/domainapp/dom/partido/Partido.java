@@ -41,6 +41,7 @@ import domainapp.dom.fecha.Fecha;
 import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
+import domainapp.dom.resultado.Resultado;
 import domainapp.dom.tarjeta.Tarjeta;
 
 @javax.jdo.annotations.PersistenceCapable(
@@ -139,22 +140,22 @@ public class Partido implements Comparable<Partido>{
 	public void setFechaHora(DateTime fechaHora) {this.fechaHora = fechaHora;}
 	
 	//GOLES DEL EQUIPO LOCAL
-	@MemberOrder(sequence = "5")
-    @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
-	@PropertyLayout(named="Goles")
-	private int golesLocal;
-	public int getGolesLocal() {return golesLocal;}
-	public void setGolesLocal(int golesLocal) {this.golesLocal = golesLocal;}
-	
-	//GOLES DEL EQUIPO VISITANTE
-	@MemberOrder(sequence = "6")
-    @Column(allowsNull="false")
-    @Property(domainEvent = NameDomainEvent.class)
-	@PropertyLayout(named="Goles")
-	private int golesVisitante;
-	public int getGolesVisitante() {return golesVisitante;}
-	public void setGolesVisitante(int golesVisitante) {this.golesVisitante = golesVisitante;}
+//	@MemberOrder(sequence = "5")
+//    @Column(allowsNull="false")
+//    @Property(domainEvent = NameDomainEvent.class)
+//	@PropertyLayout(named="Goles")
+//	private int golesLocal;
+//	public int getGolesLocal() {return golesLocal;}
+//	public void setGolesLocal(int golesLocal) {this.golesLocal = golesLocal;}
+//	
+//	//GOLES DEL EQUIPO VISITANTE
+//	@MemberOrder(sequence = "6")
+//    @Column(allowsNull="false")
+//    @Property(domainEvent = NameDomainEvent.class)
+//	@PropertyLayout(named="Goles")
+//	private int golesVisitante;
+//	public int getGolesVisitante() {return golesVisitante;}
+//	public void setGolesVisitante(int golesVisitante) {this.golesVisitante = golesVisitante;}
 	
 	//LISTA DE JUGADORES DEL PARTIDO
 	@MemberOrder(sequence = "7")
@@ -280,6 +281,36 @@ public class Partido implements Comparable<Partido>{
 	}
 	public void setGoles(SortedSet<Gol> goles) {
 		this.goles = goles;
+	}
+	
+	public long getGolesLocal(){
+		return this.goles.stream().filter(x -> this.equipoLocal.equals(x.getEquipo())).count();
+	}
+	
+	public long getGolesVisitante(){
+		return this.goles.stream().filter(x -> this.equipoVisitante.equals(x.getEquipo())).count();
+	}
+	
+	public Resultado resultado(final Equipo equipo){
+		if(this.estadoPartido == EstadoPartido.PENDIENTE){
+			return Resultado.SINRESULTADO;
+		}
+		if(this.getGolesLocal() == this.getGolesVisitante()){
+			return Resultado.EMPATADO;
+		}
+		if(this.equipoLocal == equipo){
+			if(this.getGolesLocal()>this.getGolesVisitante()){
+				return Resultado.GANADO;
+			}else{
+				return Resultado.PERDIDO;
+			}
+		}else{
+			if(this.getGolesVisitante()>this.getGolesLocal()){
+				return Resultado.GANADO;
+			}else{
+				return Resultado.PERDIDO;
+			}
+		}		
 	}
 	
 	

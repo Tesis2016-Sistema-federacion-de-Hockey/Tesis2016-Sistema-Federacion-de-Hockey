@@ -154,101 +154,101 @@ public class EquipoServicio {
     	return repositoryService.allMatches(QueryDefault.create(Club.class, "traerClub", "nombre",cl));
     }
     
-    //METODO PARA CALCULAR LOS PARTIDOS JUGADOS QUE ESTEN FINALIZADOS
-    @ActionLayout(hidden=Where.EVERYWHERE)
-    public void calcularTablaPosiciones(Equipo equipo){
-    	
-    	int pj=0;
-    	int pg=0;
-    	int pp=0;
-    	int pe=0;
-    	int gf=0;
-    	int gc=0;
-    	int pts=0;
-    	
-    	if (equipo.getDivision().getListaFechas().size()==0) return;
-    	
-    	for (Iterator<?> it1=equipo.getDivision().getListaFechas().iterator();it1.hasNext();){
-    		
-			Fecha f=((Fecha)it1.next());
-			
-			for (Iterator<?> it2=f.getListaPartidos().iterator();it2.hasNext();){
-				
-				Partido p =((Partido)it2.next());
-				
-				if (p.getEstadoPartido()==EstadoPartido.FINALIZADO){
-					
-					if(p.getEquipoLocal()==equipo || p.getEquipoVisitante()==equipo) pj++;
-					
-					if(p.getEquipoLocal()==equipo){
-						
-						if (p.getGolesLocal()>p.getGolesVisitante()){
-							
-							pg++;
-							
-							pts=pts+equipo.getDivision().getPuntosGanar();
-						}
-						
-						else if (p.getGolesLocal()<p.getGolesVisitante()){
-							
-							pp++;
-							
-							pts=pts+equipo.getDivision().getPuntosPerder();
-						}
-						
-						else if (p.getGolesLocal()==p.getGolesVisitante()){
-							
-							pe++;
-							
-							pts=pts+equipo.getDivision().getPuntosEmpatar();
-						}
-						
-						gf=gf+p.getGolesLocal();
-						
-						gc=gc+p.getGolesVisitante();
-					}
-					
-					else if (p.getEquipoVisitante()==equipo){
-						
-						if (p.getGolesVisitante()>p.getGolesLocal()){
-							
-							pg++;
-							
-							pts=pts+equipo.getDivision().getPuntosGanar();
-						}
-						
-						else if (p.getGolesVisitante()<p.getGolesLocal()){
-							
-							pp++;
-							
-							pts=pts+equipo.getDivision().getPuntosPerder();
-						}
-						
-						else if (p.getGolesVisitante()==p.getGolesLocal()){
-							
-							pe++;
-							
-							pts=pts+equipo.getDivision().getPuntosEmpatar();
-						}
-						
-						gf=gf+p.getGolesVisitante();
-						
-						gc=gc+p.getGolesLocal();
-					}
-				}
-			}
-    	}
-    	equipo.setPartidosJugados(pj);
-    	equipo.setPartidosGanados(pg);
-    	equipo.setPartidosPerdidos(pp);
-    	equipo.setPartidosEmpatados(pe);
-    	equipo.setGolesAFavor(gf);
-    	equipo.setGolesAContra(gc);
-    	equipo.setPuntos(pts);
-    	equipo.setOrdenDescendentePuntos(100-pts);
-    	
-    	return;
-    }
+//    //METODO PARA CALCULAR LOS PARTIDOS JUGADOS QUE ESTEN FINALIZADOS
+//    @ActionLayout(hidden=Where.EVERYWHERE)
+//    public void calcularTablaPosiciones(Equipo equipo){
+//    	
+//    	int pj=0;
+//    	int pg=0;
+//    	int pp=0;
+//    	int pe=0;
+//    	int gf=0;
+//    	int gc=0;
+//    	int pts=0;
+//    	
+//    	if (equipo.getDivision().getListaFechas().size()==0) return;
+//    	
+//    	for (Iterator<?> it1=equipo.getDivision().getListaFechas().iterator();it1.hasNext();){
+//    		
+//			Fecha f=((Fecha)it1.next());
+//			
+//			for (Iterator<?> it2=f.getListaPartidos().iterator();it2.hasNext();){
+//				
+//				Partido p =((Partido)it2.next());
+//				
+//				if (p.getEstadoPartido()==EstadoPartido.FINALIZADO){
+//					
+//					if(p.getEquipoLocal()==equipo || p.getEquipoVisitante()==equipo) pj++;
+//					
+//					if(p.getEquipoLocal()==equipo){
+//						
+//						if (p.getGolesLocal()>p.getGolesVisitante()){
+//							
+//							pg++;
+//							
+//							pts=pts+equipo.getDivision().getPuntosGanar();
+//						}
+//						
+//						else if (p.getGolesLocal()<p.getGolesVisitante()){
+//							
+//							pp++;
+//							
+//							pts=pts+equipo.getDivision().getPuntosPerder();
+//						}
+//						
+//						else if (p.getGolesLocal()==p.getGolesVisitante()){
+//							
+//							pe++;
+//							
+//							pts=pts+equipo.getDivision().getPuntosEmpatar();
+//						}
+//						
+//						gf=gf+p.getGolesLocal();
+//						
+//						gc=gc+p.getGolesVisitante();
+//					}
+//					
+//					else if (p.getEquipoVisitante()==equipo){
+//						
+//						if (p.getGolesVisitante()>p.getGolesLocal()){
+//							
+//							pg++;
+//							
+//							pts=pts+equipo.getDivision().getPuntosGanar();
+//						}
+//						
+//						else if (p.getGolesVisitante()<p.getGolesLocal()){
+//							
+//							pp++;
+//							
+//							pts=pts+equipo.getDivision().getPuntosPerder();
+//						}
+//						
+//						else if (p.getGolesVisitante()==p.getGolesLocal()){
+//							
+//							pe++;
+//							
+//							pts=pts+equipo.getDivision().getPuntosEmpatar();
+//						}
+//						
+//						gf=gf+p.getGolesVisitante();
+//						
+//						gc=gc+p.getGolesLocal();
+//					}
+//				}
+//			}
+//    	}
+//    	equipo.setPartidosJugados(pj);
+//    	equipo.setPartidosGanados(pg);
+//    	equipo.setPartidosPerdidos(pp);
+//    	equipo.setPartidosEmpatados(pe);
+//    	equipo.setGolesAFavor(gf);
+//    	equipo.setGolesAContra(gc);
+//    	equipo.setPuntos(pts);
+//    	equipo.setOrdenDescendentePuntos(100-pts);
+//    	
+//    	return;
+//    }
     
     @ActionLayout(named = "Exportar Lista de Buena Fe")
 	public Blob downloadAll(final Equipo equipo) throws JRException, IOException {

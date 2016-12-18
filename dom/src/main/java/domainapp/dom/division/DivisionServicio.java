@@ -318,9 +318,7 @@ public class DivisionServicio {
 					}
 					
 					partido.setEquipoLocal(eq1);
-					partido.setEquipoVisitante(eq2);
-					partido.setGolesLocal(0);
-					partido.setGolesVisitante(0);
+					partido.setEquipoVisitante(eq2);					
 					partido.setEstadoPartido(EstadoPartido.PENDIENTE);
 					partido.setFecha(fecha);
 					partido.setFechaHora(ahora.plusDays(7*i));
@@ -335,24 +333,26 @@ public class DivisionServicio {
     }
     
     //METODO PARA ACTUALIZAR LA TABLA DE POSICIONES
-    @ActionLayout(
-    		named="Actualizar Tabla de Posiciones"
-    		)
-    @MemberOrder(name="Planificacion", sequence = "5")
-    public Division actualizarTablaPosiciones(
-    		@ParameterLayout(named="Ingrese Division") final Division division
-    		){
-    	
-    	for (Iterator<?> it=division.getListaEquipos().iterator();it.hasNext();){
-    		
-			Equipo eq=((Equipo)it.next());
-			
-			equipoServicio.calcularTablaPosiciones(eq);
-			
-		}
-    	
-    	return division;
-    }
+//    @ActionLayout(
+//    		named="Actualizar Tabla de Posiciones"
+//    		)
+//    @MemberOrder(name="Planificacion", sequence = "5")
+//    public Division actualizarTablaPosiciones(
+//    		@ParameterLayout(named="Ingrese Division") final Division division
+//    		){
+//    	
+//    	for (Iterator<?> it=division.getListaEquipos().iterator();it.hasNext();){
+//    		
+//			Equipo eq=((Equipo)it.next());
+//			
+//			equipoServicio.calcularTablaPosiciones(eq);
+//			
+//		}
+//    	
+//    	return division;
+//    }
+    
+    
     
     @javax.inject.Inject
     EquipoServicio equipoServicio;

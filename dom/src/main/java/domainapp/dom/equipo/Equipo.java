@@ -36,10 +36,12 @@ import com.google.common.collect.Lists;
 import domainapp.dom.club.Club;
 import domainapp.dom.division.Division;
 import domainapp.dom.estado.Estado;
+import domainapp.dom.estado.EstadoPartido;
 import domainapp.dom.gol.Gol;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.jugador.JugadorServicio;
 import domainapp.dom.partido.Partido;
+import domainapp.dom.resultado.Resultado;
 
 @javax.jdo.annotations.PersistenceCapable(
     identityType=IdentityType.DATASTORE,
@@ -270,57 +272,73 @@ public class Equipo implements Comparable<Equipo>{
     //PARTIDOS JUGADOS
     @PropertyLayout(named="PJ", describedAs="Partidos Jugados")
     @Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-    private int partidosJugados;
-    public int getPartidosJugados() {return partidosJugados;}
-    public void setPartidosJugados(int partidosJugados) {this.partidosJugados = partidosJugados;}
+    public long getPartidosJugados(){
+    	long locales, visitantes;
+    	locales= this.getPartidosLocal().stream().filter(x -> EstadoPartido.FINALIZADO.equals(x.getEstadoPartido())).count();
+    	visitantes=this.getPartidosVisitante().stream().filter(x -> EstadoPartido.FINALIZADO.equals(x.getEstadoPartido())).count();
+    	return locales+visitantes;
+    }
+    
     
     //PARTIDOS GANADOS
     @PropertyLayout(named="PG", describedAs="Partidos Ganados")
-    @Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-    private int partidosGanados;
-	public int getPartidosGanados() {return partidosGanados;}
-	public void setPartidosGanados(int partidosGanados) {this.partidosGanados = partidosGanados;}
+    @Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)    
+	public long getPartidosGanados() {
+    	long locales, visitantes;
+    	locales=this.getPartidosLocal().stream().filter(x -> Resultado.GANADO.equals(x.resultado(this))).count();
+    	visitantes=this.getPartidosVisitante().stream().filter(x -> Resultado.GANADO.equals(x.resultado(this))).count();
+    	return locales+visitantes;
+    }	
     
     //PARTIDOS PERDIDOS
 	@PropertyLayout(named="PP", describedAs="Partidos Perdidos")
 	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-    private int partidosPerdidos;
-    public int getPartidosPerdidos() {return partidosPerdidos;}
-	public void setPartidosPerdidos(int partidosPerdidos) {this.partidosPerdidos = partidosPerdidos;}
-    
+    public long getPartidosPerdidos() {
+		long locales, visitantes;
+    	locales=this.getPartidosLocal().stream().filter(x -> Resultado.PERDIDO.equals(x.resultado(this))).count();
+    	visitantes=this.getPartidosVisitante().stream().filter(x -> Resultado.PERDIDO.equals(x.resultado(this))).count();
+    	return locales+visitantes;
+    }
+	    
     //PARTIDOS EMPATADOS
 	@PropertyLayout(named="PE", describedAs="Partidos Empatados")
 	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-    private int partidosEmpatados;
-	public int getPartidosEmpatados() {return partidosEmpatados;}
-	public void setPartidosEmpatados(int partidosEmpatados) {this.partidosEmpatados = partidosEmpatados;}
+    public long getPartidosEmpatados() {
+		long locales, visitantes;
+		locales=this.getPartidosLocal().stream().filter(x -> Resultado.EMPATADO.equals(x.resultado(this))).count();
+		visitantes=this.getPartidosVisitante().stream().filter(x -> Resultado.EMPATADO.equals(x.resultado(this))).count();
+		return locales+visitantes;
+	}	
     
     //GOLES A FAVOR
 	@PropertyLayout(named="Gf", describedAs="Goles a Favor")
 	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-	private int golesAFavor;
-	public int getGolesAFavor() {return golesAFavor;}
-	public void setGolesAFavor(int golesAFavor) {this.golesAFavor = golesAFavor;}
+	public int getGolesAFavor() {
+		return this.goles.size();
+	}
 
     //GOLES EN CONTRA
 	@PropertyLayout(named="Gc", describedAs="Goles en Contra")
 	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-	private int golesAContra;
-	public int getGolesAContra() {return golesAContra;}
-	public void setGolesAContra(int golesAContra) {this.golesAContra = golesAContra;}
+	public int getGolesAContra() {
+		return golesEnContra.size();
+	}	
 
     //PUNTOS
 	@PropertyLayout(named="Pts", describedAs="Puntos")
 	@Property(editing=Editing.DISABLED, hidden=Where.OBJECT_FORMS)
-	private int puntos;
-	public int getPuntos() {return puntos;}
-	public void setPuntos(int puntos) {this.puntos = puntos;}
+	public long getPuntos() {
+		return (this.getPartidosGanados()*this.getDivision().getPuntosGanar())+(this.getPartidosEmpatados()*this.getDivision().getPuntosEmpatar())+(this.getPartidosPerdidos()*this.getDivision().getPuntosPerder());
+	}
+	
 
 	//ORDEN PARA LA TABLA DE POSICIONES
 	@PropertyLayout(hidden=Where.EVERYWHERE)
 	private int ordenDescendentePuntos;
 	public int getOrdenDescendentePuntos() {return ordenDescendentePuntos;}
 	public void setOrdenDescendentePuntos(int ordenDescendentePuntos) {this.ordenDescendentePuntos = ordenDescendentePuntos;}
+	
+	
 	
 	@javax.inject.Inject
     EquipoServicio equipoServicio;
