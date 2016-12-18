@@ -36,13 +36,13 @@
                                 <c:property id="estado" hidden="ALL_EXCEPT_STANDALONE_TABLES"/>
                                 <c:property id="division" hidden="ALL_TABLES"/>
                                 
-                                <c:property id="puntos" hidden="STANDALONE_TABLES"  />
-                                <c:property id="partidosJugados" hidden="STANDALONE_TABLES"/>
-                                <c:property id="partidosGanados" hidden="STANDALONE_TABLES"/>
-                                <c:property id="partidosEmpatados" hidden="STANDALONE_TABLES"/>
-                                <c:property id="partidosPerdidos" hidden="STANDALONE_TABLES"/>
-                                <c:property id="golesAFavor" hidden="STANDALONE_TABLES"/>
-                                <c:property id="golesAContra" hidden="STANDALONE_TABLES"/>
+                                <c:property id="puntos" hidden="ALL_TABLES"  />
+                                <c:property id="partidosJugados" hidden="ALL_TABLES"/>
+                                <c:property id="partidosGanados" hidden="ALL_TABLES"/>
+                                <c:property id="partidosEmpatados" hidden="ALL_TABLES"/>
+                                <c:property id="partidosPerdidos" hidden="ALL_TABLES"/>
+                                <c:property id="golesAFavor" hidden="ALL_TABLES"/>
+                                <c:property id="golesAContra" hidden="ALL_TABLES"/>
                                 
                                 
                                 
