@@ -3,8 +3,6 @@ package domainapp.dom.partido;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +21,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.value.Blob;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import domainapp.dom.equipo.Equipo;
 import domainapp.dom.jugador.Jugador;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -142,30 +137,8 @@ public class PartidoServicio {
 		}
 	}
     
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @javax.inject.Inject
     Partido partido;
-    
     
     @javax.inject.Inject
     RepositoryService repositoryService;

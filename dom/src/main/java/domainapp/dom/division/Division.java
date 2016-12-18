@@ -202,7 +202,27 @@ public class Division implements Comparable<Division>{
 			}
 		}
 		return jugadores;
-	} 
+	}
+	
+	@ActionLayout(named="Tabla de Tarjetas", hidden=Where.EVERYWHERE)
+	public List<Jugador> tablaDeTarjetas(){
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		for (Iterator<?> it=this.getListaEquipos().iterator();it.hasNext();){
+			Equipo eq=((Equipo)it.next());
+			for (Iterator<?> it2=eq.getListaBuenaFe().iterator();it2.hasNext();){
+				Jugador jug=(Jugador)it2.next();
+				
+				
+				
+				
+				
+//				if (jug.golesEquipo(this) > 0){
+//					jugadores.add(jug);
+//				}
+			}
+		}
+		return jugadores;
+	}
 	
 	@javax.inject.Inject
 	ActionInvocationContext actionInvocationContext;

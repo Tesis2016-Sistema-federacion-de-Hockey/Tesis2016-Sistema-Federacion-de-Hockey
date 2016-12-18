@@ -16,8 +16,10 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import domainapp.dom.division.Division;
 import domainapp.dom.jugador.Jugador;
 import domainapp.dom.partido.Partido;
 
@@ -32,6 +34,27 @@ import domainapp.dom.partido.Partido;
 public class TarjetaServicio {
 	
 	public TranslatableString title() {return TranslatableString.tr("Tarjetas");}
+	
+	@Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+    		cssClassFa="fa fa-list",
+            bookmarking = BookmarkPolicy.AS_ROOT,
+            named="Lista de Tarjetas",
+            describedAs="Se muestran todas las tarjetas de la Division en forma cronologica"
+    )
+    @MemberOrder(sequence = "2")
+    public List<Tarjeta> listarTodasLasTarjetasPorDivision(
+    		@ParameterLayout(named="Ingrese Categoria") final Division division) {
+		return repositoryService.allMatches(Tarjeta.class, new Predicate<Tarjeta>() {
+
+			@Override
+			public boolean apply(Tarjeta input) {
+				return input.getPartido().getFecha().getDivision()==division?true:false;
+			}
+		});
+	}
 	
 	@Action(
             semantics = SemanticsOf.SAFE
