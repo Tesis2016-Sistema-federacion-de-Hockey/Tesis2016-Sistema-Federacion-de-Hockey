@@ -278,19 +278,22 @@ public class Partido implements Comparable<Partido>{
 	private SortedSet<Gol> goles = new TreeSet<Gol>();	
 	public SortedSet<Gol> getGoles() {
 		return goles;
-	}
+	}	
 	public void setGoles(SortedSet<Gol> goles) {
 		this.goles = goles;
 	}
 	
+	@Property(editing = Editing.DISABLED, notPersisted = true)
 	public long getGolesLocal(){
 		return this.goles.stream().filter(x -> this.equipoLocal.equals(x.getEquipo())).count();
 	}
 	
+	@Property(editing = Editing.DISABLED, notPersisted = true)
 	public long getGolesVisitante(){
 		return this.goles.stream().filter(x -> this.equipoVisitante.equals(x.getEquipo())).count();
 	}
 	
+	@ActionLayout(named="Resultado", hidden=Where.EVERYWHERE)
 	public Resultado resultado(final Equipo equipo){
 		if(this.estadoPartido == EstadoPartido.PENDIENTE){
 			return Resultado.SINRESULTADO;
