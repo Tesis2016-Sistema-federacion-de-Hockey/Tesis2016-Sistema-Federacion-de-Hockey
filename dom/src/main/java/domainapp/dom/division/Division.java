@@ -1,3 +1,22 @@
+/*
+#	This file is part of SIFHON.
+#
+#	Copyright ( C ) 2016 , SIFHON
+#
+#   SIFHON is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   SIFHON is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with SIFHON.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package domainapp.dom.division;
 
 import java.util.ArrayList;
@@ -211,7 +230,7 @@ public class Division implements Comparable<Division>{
 			Equipo eq=((Equipo)it.next());
 			for (Iterator<?> it2=eq.getListaBuenaFe().iterator();it2.hasNext();){
 				Jugador jug=(Jugador)it2.next();
-				if (jug.tarjetasVerdesEquipo(this) >0){
+				if (jug.tarjetasVerdesEquipo(this) >0 || jug.tarjetasAmarillasEquipo(this)>0 || jug.tarjetasRojasEquipo(this)>0){
 					jugadores.add(jug);
 				}
 			}
