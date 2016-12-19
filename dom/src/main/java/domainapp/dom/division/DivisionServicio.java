@@ -328,7 +328,7 @@ public class DivisionServicio {
 			}
 			division.getListaFechas().add(fecha);			
 		}
-		JOptionPane.showMessageDialog(null, "Fixture creado con exito");
+//		JOptionPane.showMessageDialog(null, "Fixture creado con exito");
 		return division;
     }
     

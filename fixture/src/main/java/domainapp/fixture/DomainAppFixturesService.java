@@ -2,19 +2,20 @@ package domainapp.fixture;
 
 import java.util.List;
 
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.fixture.scenarios.CuotaClubFixture;
 import domainapp.fixture.scenarios.JugadorFixture;
 import domainapp.fixture.scenarios.TemporadaFixture;
 
 @DomainService
 @DomainServiceLayout(
-        named="Carga de Prueba",
+        named="Ejemplo de Carga",
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
         menuOrder = "22"
 )
@@ -31,41 +32,20 @@ public class DomainAppFixturesService extends FixtureScripts {
 //        return Club.get(0).getObject();
 //    }
     
-    @MemberOrder(sequence="30")
+//    @MemberOrder(sequence="30")
+    @ActionLayout(hidden=Where.EVERYWHERE)
     public Object instalarFixturesJugador() {
         final List<FixtureResult> Jugador = findFixtureScriptFor(JugadorFixture.class).run(null);
         return Jugador.get(0).getObject();
     }
 
-    @MemberOrder(sequence="40")
+//    @MemberOrder(sequence="40")
+    @ActionLayout(hidden=Where.EVERYWHERE)
     public Object instalarFixturesTemporada() {
         final List<FixtureResult> Temporada = findFixtureScriptFor(TemporadaFixture.class).run(null);
         return Temporada.get(0).getObject();
     }
     
-//    @MemberOrder(sequence="50")
-//    public Object instalarFixturesCuotasClub() {
-//        final List<FixtureResult> CuotaClub = findFixtureScriptFor(CuotaClubFixture.class).run(null);
-//        return CuotaClub.get(0).getObject();
-//    }
-    
-//    @MemberOrder(sequence="50")
-//    public Object instalarFixturesTorneo() {
-//        final List<FixtureResult> Torneo = findFixtureScriptFor(TorneoFixture.class).run(null);
-//        return Torneo.get(0).getObject();
-//    }
-//    
-//    @MemberOrder(sequence="60")
-//    public Object instalarFixturesDivision() {
-//        final List<FixtureResult> Division = findFixtureScriptFor(DivisionFixture.class).run(null);
-//        return Division.get(0).getObject();
-//    }
-//    
-//    @MemberOrder(sequence="70")
-//    public Object instalarFixturesEquipo() {
-//        final List<FixtureResult> Equipo = findFixtureScriptFor(EquipoFixture.class).run(null);
-//        return Equipo.get(0).getObject();
-//    }    
 //    
 //	@MemberOrder(sequence="80")
 //    public String BorrarBD()
@@ -76,6 +56,7 @@ public class DomainAppFixturesService extends FixtureScripts {
 //    }
 //	
 	  @MemberOrder(sequence="99")
+	  @ActionLayout(named="Cargar Datos de Prueba")
 	    public String IntstalarTodosLosFixtures()
 	    {
 //	    	this.instalarFixturesClub();
